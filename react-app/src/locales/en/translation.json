@@ -31,5 +31,9 @@
     "password": "Password",
     "next": "Next",
     "back": "Back"
+  },
+  "password": {
+    "title": "Protected wallet",
+    "loginBtn": "Login"
   }
 }

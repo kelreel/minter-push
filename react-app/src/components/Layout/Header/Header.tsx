@@ -1,13 +1,16 @@
 import { Layout, Menu, Select } from 'antd';
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '../../../assets/minter-logo-circle.svg';
 import './Header.scss';
 import { useTranslation } from 'react-i18next';
 
 import uk from '../../../assets/uk.svg'
 import ru from '../../../assets/rus.webp'
+import { observer } from 'mobx-react-lite';
+import { AppStoreContext } from '../../../stores/appStore';
 
-const Header: React.FC = () => {
+const Header: React.FC = observer(() => {
+  const store = useContext(AppStoreContext)
   const { SubMenu } = Menu;
   const { Header, Content, Sider } = Layout;
   const { Option } = Select;
@@ -19,7 +22,7 @@ const Header: React.FC = () => {
     <Header className="header">
       <div className="logo">
         <img src={logo} style={{ width: "30px", height: "30px" }} />
-        <h2>Push</h2>
+        {store.name && store.seed ? <h2>Hi, {store.name}!</h2> : <h2>Push</h2>}
       </div>
       <div className="language">
         <Select
@@ -52,6 +55,6 @@ const Header: React.FC = () => {
         </Menu> */}
     </Header>
   );
-};
+});
 
 export default Header;

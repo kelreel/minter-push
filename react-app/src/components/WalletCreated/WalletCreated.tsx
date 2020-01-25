@@ -148,9 +148,9 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
               </>
             )}
           </div>
-          <Button size="small" onClick={copySeed}>
+          {/* <Button size="small" onClick={copySeed}>
             {t("walletCreated.copySeedBtn")}
-          </Button>
+          </Button> */}
         </TabPane>
 
         {/* Sharing Tab */}

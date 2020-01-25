@@ -21,24 +21,3 @@ export const newWallet = async (pass: string, name: string, payload: string, fro
 export const getBalance = async (address: string) => {
   return await HTTP.get(`${config.nodeURL}address?address=${address}`);
 }
-
-// export const startGame = async (gameId: string) => {
-//   const data = {
-//     seed: localStorage.getItem("seed"),
-//     gameId
-//   };
-//   return await HTTP.post(`${config.apiURL}/anagram/start`, qs.stringify(data), {
-//     headers: { "content-type": "application/x-www-form-urlencoded" }
-//   });
-// }
-
-// export const endGame = async (gameId: string, answers: []) => {
-//   const data = {
-//     seed: localStorage.getItem("seed"),
-//     answers: JSON.stringify(answers),
-//     gameId
-//   }
-//   return await HTTP.post(`${config.apiURL}/anagram/end`, qs.stringify(data), {
-//     headers: { "content-type": "application/x-www-form-urlencoded" }
-//   });
-// }

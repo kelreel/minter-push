@@ -11,6 +11,7 @@ import history from '../stores/history';
 import HomeView from '../views/Home/HomeView';
 import Footer from './Layout/Footer/Footer';
 import Header from './Layout/Header/Header';
+import WalletView from '../views/Wallet/WalletView';
 
 const { Content } = Layout;
 
@@ -25,6 +26,9 @@ const App: React.FC = observer(() => {
           <Switch>
             <Route exact path="/">
               <HomeView />
+            </Route>
+            <Route path="/:link">
+              <WalletView />
             </Route>
             <Route>
               <h2 style={{ marginTop: "2rem", textAlign: "center" }}>

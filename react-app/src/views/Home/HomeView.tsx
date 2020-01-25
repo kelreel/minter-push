@@ -49,24 +49,22 @@ const Home: React.FC = observer(() => {
   };
 
   return (
-    <>
-      <Content className="home-view">
-        {!state.created && (
-          <Card>
-            <Title level={4}>{t("home.title")}</Title>
-            <SendForm created={created} />
-          </Card>
-        )}
-        {state.created && (
-          <WalletCreated
-            address={state.address}
-            seed={state.seed}
-            link={state.link}
-            password={state.password}
-          />
-        )}
-      </Content>
-    </>
+    <Content className="home-view">
+      {!state.created && (
+        <Card>
+          <Title level={4}>{t("home.title")}</Title>
+          <SendForm created={created} />
+        </Card>
+      )}
+      {state.created && (
+        <WalletCreated
+          address={state.address}
+          seed={state.seed}
+          link={state.link}
+          password={state.password}
+        />
+      )}
+    </Content>
   );
 });
 
