@@ -1,0 +1,119 @@
+.wallet-created {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.card-container {
+  .nav {
+    margin-top: 10px;
+    text-align: center;
+    color: rgb(30, 96, 219);
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content > .ant-tabs-tabpane {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  padding: 16px;
+
+  .ant-list {
+    width: 220px;
+  }
+
+  .ant-list-item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+
+    p {
+      padding-top: 12px;
+      line-height: 0;
+    }
+  }
+
+  .address {
+    margin-top: 10px;
+    color: #000;
+    font-size: 1rem;
+    cursor: pointer;
+
+    i {
+      margin-left: 5px;
+    }
+  }
+
+  .balance {
+    display: flex;
+    margin-top: 1rem;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .click-copy {
+    align-self: flex-start;
+    font-weight: 600;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+
+  .share {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    div {
+      &:not(:last-of-type) {
+        margin-bottom: 10px;
+      }
+    }
+
+    .ant-alert {
+      cursor: pointer;
+      margin-bottom: 15px;
+      max-width: 240px;
+    }
+
+    canvas {
+      align-self: center;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.card-container {
+  .ant-tabs-nav-wrap {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+  }
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-content {
+  margin-top: -16px;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar {
+  border-color: #fff;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab {
+  border-color: rgb(209, 209, 209);
+  background: transparent;
+}
+
+.card-container > .ant-tabs-card > .ant-tabs-bar .ant-tabs-tab-active {
+  border-color: rgb(230, 230, 230);
+  background: #fff;
+}

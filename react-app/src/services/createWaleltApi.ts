@@ -18,9 +18,9 @@ export const newWallet = async (pass: string, name: string, payload: string, fro
   });
 };
 
-// export const getGameInfo = async (id: string) => {
-//   return await HTTP.get(`${config.apiURL}/anagram/${id}`);
-// }
+export const getBalance = async (address: string) => {
+  return await HTTP.get(`${config.nodeURL}address?address=${address}`);
+}
 
 // export const startGame = async (gameId: string) => {
 //   const data = {

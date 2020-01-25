@@ -4,12 +4,32 @@
   },
   "sendForm": {
     "toPlaceholder": "Alice",
-    "fromPlaceholder": "Alex",
-    "payloadPlaceholder": "Happy Birthday! 🎉",
+    "fromPlaceholder": "Samantha",
+    "payloadPlaceholder": "🎉 Happy Birthday!",
     "recipient": "Recipient name",
     "sender": "Sender",
     "message": "Message",
     "password": "Password",
     "send": "Continue"
+  },
+  "walletCreated": {
+    "pay": "Send coins",
+    "payDesription": "",
+    "shareLink": "Share the link",
+    "tab1title": "1. Send coins",
+    "tab2title": "2. Share the wallet",
+    "copySeedBtn": "Copy Mnemonic",
+    "mnemonic": "Mnemonic",
+    "copyAddressSuccess": "Address copied",
+    "copySeedSuccess": "Mnemonic copied",
+    "copyPassSuccess": "Password copied",
+    "copyLinkSuccess": "Link copied",
+    "currentBalance": "Balance",
+    "updateBalanceInfo": "Update automatically",
+    "waitingPayment": "Waiting for payment...",
+    "clickLink": "Click on Link to copy",
+    "password": "Password",
+    "next": "Next",
+    "back": "Back"
   }
 }

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Input, Icon, Form, Button } from "antd";
+import { Input, Icon, Form, Button, message } from "antd";
 import "./SendForm.scss";
 import { useTranslation } from "react-i18next";
 import { newWallet } from "../../services/createWaleltApi";
 
-const SendForm: React.FC = () => {
+const SendForm: React.FC<{created: Function}> = ({created}) => {
   const { t, i18n } = useTranslation();
   const [state, setState] = useState({
     from: "",
@@ -18,9 +18,15 @@ const SendForm: React.FC = () => {
 
   const send = async () => {
     setState({...state, loading: true})
-    let res = await newWallet(state.password, state.to, state.message, state.from)
+    try {
+      let res = await newWallet(state.password, state.to, state.message, state.from)
+      created(res.data.address, res.data.seed, res.data.link, state.password)
+      console.log(res.data);
+    } catch (error) {
+      message.warning(error.message)
+      console.log(error);
+    }
     setState({ ...state, loading: false });
-    console.log(res.data);
   };
 
   return (

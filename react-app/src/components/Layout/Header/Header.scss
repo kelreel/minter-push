@@ -2,19 +2,23 @@
   display: flex;
   flex-flow: row nowrap;
   background-color: #fff;
-  
+
   .logo {
     display: flex;
     flex-flow: row nowrap;
     flex: 1;
     align-items: center;
+    user-select: none;
 
     img {
       margin-right: 1rem;
+      -webkit-user-drag: none;
+      cursor: pointer;
     }
 
     h2 {
       margin-top: 8px;
+      cursor: pointer;
     }
   }
 
