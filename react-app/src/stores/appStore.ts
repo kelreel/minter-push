@@ -7,7 +7,7 @@ import { getBalanceFromExplorer } from "../services/walletApi";
 import {Minter, prepareLink} from "minter-js-sdk";
 import config from "../config";
 
-const minter = new Minter({apiType: 'node', baseURL: config.nodeURL})
+// const minter = new Minter({apiType: 'node', baseURL: config.nodeURL})
 
 const { walletFromMnemonic, isValidMnemonic } = require("minterjs-wallet");
 
@@ -30,40 +30,40 @@ class AppStore {
 
   constructor() {}
 
-  @action async checkBalance() {
-    try {
-      let res = await getBalanceFromExplorer(this.address!);
-      let balances = res?.data?.data?.balances;
-      let result: Balance[] = []
-      let totalBipVal = 0;
-      result = balances.map(async (x: { coin: any; amount: string | number; }) => {
-        let bipVal = 0;
+  // @action async checkBalance() {
+  //   try {
+  //     let res = await getBalanceFromExplorer(this.address!);
+  //     let balances = res?.data?.data?.balances;
+  //     let result: Balance[] = []
+  //     let totalBipVal = 0;
+  //     result = balances.map(async (x: { coin: any; amount: string | number; }) => {
+  //       let bipVal = 0;
 
-        if (x.coin === 'BIP') {
-          bipVal = 0;
-        } else {
-          let r = await minter.estimateCoinSell({
-            coinToSell: x.coin,
-            valueToSell: +x.amount,
-            coinToBuy: "BIP"
-          });
-          bipVal = r.will_get;
-          totalBipVal += bipVal;
-        }
+  //       if (x.coin === 'BIP') {
+  //         bipVal = 0;
+  //       } else {
+  //         let r = await minter.estimateCoinSell({
+  //           coinToSell: x.coin,
+  //           valueToSell: +x.amount,
+  //           coinToBuy: "BIP"
+  //         });
+  //         bipVal = r.will_get;
+  //         totalBipVal += bipVal;
+  //       }
 
-        return {
-          coin: x.coin,
-          value: +x.amount,
-          bip_value: bipVal
-        }
-      })
-      this.balance = result;
-      this.totalBipBalance = totalBipVal;
-    } catch (error) {
-      console.log(error);
-    }
+  //       return {
+  //         coin: x.coin,
+  //         value: +x.amount,
+  //         bip_value: bipVal
+  //       }
+  //     })
+  //     this.balance = result;
+  //     this.totalBipBalance = totalBipVal;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
     
-  }
+  // }
 
   @action setWalletWithoutSeed(
     address: string,

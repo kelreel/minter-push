@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./WalletCreated.scss";
 
-import { QRCode } from "react-qr-svg";
 import { Tabs, Icon, message, Alert, Button, List } from "antd";
 import { shortAddress } from "../../services/utils";
 
