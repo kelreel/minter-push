@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Отправить деньги в два клика"
+  },
+  "sendForm": {
+    "toPlaceholder": "Алиса",
+    "fromPlaceholder": "Александра",
+    "payloadPlaceholder": "С Днем Рождения!",
+    "recipient": "Имя получателя",
+    "sender": "Отправитель",
+    "message": "Сообщение",
+    "password": "Пароль",
+    "send": "Далее"
+  }
+}

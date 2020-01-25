@@ -1,0 +1,39 @@
+.home-view {
+  display: flex;
+  flex-flow: row wrap;
+  margin: 24px;
+  align-items: center;
+  justify-content: center;
+
+  h4 {
+    text-align: center;
+  }
+
+  .ant-card {
+    margin-right: 10px;
+    margin-top: 10px;
+
+    .ant-card-body {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .actions {
+      display: flex;
+      flex-flow: row wrap;
+      flex: 1;
+      justify-content: center;
+
+      button:first-of-type {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}

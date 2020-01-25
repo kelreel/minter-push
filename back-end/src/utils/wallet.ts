@@ -21,7 +21,8 @@ export const getAddressFromSeed = (seed: string): string => {
 export const createWallet = async (
   password: string | null = null,
   name: string | null = null,
-  payload: string | null = null
+  payload: string | null = null,
+  fromName: string | null = null
 ) => {
   const seed = generateSeed();
   const address = getAddressFromSeed(seed);
@@ -41,6 +42,7 @@ export const createWallet = async (
     payload,
     status: WalletStatus.created,
     password: hash,
+    fromName,
     link
   })
 

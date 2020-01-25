@@ -34,9 +34,15 @@ router.post("/new", async (req, res) => {
   let pass = req.body.pass;
   let name = req.body.name;
   let payload = req.body.payload;
+  let fromName = req.body.fromName;
+
+  if (pass === "") pass = null;
+  if (name === "") name = null;
+  if (fromName === "") fromName = null;
+  if (payload === "") payload = null;
 
   try {
-    let result = await createWallet(pass, name, payload);
+    let result = await createWallet(pass, name, payload, fromName);
     res.send(result);
   } catch (error) {
     res.status(400).send(error);

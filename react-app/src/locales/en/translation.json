@@ -1,0 +1,15 @@
+{
+  "home": {
+    "title": "Send money. It's that easy!"
+  },
+  "sendForm": {
+    "toPlaceholder": "Alice",
+    "fromPlaceholder": "Alex",
+    "payloadPlaceholder": "Happy Birthday! 🎉",
+    "recipient": "Recipient name",
+    "sender": "Sender",
+    "message": "Message",
+    "password": "Password",
+    "send": "Continue"
+  }
+}

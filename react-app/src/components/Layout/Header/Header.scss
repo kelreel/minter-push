@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  background-color: #fff;
+  
+  .logo {
+    display: flex;
+    flex-flow: row nowrap;
+    flex: 1;
+    align-items: center;
+
+    img {
+      margin-right: 1rem;
+    }
+
+    h2 {
+      margin-top: 8px;
+    }
+  }
+
+  .lng {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-items: center;
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}
+
+.ant-layout-header {
+  padding: 0 25px;
+}

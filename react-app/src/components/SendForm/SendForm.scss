@@ -1,0 +1,13 @@
+.send-form {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+
+  .field {
+    margin-bottom: 16px;
+  }
+  
+  textarea {
+    resize: none;
+  }
+}
