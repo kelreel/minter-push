@@ -1,7 +1,16 @@
 .wallet-view {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   margin: 24px;
   align-items: center;
   justify-content: center;
+
+  .balance {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+  }
 }

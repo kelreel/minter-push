@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import "./WalletCreated.scss";
 
-import { Tabs, Icon, message, Alert, Button, List } from "antd";
+import { Tabs, Icon, message, Alert, Button, List, Modal } from "antd";
 import { shortAddress } from "../../services/utils";
 
 import copy from "copy-to-clipboard";

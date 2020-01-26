@@ -64,6 +64,7 @@ router.get("/wallet/:id", async (req, res) => {
       res.send({
         address: wallet.address,
         name: wallet.name,
+        fromName: wallet.fromName,
         payload: wallet.payload,
         password: true
       });
@@ -71,6 +72,7 @@ router.get("/wallet/:id", async (req, res) => {
       res.send({
         address: wallet.address,
         name: wallet.name,
+        fromName: wallet.fromName,
         payload: wallet.payload,
         password: false,
         seed: wallet.seed

@@ -20,5 +20,9 @@ export const getSeed = async (
 };
 
 export const getBalanceFromExplorer = async (address: string) => {
-  return await HTTP.get(`${config.explorerURL}/address/${address}`);
+  return await HTTP.get(`${config.explorerURL}/addresses/${address}`);
 };
+
+export const getPrice = async () => {
+  return await HTTP.get(`${config.mbankAPI}/price`);
+}

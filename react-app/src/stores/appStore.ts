@@ -1,13 +1,15 @@
-import { action, observable } from "mobx";
+import { action, observable, get, computed } from "mobx";
 import { createContext } from "react";
 import { getBalance } from "../services/createWaleltApi";
-import { getBalanceFromExplorer } from "../services/walletApi";
-
+import { getBalanceFromExplorer, getPrice } from "../services/walletApi";
+import HTTP from '../services/http'
 // @ts-ignore
-import {Minter, prepareLink} from "minter-js-sdk";
+import { Minter, prepareLink } from "minter-js-sdk";
 import config from "../config";
+import { message } from "antd";
+import { useTranslation } from "react-i18next";
 
-// const minter = new Minter({apiType: 'node', baseURL: config.nodeURL})
+const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
 const { walletFromMnemonic, isValidMnemonic } = require("minterjs-wallet");
 
@@ -27,43 +29,108 @@ class AppStore {
   @observable link: string | null = null;
   @observable balance: Balance[] = [];
   @observable totalBipBalance: number = 0;
+  @observable totalPrice: number = 0;
+  @observable bipPrice: number = 0;
+  @observable isLoading: boolean = false;
+  @observable rubCourse: number = 0;
+  @observable locale: string | null = window.localStorage.getItem("i18nextLng");
+  @observable currency: string = "USD";
 
-  constructor() {}
+  constructor() {
+    if (this.locale?.substring(0,2) === 'ru') {
+      this.currency = "RUB"
+    } else this.currency = "USD"
+  }
 
-  // @action async checkBalance() {
-  //   try {
-  //     let res = await getBalanceFromExplorer(this.address!);
-  //     let balances = res?.data?.data?.balances;
-  //     let result: Balance[] = []
-  //     let totalBipVal = 0;
-  //     result = balances.map(async (x: { coin: any; amount: string | number; }) => {
-  //       let bipVal = 0;
+  @computed get exchRate() {
+    switch (this.currency) {
+      case "USD":
+        return 1
+      case "RUB":
+        return this.rubCourse
+      default: return 1
+    }
+  }
 
-  //       if (x.coin === 'BIP') {
-  //         bipVal = 0;
-  //       } else {
-  //         let r = await minter.estimateCoinSell({
-  //           coinToSell: x.coin,
-  //           valueToSell: +x.amount,
-  //           coinToBuy: "BIP"
-  //         });
-  //         bipVal = r.will_get;
-  //         totalBipVal += bipVal;
-  //       }
+  @computed get totalInLocalCurrency() {
+    return Math.round(
+      (this.totalPrice * this.exchRate * 100) / 100
+    )
+  }
 
-  //       return {
-  //         coin: x.coin,
-  //         value: +x.amount,
-  //         bip_value: bipVal
-  //       }
-  //     })
-  //     this.balance = result;
-  //     this.totalBipBalance = totalBipVal;
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-    
-  // }
+  @action changeLocale = (language: string) => {
+    this.locale = language;
+    if (language === 'ru') {
+      this.currency = "RUB"
+    } else this.currency = "USD";
+  }
+
+  @action async checkBalance() {
+    this.isLoading = true;
+    try {
+      let res = await getBalanceFromExplorer(
+        // `Mxa0240b1070cb72f9600f4f4c3e427dd0dbc94cd6`
+        // "Mx63f5509fe5347916c829664c6d92d09d87229998"
+        "Mxcf3b7531dd5ee878c5cc30ab198d30b427555555"
+      );
+      let balances = res?.data?.data?.balances;
+      let bipVal = 0;
+
+      for (let item of balances) {
+        if (item.coin === "BIP") {
+          bipVal += parseFloat(item.amount as string);
+          this.totalBipBalance += bipVal;
+          item.bip_value = bipVal;
+          item.value =
+            Math.round(parseFloat(item.amount as string) * 100) / 100;
+        } else {
+          let r;
+          try {
+            r = await minter.estimateCoinSell({
+              coinToSell: item.coin,
+              valueToSell: parseFloat(item.amount as string),
+              coinToBuy: "BIP"
+            });
+          } catch (error) {
+            r.will_get = 0;
+          }
+          bipVal = Math.round(parseFloat(r.will_get) * 100) / 100;
+          this.totalBipBalance += Math.round(
+            (parseFloat(r.will_get) * 100) / 100
+          );
+          item.bip_value = bipVal;
+          item.value =
+            Math.round(parseFloat(item.amount as string) * 100) / 100;
+        }
+        delete item["amount"];
+      }
+      let r = balances.filter((x: { value: number }) => x.value !== 0);
+      this.balance = r;
+      console.log(r);
+    } catch (error) {
+      console.log(error);
+      message.error("Error while getting balance");
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  @action async getRubCourse() {
+    try {
+      let res = await HTTP.get(`https://www.cbr-xml-daily.ru/daily_json.js`);
+      this.rubCourse = res.data.Valute.USD.Value;
+    } catch (error) {
+      message.error("Error getting RUB Exchange Rate");
+    }
+  }
+
+  @action async getTotalPrice() {
+    try {
+      let res = await getPrice();
+      this.bipPrice = res.data.data.price / 10000;
+      this.totalPrice = this.totalBipBalance * this.bipPrice;
+    } catch (error) {}
+  }
 
   @action setWalletWithoutSeed(
     address: string,

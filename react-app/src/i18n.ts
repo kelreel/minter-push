@@ -17,11 +17,21 @@ i18n
   .use(detector)
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
+    detection: {
+      order: [
+        "querystring",
+        "cookie",
+        "localStorage",
+        "navigator",
+        "htmlTag",
+        "path",
+        "subdomain"
+      ]
+    },
     resources,
-    lng: "en",
     fallbackLng: "en", // use en if detected lng is not available
 
-    keySeparator: '.', // we do not use keys in form messages.welcome
+    keySeparator: ".", // we do not use keys in form messages.welcome
 
     interpolation: {
       escapeValue: false // react already safes from xss

@@ -15,6 +15,7 @@
   "walletCreated": {
     "pay": "Send coins",
     "payDesription": "",
+    "modalAbout": "Send coins from the Minter network to the specified address. You can send several types of coins with any number of transactions. \nReplenishment is possible even after closing this page.",
     "shareLink": "Share the link",
     "tab1title": "1. Send coins",
     "tab2title": "2. Share the wallet",
@@ -35,5 +36,8 @@
   "password": {
     "title": "Protected wallet",
     "loginBtn": "Login"
+  },
+  "balance": {
+    "sentYou": "sent you"
   }
 }

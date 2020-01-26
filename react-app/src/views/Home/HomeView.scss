@@ -1,3 +1,12 @@
+  .ant-modal-confirm-info .ant-modal-confirm-body {
+    .ant-modal-confirm-content {
+      white-space: pre-wrap;
+    }
+    .anticon {
+      display: none;
+    }
+  }
+
 .home-view {
   display: flex;
   flex-flow: row wrap;
@@ -37,7 +46,7 @@
     -webkit-user-drag: none;
   }
 
-    @media screen and (max-width: 600px) {
+  @media screen and (max-width: 600px) {
     h4 {
       font-size: 18px;
     }

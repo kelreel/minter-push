@@ -1,13 +1,16 @@
-import { Layout } from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useParams } from "react-router-dom";
-import PasswordForm from "../../components/Wallet/PasswordForm/PasswordForm";
-import { getWallet } from "../../services/walletApi";
-import { AppStoreContext } from "../../stores/appStore";
-import history from "../../stores/history";
-import "./WalletView.scss";
+import './WalletView.scss';
+
+import { Card, Layout } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+
+import Balance from '../../components/Wallet/Balance/Balance';
+import PasswordForm from '../../components/Wallet/PasswordForm/PasswordForm';
+import { getWallet } from '../../services/walletApi';
+import { AppStoreContext } from '../../stores/appStore';
+import history from '../../stores/history';
 
 const { Content } = Layout;
 
@@ -33,19 +36,32 @@ const WalletView: React.FC = observer(() => {
           // @ts-ignore
           link
         );
-        if (res.data.seed) store.setSeed(res.data.seed)
+        if (res.data.seed) store.setSeed(res.data.seed);
       } catch (error) {
         console.log(error);
         history.push("/");
       }
+
+      await store.checkBalance();
+      await store.getTotalPrice();
+      await store.getRubCourse();
+      console.log(store.rubCourse);
     };
-    init()
+    init();
+    
   }, []);
 
   return (
     <Content className="wallet-view">
-      {store.isPassword && <PasswordForm />}
-      {store.seed}
+      {store.isPassword ? (
+        <PasswordForm />
+      ) : (
+        <>
+          <Card className="balance">
+            <Balance />
+          </Card>
+        </>
+      )}
     </Content>
   );
 });

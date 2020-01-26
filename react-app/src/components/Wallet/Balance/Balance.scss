@@ -1,0 +1,82 @@
+.balance {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+
+  .ant-card-body {
+    width: 100%;
+  }
+
+  .from {
+    text-transform: uppercase;
+    color: rgba(141, 141, 141, 0.767);
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .one-coin {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+
+    .value {
+      margin-top: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+
+      .coin {
+        font-size: 1.8rem;
+      }
+    }
+
+    .price {
+      margin-top: 10px;
+      font-weight: 700;
+      color: #7c7c7c;
+      font-size: 1.1rem;
+    }
+  }
+
+  .coin-list {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .value {
+      margin-top: 10px;
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    .ant-list {
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .ant-list-item {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+
+      .coin {
+        font-weight: 600;
+      }
+
+      .right {
+        font-size: 0.8rem;
+        .val {
+          margin-right: 10px;
+        }
+      }
+
+      p {
+        padding-top: 12px;
+        line-height: 0;
+      }
+    }
+  }
+}

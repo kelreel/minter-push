@@ -1,6 +1,6 @@
 import "./HomeView.scss";
 
-import { Layout, Spin, Card } from "antd";
+import { Layout, Spin, Card, Modal } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,6 +24,13 @@ const Home: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
   const { t, i18n } = useTranslation();
 
+  function showAboutModal() {
+    Modal.info({
+      content: t("walletCreated.modalAbout"),
+      onOk() {}
+    });
+  }
+
   const [state, setState] = useState({
     created: false,
     address: "",
@@ -46,6 +53,7 @@ const Home: React.FC = observer(() => {
       link,
       password
     });
+    showAboutModal();
   };
 
   return (

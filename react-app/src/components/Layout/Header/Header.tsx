@@ -1,46 +1,60 @@
-import { Layout, Menu, Select } from 'antd';
-import React, { useContext } from 'react';
-import logo from '../../../assets/minter-logo-circle.svg';
-import './Header.scss';
-import { useTranslation } from 'react-i18next';
+import { Layout, Menu, Select, Modal } from "antd";
+import React, { useContext, useState } from "react";
+import logo from "../../../assets/minter-logo-circle.svg";
+import "./Header.scss";
+import { useTranslation } from "react-i18next";
 
-import uk from '../../../assets/uk.svg'
-import ru from '../../../assets/rus.webp'
-import { observer } from 'mobx-react-lite';
-import { AppStoreContext } from '../../../stores/appStore';
+import uk from "../../../assets/uk.svg";
+import ru from "../../../assets/rus.webp";
+import { observer } from "mobx-react-lite";
+import { AppStoreContext } from "../../../stores/appStore";
 
 const Header: React.FC = observer(() => {
-  const store = useContext(AppStoreContext)
+  const store = useContext(AppStoreContext);
+  const [state, setState] = useState({});
   const { SubMenu } = Menu;
   const { Header, Content, Sider } = Layout;
   const { Option } = Select;
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (language: string) => i18n.changeLanguage(language);
+  const changeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+    store.changeLocale(language);
+  }
 
   return (
     <Header className="header">
       <div className="logo">
         <img src={logo} style={{ width: "30px", height: "30px" }} />
-        {store.name && store.seed ? <h2>Hi, {store.name}!</h2> : <h2>Push</h2>}
+        {store.name && store.seed ? <h2>Hi, {store.name}</h2> : <h2>Push</h2>}
       </div>
       <div className="language">
         <Select
-          defaultValue={i18n.language}
+          defaultValue={i18n.language.substring(0, 2)}
           style={{ width: 100 }}
           onChange={(val: string) => changeLanguage(val)}
         >
           <Option value="en" className="lng">
             <img
               src={uk}
-              style={{ width: "30px", height: "20px", objectFit: "cover", marginRight: '10px' }}
+              style={{
+                width: "30px",
+                height: "20px",
+                objectFit: "cover",
+                marginRight: "10px"
+              }}
             />
             <span>EN</span>
           </Option>
           <Option className="lng" value="ru">
             <img
               src={ru}
-              style={{ width: "30px", height: "20px", objectFit: "cover", marginRight: '10px' }}
+              style={{
+                width: "30px",
+                height: "20px",
+                objectFit: "cover",
+                marginRight: "10px"
+              }}
             />
             <span>RU</span>
           </Option>
@@ -53,6 +67,14 @@ const Header: React.FC = observer(() => {
         >
           <Menu.Item key="1">Спец. предложение</Menu.Item>
         </Menu> */}
+      {/* <Modal
+        title="Modal"
+        visible={this.state.visible}
+        onOk={this.hideModal}
+        onCancel={this.hideModal}
+        okText="确认"
+        cancelText="取消"
+      ></Modal> */}
     </Header>
   );
 });
