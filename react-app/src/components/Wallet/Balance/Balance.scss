@@ -8,6 +8,15 @@
     width: 100%;
   }
 
+  .ant-alert {
+    margin-top: 10px; 
+    max-width: 80%;
+
+    .ant-alert-message {
+      margin-right: 10px;
+    }
+  }
+
   .from {
     text-transform: uppercase;
     color: rgba(141, 141, 141, 0.767);

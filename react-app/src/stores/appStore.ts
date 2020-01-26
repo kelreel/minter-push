@@ -3,7 +3,7 @@ import { createContext } from "react";
 import { getBalance } from "../services/createWaleltApi";
 import { getBalanceFromExplorer, getPrice } from "../services/walletApi";
 import HTTP from '../services/http'
-// @ts-ignore
+
 import { Minter, prepareLink } from "minter-js-sdk";
 import config from "../config";
 import { message } from "antd";

@@ -39,5 +39,26 @@
   },
   "balance": {
     "sentYou": "отправил вам"
-  }
+  },
+  "transfersTitle": "Вы можете отправить ваши монеты",
+  "transfersList": {
+    "anotherPerson": "Другому человеку",
+    "anotherWallet": "Другой кошелек",
+    "creditCard": "Кредитная карта",
+    "bitcoin": "Bitcoin кошелек"
+  },
+  "shopListTitle": "Интернет-магазины",
+  "shopList": {
+    "ozon": "Ozon",
+    "yandex": "Яндекс.Еда",
+    "perekrestok": "Перекресток",
+    "ds": "Дочки Сыночки"
+  },
+  "loyalityTitle": "Программы лояльности",
+  "loyalityList": {
+    "nut": "NUT. Loyalty for car lovers.",
+    "phone": "Пополнить телефон",
+    "hotel": "Отели"
+  },
+  "comingSoon": "Coming soon.."
 }

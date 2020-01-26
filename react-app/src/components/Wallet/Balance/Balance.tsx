@@ -1,4 +1,4 @@
-import { Layout, List, Skeleton } from "antd";
+import { Layout, List, Skeleton, Alert } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
@@ -66,6 +66,7 @@ const Balance: React.FC = observer(() => {
             />
           </div>
         )}
+        <Alert closable message={store.payload} type="success" />
       </div>
     );
   } else {

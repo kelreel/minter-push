@@ -3,13 +3,14 @@ import { useTranslation } from "react-i18next";
 import "./WalletCreated.scss";
 
 import { Tabs, Icon, message, Alert, Button, List, Modal } from "antd";
-import { shortAddress } from "../../services/utils";
+import { shortAddress, getDeepLink } from "../../services/utils";
 
 import copy from "copy-to-clipboard";
 import Loading from "../Layout/Loading";
 import Title from "antd/lib/skeleton/Title";
 import config from "../../config";
 import { getBalance } from "../../services/createWaleltApi";
+import { isMobile } from "react-device-detect";
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -60,7 +61,7 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
         setState({ ...state, balance: balances });
       }
     } catch (error) {
-      message.error('Error while updating balance')
+      message.error("Error while updating balance");
       console.log(error);
     }
   };
@@ -97,10 +98,10 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
             (parseFloat(state.balance[key]) / 1000000000000000000) * 100
           ) / 100
       });
-      res.sort((a,b) => {
-        if (a.value > b.value) return -1
+      res.sort((a, b) => {
+        if (a.value > b.value) return -1;
         else return 1;
-      })
+      });
     }
     return res;
   };
@@ -136,12 +137,26 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
                   size="small"
                   bordered
                   dataSource={getBalances()}
-                  renderItem={item => <List.Item><p>{item.coin} </p> <p>{item.value}</p></List.Item>}
+                  renderItem={item => (
+                    <List.Item>
+                      <p>{item.coin} </p> <p>{item.value}</p>
+                    </List.Item>
+                  )}
                 />
               </>
             )}
             {!state.balance && (
               <>
+                {isMobile &&
+                <a
+                  className="ant-btn ant-btn-primary"
+                  href={getDeepLink(address)}
+                  target="_blank"
+                  type="primary"
+                  style={{marginBottom: '15px'}}
+                >
+                  Pay via Link
+                </a>}
                 <h4>{t("walletCreated.waitingPayment")}</h4>
                 <Loading size="50px" />
               </>

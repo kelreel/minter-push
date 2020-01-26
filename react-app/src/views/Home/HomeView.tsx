@@ -9,6 +9,7 @@ import Loading from "../../components/Layout/Loading";
 import Title from "antd/lib/typography/Title";
 import SendForm from "../../components/SendForm/SendForm";
 import WalletCreated from "../../components/WalletCreated/WalletCreated";
+import moneyIcon from "../../assets/money_transfer.png";
 
 const { Content } = Layout;
 
@@ -26,7 +27,7 @@ const Home: React.FC = observer(() => {
 
   function showAboutModal() {
     Modal.info({
-      content: t("walletCreated.modalAbout"),
+      content: <>{t("walletCreated.modalAbout")}</>,
       onOk() {}
     });
   }

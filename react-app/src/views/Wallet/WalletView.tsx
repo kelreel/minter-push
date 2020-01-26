@@ -1,16 +1,19 @@
-import './WalletView.scss';
+import "./WalletView.scss";
 
-import { Card, Layout } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Card, Layout } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
-import Balance from '../../components/Wallet/Balance/Balance';
-import PasswordForm from '../../components/Wallet/PasswordForm/PasswordForm';
-import { getWallet } from '../../services/walletApi';
-import { AppStoreContext } from '../../stores/appStore';
-import history from '../../stores/history';
+import Balance from "../../components/Wallet/Balance/Balance";
+import PasswordForm from "../../components/Wallet/PasswordForm/PasswordForm";
+import { getWallet } from "../../services/walletApi";
+import { AppStoreContext } from "../../stores/appStore";
+import history from "../../stores/history";
+import Transfers from "../../components/Wallet/Transfers/Transfers";
+import Shops from "../../components/Wallet/Transfers/Shops";
+import Loyality from "../../components/Wallet/Transfers/Loyality";
 
 const { Content } = Layout;
 
@@ -48,7 +51,6 @@ const WalletView: React.FC = observer(() => {
       console.log(store.rubCourse);
     };
     init();
-    
   }, []);
 
   return (
@@ -60,6 +62,18 @@ const WalletView: React.FC = observer(() => {
           <Card className="balance">
             <Balance />
           </Card>
+          <div className="title">{t("transfersTitle")}</div>
+          <div className="transfers">
+            <Transfers />
+          </div>
+          <div className="title">{t("shopListTitle")}</div>
+          <div className="transfers">
+            <Shops />
+          </div>
+          <div className="title">{t("loyalityTitle")}</div>
+          <div className="transfers">
+            <Loyality />
+          </div>
         </>
       )}
     </Content>

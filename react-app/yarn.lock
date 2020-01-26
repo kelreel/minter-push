@@ -2299,7 +2299,7 @@ aws4@^1.8.0:
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.9.1.tgz#7e33d8f7d449b3f673cd72deb9abdc552dbe528e"
   integrity sha512-wMHVg2EOHaMRxbzgFJ9gtjOOCrI80OHLG14rxi28XwOW8ux6IiEbRCGGGqCtdAIg4FQCbW20k9RsT4y3gJlFug==
 
-axios@^0.19.0:
+axios@^0.19.0, axios@^0.19.1:
   version "0.19.2"
   resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
@@ -7349,25 +7349,25 @@ minipass@^3.0.0, minipass@^3.1.1:
   dependencies:
     yallist "^4.0.0"
 
-minter-js-sdk@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/minter-js-sdk/-/minter-js-sdk-0.23.0.tgz#2772ceaddeddd0d16f961c6316eb6e9b292c7af4"
-  integrity sha512-+jJMn9buZbH4L/Z2+Eo9cu+/8uSUVJLYs4MQSXNuydL4Tlr0ujU9u0EamaA3Ff4Dh2FCu/6UTdVRD0UlhKso9g==
+minter-js-sdk@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/minter-js-sdk/-/minter-js-sdk-0.26.1.tgz#89422eb8aaa8becc366e9392b1f8cea90392b13c"
+  integrity sha512-Df91FATEf32pls+A+5Ecq8SCxfu9m87rKBIlH6Lxx/OI8LoMJyR00tbqGq1rybvl+GFMdR5p41B2zfhaMrQC7g==
   dependencies:
-    axios "^0.19.0"
+    axios "^0.19.1"
     big.js "^5.2.2"
     bn.js "^4.11.8"
     buffer-es6 "github:shrpne/buffer-es6#fix-internal-is-buffer"
     elliptic "^6.5.2"
     ethereumjs-util "^6.2.0"
     ethjs-util "^0.1.6"
-    minterjs-tx "^7.1.0"
-    minterjs-util "^0.14.1"
+    minterjs-tx "^7.2.1"
+    minterjs-util "^0.15.0"
     parse-asn1 "github:shrpne/parse-asn1#update-asn1"
     rlp "^2.2.4"
-    secp256k1 "^3.7.1"
+    secp256k1 "^3.8.0"
 
-minterjs-tx@^7.0.0, minterjs-tx@^7.0.1, minterjs-tx@^7.1.0:
+minterjs-tx@^7.0.0, minterjs-tx@^7.1.1, minterjs-tx@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/minterjs-tx/-/minterjs-tx-7.2.1.tgz#9d881fdfb44d10e3ed7c63606beec91766b27831"
   integrity sha512-W/LJEqRkP70nA+T792/n79mnHLTdMvnE5mKDVVTvY49KSuYCDlMxGWWI35uE7qJpzI+rRrqsMk69500tSLRVlQ==
@@ -7393,18 +7393,18 @@ minterjs-util@0.14.0:
     minterjs-tx "^7.0.0"
     secp256k1 "^3.7.1"
 
-minterjs-util@^0.14.1:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/minterjs-util/-/minterjs-util-0.14.1.tgz#b77148693d8044ba792480c37b132a73f86617d8"
-  integrity sha512-yuVx0i+5MW61rFxq9mHwlf4rZ9Oy+VVQLfMvOkBo7gC3dTR3v9eOIL/CeYI2xz56lB0GXSR7jAqXbzTgKGYLrQ==
+minterjs-util@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/minterjs-util/-/minterjs-util-0.15.0.tgz#28f9a4757f4585f45756fc4e6826d89b7d25137a"
+  integrity sha512-Pq64ESjvEF3K/6ZlvAalwBpNf/osMQxCD9cMpo8XhHAdlGE9Mz4Yjyllk4jeyXAnNTlHnziFoOPZmgA3myNBDA==
   dependencies:
     big.js "^5.2.2"
     bn.js "^4.11.8"
     buffer-es6 "github:shrpne/buffer-es6#fix-internal-is-buffer"
-    elliptic "^6.5.1"
+    elliptic "^6.5.2"
     ethereumjs-util "^6.2.0"
     ethjs-util "^0.1.6"
-    minterjs-tx "^7.0.1"
+    minterjs-tx "^7.1.1"
     secp256k1 "^3.7.1"
 
 minterjs-wallet@^4.0.4:
@@ -10546,7 +10546,7 @@ scss-tokenizer@^0.2.3:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
 
-secp256k1@^3.0.1, secp256k1@^3.7.1:
+secp256k1@^3.0.1, secp256k1@^3.7.1, secp256k1@^3.8.0:
   version "3.8.0"
   resolved "https://registry.yarnpkg.com/secp256k1/-/secp256k1-3.8.0.tgz#28f59f4b01dbee9575f56a47034b7d2e3b3b352d"
   integrity sha512-k5ke5avRZbtl9Tqx/SA7CbY3NF6Ro+Sj9cZxezFzuBlLDmyqPiL8hJJ+EmzD8Ig4LUDByHJ3/iPOVoRixs/hmw==

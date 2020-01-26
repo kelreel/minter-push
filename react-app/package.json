@@ -19,7 +19,7 @@
     "i18next-browser-languagedetector": "^4.0.1",
     "i18next-xhr-backend": "^3.2.2",
     "js-base64": "^2.5.1",
-    "minter-js-sdk": "^0.23.0",
+    "minter-js-sdk": "^0.26.1",
     "minterjs-wallet": "^4.0.4",
     "mobx": "^5.15.3",
     "mobx-react": "^6.1.4",

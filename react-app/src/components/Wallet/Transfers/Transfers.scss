@@ -1,0 +1,35 @@
+.transfer-card {
+  border-radius: 10px;
+  max-width: 170px;
+  flex: 1;
+  transition: 0.5s;
+
+  &:hover {
+    background-color: #F8F8F8;
+    border: 3px solid #FC9E0F;
+    cursor: pointer;
+  }
+
+  .ant-card-body {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    h3 {
+      line-height: 1.3rem;
+      margin-top: 20px;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+
+    &:hover {
+      background-color: #fff;
+      border: 1px solid #e8e8e8;
+      cursor: not-allowed;
+    }
+  }
+}
