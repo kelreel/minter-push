@@ -99,5 +99,41 @@
     "payload": "Payload",
     "send": "Send",
     "cancel": "Cancel"
+  },
+    "ozon": {
+    "title": "Ozon",
+    "content1": "Это Mock! Ожидаем публичного API GIFT",
+    "content2": "Сертификаты Ozon.ru",
+    "select": "Choose Certificate",
+    "coin": "Coin for pay",
+    "send": "Next",
+    "cancel": "Cancel"
+  },
+    "yandexEda": {
+    "title": "Яндекс.Еда",
+    "content1": "Это Mock! Ожидаем публичного API GIFT",
+    "content2": "Сертификаты Яндекс.Еда",
+    "select": "Выберите сертификат",
+    "coin": "Монета для оплаты",
+    "send": "Далее",
+    "cancel": "Отмена"
+  },
+    "perekrestok": {
+    "title": "Перекресток",
+    "content1": "Это Mock! Ожидаем публичного API GIFT",
+    "content2": "Сертификаты Перекресток",
+    "select": "Выберите сертификат",
+    "coin": "Монета для оплаты",
+    "send": "Далее",
+    "cancel": "Отмена"
+  },
+  "ds": {
+    "title": "Дочки Сыночки",
+    "content1": "Это Mock! Ожидаем публичного API GIFT",
+    "content2": "Сертификаты Дочки Сыночки",
+    "select": "Выберите сертификат",
+    "coin": "Монета для оплаты",
+    "send": "Далее",
+    "cancel": "Отмена"
   }
 }
