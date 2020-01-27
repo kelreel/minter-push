@@ -1,0 +1,36 @@
+.another-wallet {
+  display: flex;
+  flex-flow: column wrap;
+
+  .send-form {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+
+    .coin-val {
+      display: flex;
+      flex-flow: row nowrap;
+      margin-bottom: 10px;
+
+      .coin {
+        display: flex;
+        flex-flow: column wrap;
+        flex: 1;
+        margin-right: 10px;
+      }
+
+      .amount {
+        display: flex;
+        flex-flow: column wrap;
+      }
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+}

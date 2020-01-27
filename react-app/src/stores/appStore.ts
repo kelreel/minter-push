@@ -52,6 +52,7 @@ class AppStore {
     }
   }
 
+
   @computed get totalInLocalCurrency() {
     return Math.round(
       (this.totalPrice * this.exchRate * 100) / 100
@@ -65,18 +66,20 @@ class AppStore {
     } else this.currency = "USD";
   }
 
+
   @action async checkBalance() {
     this.isLoading = true;
     try {
       let res = await getBalanceFromExplorer(
         // `Mxa0240b1070cb72f9600f4f4c3e427dd0dbc94cd6`
         // "Mx63f5509fe5347916c829664c6d92d09d87229998"
-        "Mxcf3b7531dd5ee878c5cc30ab198d30b427555555"
+        // "Mxcf3b7531dd5ee878c5cc30ab198d30b427555555"
+        this.address!
       );
       let balances = res?.data?.data?.balances;
-      let bipVal = 0;
 
       for (let item of balances) {
+      let bipVal = 0;
         if (item.coin === "BIP") {
           bipVal += parseFloat(item.amount as string);
           this.totalBipBalance += bipVal;

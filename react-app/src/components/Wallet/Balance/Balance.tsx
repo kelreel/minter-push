@@ -15,10 +15,14 @@ const Balance: React.FC = observer(() => {
   if (store.isLoading === false) {
     return (
       <div className="balance">
-        {store.fromName && (
+        {store.fromName ? (
           <div className="from">
             <span className="name">{store.fromName}</span>{" "}
             <span className="sended">{t("balance.sentYou")}</span>
+          </div>
+        ) : (
+          <div className="from">
+            <span className="sended">{t("balance.youReceive")}</span>
           </div>
         )}
         {store.balance.length === 1 && (
@@ -66,7 +70,9 @@ const Balance: React.FC = observer(() => {
             />
           </div>
         )}
-        <Alert closable message={store.payload} type="success" />
+        {store.payload && (
+          <Alert closable message={store.payload} type="success" />
+        )}
       </div>
     );
   } else {

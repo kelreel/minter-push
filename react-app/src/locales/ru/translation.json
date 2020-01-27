@@ -38,7 +38,8 @@
     "loginBtn": "Войти"
   },
   "balance": {
-    "sentYou": "отправил вам"
+    "sentYou": "отправил вам",
+    "youReceive": "вы получили"
   },
   "transfersTitle": "Вы можете отправить ваши монеты",
   "transfersList": {
@@ -60,5 +61,23 @@
     "phone": "Пополнить телефон",
     "hotel": "Отели"
   },
-  "comingSoon": "Coming soon.."
+  "comingSoon": "Coming soon..",
+  "anotherPerson": {
+    "title": "Перевод другому человеку",
+    "content1": "Перевод через Push.",
+    "content2": "Точно так же, как вы получили ссылку на эту страницу.",
+    "send": "Отправить",
+    "cancel": "Отмена"
+  },
+  "anotherWallet": {
+    "title": "Другой кошелек",
+    "content1": "Перевод на кошелек сети Минтер",
+    "address": "Адрес",
+    "coin": "Монета",
+    "value": "Количество",
+    "payload": "Payload",
+    "send": "Отправить",
+    "cancel": "Отмена",
+    "success": "Транзакция отправлена"
+  }
 }

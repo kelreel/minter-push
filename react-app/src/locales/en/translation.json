@@ -38,7 +38,8 @@
     "loginBtn": "Login"
   },
   "balance": {
-    "sentYou": "sent you"
+    "sentYou": "sent you",
+    "youReceive": "You received"
   },
   "transfersTitle": "You can transfer your coins to",
   "transfersList": {
@@ -60,5 +61,23 @@
     "phone": "Phone",
     "hotel": "Hotels"
   },
-  "comingSoon": "Coming soon.."
+  "comingSoon": "Coming soon..",
+  "anotherPerson": {
+    "title": "Transfer to another person",
+    "content1": "Transfer via Push.",
+    "content2": "Just like you got a link to this page.",
+    "send": "Send",
+    "cancel": "Cancel"
+  },
+  "anotherWallet": {
+    "title": "Another Wallet",
+    "content1": "Transfer to the Minter Network wallet",
+    "address": "Address",
+    "coin": "Coin",
+    "value": "Amount",
+    "payload": "Payload",
+    "send": "Send",
+    "cancel": "Cancel",
+    "success": "Transaction ok!"
+  } 
 }

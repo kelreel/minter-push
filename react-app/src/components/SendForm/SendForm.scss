@@ -4,6 +4,8 @@
   justify-content: flex-start;
 
   .field {
+    display: flex;
+    flex-flow: column wrap;
     margin-bottom: 16px;
   }
 
