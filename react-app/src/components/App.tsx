@@ -1,18 +1,18 @@
-import "./App.scss";
-import "antd/dist/antd.css";
+import './App.scss';
+import 'antd/dist/antd.css';
 
-import { Layout } from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext } from "react";
-import { Route, Router, Switch } from "react-router-dom";
+import { Layout } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Route, Router, Switch } from 'react-router-dom';
 
-import { AppStoreContext } from "../stores/appStore";
-import history from "../stores/history";
-import HomeView from "../views/Home/HomeView";
-import Footer from "./Layout/Footer/Footer";
-import Header from "./Layout/Header/Header";
-import WalletView from "../views/Wallet/WalletView";
-import { useTranslation } from "react-i18next";
+import { AppStoreContext } from '../stores/appStore';
+import history from '../stores/history';
+import HomeView from '../views/Home/HomeView';
+import WalletView from '../views/Wallet/WalletView';
+import Footer from './Layout/Footer/Footer';
+import Header from './Layout/Header/Header';
 
 const { Content } = Layout;
 

@@ -1,13 +1,14 @@
-import { Layout, Menu, Select, Modal } from "antd";
-import React, { useContext, useState } from "react";
-import logo from "../../../assets/minter-logo-circle.svg";
-import "./Header.scss";
-import { useTranslation } from "react-i18next";
+import './Header.scss';
 
-import uk from "../../../assets/uk.svg";
-import ru from "../../../assets/rus.webp";
-import { observer } from "mobx-react-lite";
-import { AppStoreContext } from "../../../stores/appStore";
+import { Layout, Menu, Select } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import logo from '../../../assets/minter-logo-circle.svg';
+import ru from '../../../assets/rus.webp';
+import uk from '../../../assets/uk.svg';
+import { AppStoreContext } from '../../../stores/appStore';
 
 const Header: React.FC = observer(() => {
   const store = useContext(AppStoreContext);

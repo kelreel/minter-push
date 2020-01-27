@@ -44,7 +44,7 @@
   "transfersTitle": "Вы можете отправить ваши монеты",
   "transfersList": {
     "anotherPerson": "Другому человеку",
-    "anotherWallet": "Другой кошелек",
+    "anotherWallet": "Minter кошелек",
     "creditCard": "Кредитная карта",
     "bitcoin": "Bitcoin кошелек"
   },
@@ -70,7 +70,7 @@
     "cancel": "Отмена"
   },
   "anotherWallet": {
-    "title": "Другой кошелек",
+    "title": "Minter кошелек",
     "content1": "Перевод на кошелек сети Минтер",
     "address": "Адрес",
     "coin": "Монета",
@@ -79,5 +79,25 @@
     "send": "Отправить",
     "cancel": "Отмена",
     "success": "Транзакция отправлена"
+  },
+  "creditCard": {
+    "title": "Кредитная карта.",
+    "content1": "Это Mock! Ожидаем публичного API 1001 или BipBanker",
+    "cardNumber": "Номер карты",
+    "coin": "Монета",
+    "value": "Количество",
+    "payload": "Payload",
+    "send": "Отправить",
+    "cancel": "Отмена"
+  },
+  "bitcoin": {
+    "title": "Обмен на Bitcoin",
+    "content1": "Это Mock! Ожидаем публичного API 1001 или BipBanker",
+    "btcWallet": "Адрес Btcoin",
+    "coin": "Монета",
+    "value": "Количество",
+    "payload": "Payload",
+    "send": "Отправить",
+    "cancel": "Отмена"
   }
 }

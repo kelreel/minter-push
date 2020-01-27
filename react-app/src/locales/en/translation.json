@@ -44,7 +44,7 @@
   "transfersTitle": "You can transfer your coins to",
   "transfersList": {
     "anotherPerson": "Another Person",
-    "anotherWallet": "Another Wallet",
+    "anotherWallet": "Minter Wallet",
     "creditCard": "Credit Card",
     "bitcoin": "Bitcoin Wallet"
   },
@@ -70,7 +70,7 @@
     "cancel": "Cancel"
   },
   "anotherWallet": {
-    "title": "Another Wallet",
+    "title": "Minter Wallet",
     "content1": "Transfer to the Minter Network wallet",
     "address": "Address",
     "coin": "Coin",
@@ -79,5 +79,25 @@
     "send": "Send",
     "cancel": "Cancel",
     "success": "Transaction ok!"
-  } 
+  },
+  "creditCard": {
+    "title": "Credit Card",
+    "content1": "Это Mock! Ожидаем публичного API 1001 или BipBanker",
+    "cardNumber": "Card Number",
+    "coin": "Coin",
+    "value": "Amount",
+    "payload": "Payload",
+    "send": "Send",
+    "cancel": "Cancel"
+  },
+  "bitcoin": {
+    "title": "Credit Card",
+    "content1": "Это Mock! Ожидаем публичного API 1001 или BipBanker",
+    "btcWallet": "Bitcoin Wallet",
+    "coin": "Coin",
+    "value": "Amount",
+    "payload": "Payload",
+    "send": "Send",
+    "cancel": "Cancel"
+  }
 }

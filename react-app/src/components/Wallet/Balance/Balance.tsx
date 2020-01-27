@@ -1,10 +1,12 @@
-import { Layout, List, Skeleton, Alert } from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext } from "react";
-import { useTranslation } from "react-i18next";
-import { AppStoreContext } from "../../../stores/appStore";
-import "./Balance.scss";
-import Loading from "../../Layout/Loading";
+import './Balance.scss';
+
+import { Alert, Layout, List } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { AppStoreContext } from '../../../stores/appStore';
+import Loading from '../../Layout/Loading';
 
 const { Content } = Layout;
 

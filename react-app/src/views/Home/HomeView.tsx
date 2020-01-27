@@ -1,15 +1,14 @@
-import "./HomeView.scss";
+import './HomeView.scss';
 
-import { Layout, Spin, Card, Modal } from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { AppStoreContext } from "../../stores/appStore";
-import Loading from "../../components/Layout/Loading";
-import Title from "antd/lib/typography/Title";
-import SendForm from "../../components/SendForm/SendForm";
-import WalletCreated from "../../components/WalletCreated/WalletCreated";
-import moneyIcon from "../../assets/money_transfer.png";
+import { Card, Layout, Modal } from 'antd';
+import Title from 'antd/lib/typography/Title';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import SendForm from '../../components/SendForm/SendForm';
+import WalletCreated from '../../components/WalletCreated/WalletCreated';
+import { AppStoreContext } from '../../stores/appStore';
 
 const { Content } = Layout;
 

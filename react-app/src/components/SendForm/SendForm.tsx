@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { Input, Icon, Form, Button, message } from "antd";
-import "./SendForm.scss";
-import { useTranslation } from "react-i18next";
-import { newWallet } from "../../services/createWaleltApi";
+import './SendForm.scss';
+
+import { Button, Icon, Input, message } from 'antd';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { newWallet } from '../../services/createWaleltApi';
 
 const SendForm: React.FC<{created: Function}> = ({created}) => {
   const { t, i18n } = useTranslation();

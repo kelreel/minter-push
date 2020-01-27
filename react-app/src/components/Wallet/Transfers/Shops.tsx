@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
-import { useTranslation } from "react-i18next";
-import { AppStoreContext } from "../../../stores/appStore";
-import { observer } from "mobx-react-lite";
-import { Card, Avatar } from "antd";
-import "./Transfers.scss";
+import './Transfers.scss';
 
-import dsLogo from '../../../assets/ds.png'
-import yandexLogo from '../../../assets/yandex.png'
-import perekrestokLogo from '../../../assets/perekrestok.png'
-import ozonLogo from '../../../assets/ozon.png'
+import { Avatar, Card } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import dsLogo from '../../../assets/ds.png';
+import ozonLogo from '../../../assets/ozon.png';
+import perekrestokLogo from '../../../assets/perekrestok.png';
+import yandexLogo from '../../../assets/yandex.png';
+import { AppStoreContext } from '../../../stores/appStore';
 
 const Shops: React.FC = observer(() => {
   const store = useContext(AppStoreContext);

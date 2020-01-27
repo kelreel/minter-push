@@ -1,16 +1,15 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next";
-import "./WalletCreated.scss";
+import './WalletCreated.scss';
 
-import { Tabs, Icon, message, Alert, Button, List, Modal } from "antd";
-import { shortAddress, getDeepLink } from "../../services/utils";
+import { Alert, Icon, List, message, Tabs } from 'antd';
+import copy from 'copy-to-clipboard';
+import React, { useEffect, useRef, useState } from 'react';
+import { isMobile } from 'react-device-detect';
+import { useTranslation } from 'react-i18next';
 
-import copy from "copy-to-clipboard";
-import Loading from "../Layout/Loading";
-import Title from "antd/lib/skeleton/Title";
-import config from "../../config";
-import { getBalance } from "../../services/createWaleltApi";
-import { isMobile } from "react-device-detect";
+import config from '../../config';
+import { getBalance } from '../../services/createWaleltApi';
+import { getDeepLink, shortAddress } from '../../services/utils';
+import Loading from '../Layout/Loading';
 
 var QRCodeCanvas = require("qrcode.react");
 

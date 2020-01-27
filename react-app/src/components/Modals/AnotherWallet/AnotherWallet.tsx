@@ -1,21 +1,13 @@
-import "./AnotherWallet.scss";
+import './AnotherWallet.scss';
 
-import {
-  Button,
-  Modal,
-  Select,
-  Input,
-  InputNumber,
-  message,
-  Result
-} from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Button, Input, InputNumber, message, Modal, Result, Select } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { AppStoreContext } from "../../../stores/appStore";
-import Loading from "../../Layout/Loading";
-import { sendTx } from "../../../services/tx";
+import { sendTx } from '../../../services/tx';
+import { AppStoreContext } from '../../../stores/appStore';
+import Loading from '../../Layout/Loading';
 
 const AnotherWallet: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -59,6 +51,8 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       setState({ ...state, visible: false, success: false, hash: '' });
     };
 
+    const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/igm
+
     return (
       <Modal
         destroyOnClose={true}
@@ -76,7 +70,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
               </Button>
               ,
               <Button
-                disabled={state.address.length !== 42}
+                disabled={!mxRegExp.test(state.address)}
                 key="submit"
                 type="primary"
                 loading={state.loading}

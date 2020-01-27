@@ -1,11 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useTranslation } from "react-i18next";
-import { AppStoreContext } from "../../../stores/appStore";
-import { observer } from "mobx-react-lite";
-import { useParams } from "react-router-dom";
-import { getWallet, getSeed } from "../../../services/walletApi";
-import { Input, Card, Button, message } from "antd";
-import './PasswordForm.scss'
+import './PasswordForm.scss';
+
+import { Button, Card, Input, message } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { getSeed } from '../../../services/walletApi';
+import { AppStoreContext } from '../../../stores/appStore';
 
 const PasswordForm: React.FC = observer(() => {
   const store = useContext(AppStoreContext);

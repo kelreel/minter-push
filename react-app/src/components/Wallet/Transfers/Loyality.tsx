@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
-import { useTranslation } from "react-i18next";
-import { AppStoreContext } from "../../../stores/appStore";
-import { observer } from "mobx-react-lite";
-import { Card, Avatar } from "antd";
-import "./Transfers.scss";
+import './Transfers.scss';
 
-import nutLogo from '../../../assets/nut.jpg'
-import popeLogo from '../../../assets/pope.jpg'
+import { Avatar, Card } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import nutLogo from '../../../assets/nut.jpg';
+import popeLogo from '../../../assets/pope.jpg';
+import { AppStoreContext } from '../../../stores/appStore';
 
 const Loyality: React.FC = observer(() => {
   const store = useContext(AppStoreContext);

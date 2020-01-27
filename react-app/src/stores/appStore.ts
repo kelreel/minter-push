@@ -1,13 +1,11 @@
-import { action, observable, get, computed } from "mobx";
-import { createContext } from "react";
-import { getBalance } from "../services/createWaleltApi";
-import { getBalanceFromExplorer, getPrice } from "../services/walletApi";
-import HTTP from '../services/http'
+import { message } from 'antd';
+import { Minter } from 'minter-js-sdk';
+import { action, computed, observable } from 'mobx';
+import { createContext } from 'react';
 
-import { Minter, prepareLink } from "minter-js-sdk";
-import config from "../config";
-import { message } from "antd";
-import { useTranslation } from "react-i18next";
+import config from '../config';
+import HTTP from '../services/http';
+import { getBalanceFromExplorer, getPrice } from '../services/walletApi';
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 

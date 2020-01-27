@@ -1,16 +1,22 @@
-import React, { useContext, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { AppStoreContext } from "../../../stores/appStore";
-import { observer } from "mobx-react-lite";
-import { Card, Avatar } from "antd";
-import "./Transfers.scss";
-import AnotherPerson from "../../Modals/AnotherPerson/AnotherPerson";
-import AnotherWallet from "../../Modals/AnotherWallet/AnotherWallet";
+import './Transfers.scss';
+
+import { Avatar, Card } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
+import { AppStoreContext } from '../../../stores/appStore';
+import AnotherPerson from '../../Modals/AnotherPerson/AnotherPerson';
+import AnotherWallet from '../../Modals/AnotherWallet/AnotherWallet';
+import Bitcoin from '../../Modals/Bitcoin/Bitcoin';
+import CreditCard from '../../Modals/CreditCard/CreditCard';
 
 const Transfers: React.FC = observer(() => {
   const [state, setState] = useState({
     anotherPerson: false,
-    anotherWallet: false
+    anotherWallet: false,
+    creditCard: false,
+    bitcoin: false
   });
   const store = useContext(AppStoreContext);
   const { t, i18n } = useTranslation();
@@ -50,7 +56,15 @@ const Transfers: React.FC = observer(() => {
         />
         <h3>{t("transfersList.anotherWallet")}</h3>
       </Card>
-      <Card className="transfer-card">
+      <Card
+        onClick={() => {
+          setState({ ...state, creditCard: false });
+          setTimeout(() => {
+            setState({ ...state, creditCard: true });
+          }, 0);
+        }}
+        className="transfer-card"
+      >
         <Avatar
           style={{ backgroundColor: "#0dc367" }}
           size={64}
@@ -58,7 +72,15 @@ const Transfers: React.FC = observer(() => {
         />
         <h3>{t("transfersList.creditCard")}</h3>
       </Card>
-      <Card className="transfer-card">
+      <Card
+        onClick={() => {
+          setState({ ...state, bitcoin: false });
+          setTimeout(() => {
+            setState({ ...state, bitcoin: true });
+          }, 0);
+        }}
+        className="transfer-card"
+      >
         <Avatar
           style={{ backgroundColor: "#f7931a" }}
           size={64}
@@ -70,6 +92,8 @@ const Transfers: React.FC = observer(() => {
       {/* MODALS */}
       <AnotherPerson visible={state.anotherPerson} />
       <AnotherWallet visible={state.anotherWallet} />
+      <CreditCard visible={state.creditCard} />
+      <Bitcoin visible={state.bitcoin} />
     </>
   );
 });

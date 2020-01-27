@@ -1,6 +1,8 @@
-import { Minter, prepareLink, TX_TYPE } from "minter-js-sdk";
-import config from "../config";
-import { message } from "antd";
+import { message } from 'antd';
+import { Minter, TX_TYPE } from 'minter-js-sdk';
+
+import config from '../config';
+
 const { walletFromMnemonic, isValidMnemonic } = require("minterjs-wallet");
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
