@@ -26,3 +26,7 @@ export const getBalanceFromExplorer = async (address: string) => {
 export const getPrice = async () => {
   return await HTTP.get(`${config.mbankAPI}/price`);
 }
+
+export const getScoring = async (address: string) => {
+  return await HTTP.get(`https://minter-scoring.space/api/${address}`);
+};

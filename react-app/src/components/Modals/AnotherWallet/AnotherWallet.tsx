@@ -1,13 +1,23 @@
-import './AnotherWallet.scss';
+import "./AnotherWallet.scss";
 
-import { Button, Input, InputNumber, message, Modal, Result, Select } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  Input,
+  InputNumber,
+  message,
+  Modal,
+  Result,
+  Select,
+  Icon
+} from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { sendTx } from '../../../services/tx';
-import { AppStoreContext } from '../../../stores/appStore';
-import Loading from '../../Layout/Loading';
+import { sendTx } from "../../../services/tx";
+import { AppStoreContext } from "../../../stores/appStore";
+import Loading from "../../Layout/Loading";
+import { getScoring } from "../../../services/walletApi";
 
 const AnotherWallet: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -21,12 +31,36 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       amount: 0,
       payload: "",
       success: false,
-      hash: ""
+      hash: "",
+      scoring: 0,
+      name: "",
+      loadScoring: false
     });
+
+    const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/gim;
 
     useEffect(() => {
       setState({ ...state, visible, coin: store.balance[0]?.coin });
     }, [visible]);
+
+    useEffect(() => {
+      if (state.address.length === 42) {
+        setState({ ...state, loadScoring: true });
+        getScoring(state.address)
+          .then(res => {
+            setState({
+              ...state,
+              scoring: res.data.score,
+              name: res.data?.profile?.title,
+              loadScoring: false
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            setState({ ...state, loadScoring: false, name: "", scoring: 0 });
+          });
+      }
+    }, [state.address]);
 
     const { t, i18n } = useTranslation();
 
@@ -48,10 +82,8 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
     };
 
     const handleCancel = () => {
-      setState({ ...state, visible: false, success: false, hash: '' });
+      setState({ ...state, visible: false, success: false, hash: "" });
     };
-
-    const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/igm
 
     return (
       <Modal
@@ -93,9 +125,6 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                     value={state.coin}
                     onChange={(val: string) => {
                       setState({ ...state, coin: val });
-                      setTimeout(() => {
-                        console.log(state.coin);
-                      }, 10);
                     }}
                   >
                     {store.balance.map(item => {
@@ -130,6 +159,21 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                     setState({ ...state, address: e.target.value })
                   }
                   maxLength={42}
+                  addonAfter={
+                    <>
+                      {state.address.length == 42 &&
+                        !state.loadScoring &&
+                        !state.name && (
+                          <span>Score: {state.scoring}/100</span>
+                        )}
+                      {state.address.length == 42 &&
+                        !state.loadScoring &&
+                        state.name !== "" && <span>{state.name}</span>}
+                      {state.address.length == 42 && state.loadScoring && (
+                        <Icon type="loading" />
+                      )}
+                    </>
+                  }
                 />
               </div>
               <div className="field">
