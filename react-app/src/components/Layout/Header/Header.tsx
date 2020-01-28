@@ -1,6 +1,6 @@
 import './Header.scss';
 
-import { Layout, Menu, Select } from 'antd';
+import { Layout, Menu, Select, Modal } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +9,7 @@ import logo from '../../../assets/minter-logo-circle.svg';
 import ru from '../../../assets/rus.webp';
 import uk from '../../../assets/uk.svg';
 import { AppStoreContext } from '../../../stores/appStore';
+import history from '../../../stores/history';
 
 const Header: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
@@ -23,9 +24,20 @@ const Header: React.FC = observer(() => {
     store.changeLocale(language);
   }
 
+  const showConfirm = () => {
+    if(window.location.pathname === '/')
+    Modal.confirm({
+      title: t('createNewWallet'),
+      onOk() {
+        window.location.reload();
+      },
+      onCancel() { }
+    });
+  }
+
   return (
     <Header className="header">
-      <div className="logo">
+      <div className="logo" onClick={showConfirm}>
         <img src={logo} style={{ width: "30px", height: "30px" }} />
         {store.name && store.seed ? <h2>Hi, {store.name}</h2> : <h2>Push</h2>}
       </div>

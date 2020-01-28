@@ -1,0 +1,15 @@
+.ant-layout-footer {
+  display: flex;
+  flex-flow: column wrap;
+
+  .actions {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    button + button {
+      margin-left: 10px;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-.ozon {
+.phone {
   display: flex;
   flex-flow: column wrap;
 
@@ -6,22 +6,6 @@
     display: flex;
     flex-flow: column wrap;
     justify-content: flex-start;
-
-    .price {
-      display: flex;
-      flex-flow: row nowrap;
-      justify-content: flex-end;
-
-      p {
-        &:first-of-type {
-          margin-right: 7px;
-        }
-
-        &:last-of-type {
-          font-weight: 600;
-        }
-      }
-    }
 
     .coin-val {
       display: flex;

@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import nutLogo from "../../../assets/nut.jpg";
 import popeLogo from "../../../assets/pope.jpg";
 import { AppStoreContext } from "../../../stores/appStore";
+import Phone from "../../Modals/Phone/Phone";
+import Nut from "../../Modals/Nut/Nut";
 
 const Loyality: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
@@ -35,13 +37,13 @@ const Loyality: React.FC = observer(() => {
           size={64}
           src={nutLogo}
         />
-        <h3>{t("loyalityList.nut")}</h3>
+        <h3 style={{padding: '0 5px'}}>{t("loyalityList.nut")}</h3>
       </Card>
       <Card
         onClick={() => {
-          setState({ ...state, nut: false });
+          setState({ ...state, phone: false });
           setTimeout(() => {
-            setState({ ...state, nut: true });
+            setState({ ...state, phone: true });
           }, 0);
         }}
         className="transfer-card"
@@ -50,13 +52,7 @@ const Loyality: React.FC = observer(() => {
         <h3>{t("loyalityList.phone")}</h3>
       </Card>
       <Card
-        onClick={() => {
-          setState({ ...state, nut: false });
-          setTimeout(() => {
-            setState({ ...state, nut: true });
-          }, 0);
-        }}
-        className="transfer-card"
+        className="transfer-card disabled"
       >
         <Avatar style={{ backgroundColor: "#0dc367" }} size={64} icon="tag" />
         <h3>{t("loyalityList.hotel")}</h3>
@@ -65,6 +61,8 @@ const Loyality: React.FC = observer(() => {
         <Avatar size={64} icon={"clock-circle"} src={popeLogo} />
         <h3>{t("comingSoon")}</h3>
       </Card>
+      <Phone visible={state.phone} />
+      <Nut visible={state.nut} />
     </>
   );
 });

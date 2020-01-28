@@ -12,6 +12,7 @@
     "password": "Password",
     "send": "Continue"
   },
+  "createNewWallet": "Do you want to create new wallet?",
   "walletCreated": {
     "pay": "Send coins",
     "payDesription": "",
@@ -100,32 +101,35 @@
     "send": "Send",
     "cancel": "Cancel"
   },
-    "ozon": {
+  "ozon": {
     "title": "Ozon",
     "content1": "Это Mock! Ожидаем публичного API GIFT",
     "content2": "Сертификаты Ozon.ru",
     "select": "Choose Certificate",
     "coin": "Coin for pay",
     "send": "Next",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "price": "To pay"
   },
-    "yandexEda": {
+  "yandexEda": {
     "title": "Яндекс.Еда",
     "content1": "Это Mock! Ожидаем публичного API GIFT",
     "content2": "Сертификаты Яндекс.Еда",
     "select": "Выберите сертификат",
     "coin": "Монета для оплаты",
     "send": "Далее",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "price": "To pay"
   },
-    "perekrestok": {
+  "perekrestok": {
     "title": "Перекресток",
     "content1": "Это Mock! Ожидаем публичного API GIFT",
     "content2": "Сертификаты Перекресток",
     "select": "Выберите сертификат",
     "coin": "Монета для оплаты",
     "send": "Далее",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "price": "To pay"
   },
   "ds": {
     "title": "Дочки Сыночки",
@@ -134,6 +138,29 @@
     "select": "Выберите сертификат",
     "coin": "Монета для оплаты",
     "send": "Далее",
-    "cancel": "Отмена"
+    "cancel": "Отмена",
+    "price": "To pay"
+  },
+  "nut": {
+    "title": "NUT",
+    "content1": "Это пример возможной интеграции. Ожидаем запуска проекта.",
+    "content2": "Програма лояльности для автолюбителей",
+    "loadCheck": "Загрузите чек с автозапраки или автосервиса и получите CashBack:Ы",
+    "yourLevel": "Ваш уровень:",
+    "coin": "Монета для оплаты",
+    "success": "Успешно",
+    "success2": "10 NUT зачислены на Ваш счет!",
+    "send": "Далее",
+    "cancel": "Закрыть"
+  },
+  "phone": {
+    "title": "Mobile Phone",
+    "content1": "Это Mock! Ожидаем запуска проекта и API",
+    "content2": "Mobile Phone Recharge",
+    "coin": "Coin",
+    "value": "Value",
+    "phoneNumber": "Phone Number",
+    "send": "Next",
+    "cancel": "Cancel"
   }
 }

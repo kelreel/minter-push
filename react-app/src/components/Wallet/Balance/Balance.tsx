@@ -27,6 +27,14 @@ const Balance: React.FC = observer(() => {
             <span className="sended">{t("balance.youReceive")}</span>
           </div>
         )}
+        {store.balance.length === 0 && (
+          <div className="one-coin">
+            <div className="price">
+              ~ 0{" "}
+              {store.currency}
+            </div>
+          </div>
+        )}
         {store.balance.length === 1 && (
           <div className="one-coin">
             <div className="value">

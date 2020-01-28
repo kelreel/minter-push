@@ -110,6 +110,43 @@ const YandexEda: React.FC<{ visible: boolean }> = observer(({ visible }) => {
                 })}
               </Select>
             </div>
+            {state.coin && state.certificate && (
+              <div className="price">
+                {state.coin === "BIP" ? (
+                  <>
+                    <p>{t("ozon.price")}</p>
+                    <p>
+                      {Math.round(
+                        (+state.certificate /
+                          store.rubCourse /
+                          store.bipPrice) *
+                          100
+                      ) / 100}{" "}
+                      {state.coin}
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <p>{t("ozon.price")}</p>
+                    <p>
+                      {Math.round(
+                        (+state.certificate /
+                          store.rubCourse /
+                          store.bipPrice) *
+                          // @ts-ignore
+                          (store.balance.find(x => x.coin === state.coin)
+                            ?.value /
+                            // @ts-ignore
+                            store.balance.find(x => x.coin === state.coin)
+                              ?.bip_value) *
+                          100
+                      ) / 100}{" "}
+                      {state.coin}
+                    </p>
+                  </>
+                )}
+              </div>
+            )}
           </div>
         </>
       )}

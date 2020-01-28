@@ -12,14 +12,6 @@ import { AppStoreContext } from '../../stores/appStore';
 
 const { Content } = Layout;
 
-type state = {
-  created: boolean;
-  address: string | null;
-  seed: string | null;
-  link: string | null;
-  password: string | null;
-};
-
 const Home: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
   const { t, i18n } = useTranslation();
@@ -60,7 +52,7 @@ const Home: React.FC = observer(() => {
     <Content className="home-view">
       {!state.created && (
         <Card>
-          <Title level={4}>{t("home.title")}</Title>
+          <Title level={4} style={{marginBottom: '20px'}}>{t("home.title")}</Title>
           <SendForm created={created} />
         </Card>
       )}

@@ -1,26 +1,19 @@
-.ozon {
+.nut {
   display: flex;
   flex-flow: column wrap;
 
   .send-form {
     display: flex;
     flex-flow: column wrap;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 
-    .price {
+    .avatar-uploader {
       display: flex;
       flex-flow: row nowrap;
-      justify-content: flex-end;
-
-      p {
-        &:first-of-type {
-          margin-right: 7px;
-        }
-
-        &:last-of-type {
-          font-weight: 600;
-        }
-      }
+      justify-content: center;
+      align-items: center;
     }
 
     .coin-val {
