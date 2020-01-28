@@ -1,4 +1,4 @@
-import "./AnotherWallet.scss";
+import "./TimeLoop.scss";
 
 import {
   Button,
@@ -14,12 +14,11 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { sendTx } from "../../../services/tx";
+import { sendTx, sendTimeTx } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { getScoring } from "../../../services/walletApi";
 
-const AnotherWallet: React.FC<{ visible: boolean }> = observer(
+const TimeLoop: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
     const store = useContext(AppStoreContext);
 
@@ -32,47 +31,20 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       payload: "",
       success: false,
       hash: "",
-      scoring: 0,
-      name: "",
-      loadScoring: false
+      secret: Math.random().toString(36).substring(2, 15)
     });
 
-    const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/gim;
 
     useEffect(() => {
       setState({ ...state, visible, coin: store.balance[0]?.coin });
     }, [visible]);
-
-    useEffect(() => {
-      if (state.address.length === 42) {
-        setState({ ...state, loadScoring: true });
-        getScoring(state.address)
-          .then(res => {
-            setState({
-              ...state,
-              scoring: res.data.score,
-              name: res.data?.profile?.title,
-              loadScoring: false
-            });
-          })
-          .catch(err => {
-            console.log(err);
-            setState({ ...state, loadScoring: false, name: "", scoring: 0 });
-          });
-      }
-    }, [state.address]);
 
     const { t, i18n } = useTranslation();
 
     const handleOk = async () => {
       setState({ ...state, loading: true });
       try {
-        let res = await sendTx(
-          state.address,
-          state.coin,
-          state.amount,
-          state.payload
-        );
+        let res = await sendTimeTx(state.coin, state.amount, state.secret)
         setState({ ...state, success: true, hash: res, loading: false });
       } catch (error) {
         console.log(error);
@@ -88,10 +60,10 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
     return (
       <Modal
         destroyOnClose={true}
-        wrapClassName="another-wallet"
+        wrapClassName="timeloop"
         maskClosable={false}
         visible={state.visible}
-        title={t("anotherWallet.title")}
+        title={t("timeloop.title")}
         onOk={handleOk}
         onCancel={handleCancel}
         afterClose={() => store.checkBalance()}
@@ -99,17 +71,17 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           !state.success && (
             <>
               <Button key="back" onClick={handleCancel}>
-                {t("anotherWallet.cancel")}
+                {t("timeloop.cancel")}
               </Button>
               ,
               <Button
-                disabled={!mxRegExp.test(state.address)}
+                disabled={state.amount === 0}
                 key="submit"
                 type="primary"
                 loading={state.loading}
                 onClick={handleOk}
               >
-                {t("anotherWallet.send")}
+                {t("timeloop.send")}
               </Button>
             </>
           )
@@ -117,11 +89,11 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       >
         {store.balance && !state.success && (
           <>
-            <p>{t("anotherWallet.content1")}</p>
+            <p>{t("timeloop.content1")}</p>
             <div className="send-form">
               <div className="coin-val">
                 <div className="coin">
-                  <label>{t("anotherWallet.coin")}</label>
+                  <label>{t("timeloop.coin")}</label>
                   <Select
                     value={state.coin}
                     onChange={(val: string) => {
@@ -138,7 +110,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   </Select>
                 </div>
                 <div className="amount">
-                  <label>{t("anotherWallet.value")}</label>
+                  <label>{t("timeloop.value")}</label>
                   <InputNumber
                     min={0}
                     max={
@@ -155,41 +127,6 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   />
                 </div>
               </div>
-              <div className="field">
-                <label>{t("anotherWallet.address")}</label>
-                <Input
-                  placeholder="Mx..."
-                  value={state.address}
-                  onChange={e =>
-                    setState({ ...state, address: e.target.value })
-                  }
-                  maxLength={42}
-                  addonAfter={
-                    <>
-                      {state.address.length == 42 &&
-                        !state.loadScoring &&
-                        !state.name && <span>Score: {state.scoring}/100</span>}
-                      {state.address.length == 42 &&
-                        !state.loadScoring &&
-                        state.name !== "" && <span>{state.name}</span>}
-                      {state.address.length == 42 && state.loadScoring && (
-                        <Icon type="loading" />
-                      )}
-                    </>
-                  }
-                />
-              </div>
-              <div className="field">
-                <label>{t("anotherWallet.payload")}</label>
-                <Input
-                  placeholder="You message here"
-                  value={state.payload}
-                  maxLength={120}
-                  onChange={e =>
-                    setState({ ...state, payload: e.target.value })
-                  }
-                />
-              </div>
             </div>
           </>
         )}
@@ -197,14 +134,13 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
         {state.success && (
           <Result
             status="success"
-            title={t("anotherWallet.success")}
+            subTitle={t("timeloop.success")}
             extra={
               <a
-                href={`https://minterscan.net/tx/${state.hash}`}
+                href={`https://timeloop.games/?gift=${state.secret}`}
                 target="_blank"
-                className="ant-btn ant-btn-primary"
               >
-                Explorer
+                {`https://timeloop.games/?gift=${state.secret}`}
               </a>
             }
           />
@@ -214,4 +150,4 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
   }
 );
 
-export default AnotherWallet;
+export default TimeLoop;

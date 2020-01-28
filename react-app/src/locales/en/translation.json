@@ -60,7 +60,8 @@
   "loyalityList": {
     "nut": "NUT. Loyalty for car lovers.",
     "phone": "Phone",
-    "hotel": "Hotels"
+    "hotel": "Hotels",
+    "timeloop": "TimeLoop"
   },
   "comingSoon": "Coming soon..",
   "anotherPerson": {
@@ -162,5 +163,16 @@
     "phoneNumber": "Phone Number",
     "send": "Next",
     "cancel": "Cancel"
+  },
+  "timeloop": {
+    "title": "TimeLoop",
+    "content1": "Replenish accounts in the game",
+    "address": "Address",
+    "coin": "Coin",
+    "value": "Amount",
+    "payload": "Payload",
+    "send": "Send",
+    "cancel": "Cancel",
+    "success": "Transaction ok! Go the link to get TIME."
   }
 }

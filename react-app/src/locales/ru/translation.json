@@ -60,7 +60,8 @@
   "loyalityList": {
     "nut": "NUT. Loyalty for car lovers.",
     "phone": "Пополнить телефон",
-    "hotel": "Отели"
+    "hotel": "Отели",
+    "timeloop": "TimeLoop"
   },
   "comingSoon": "Coming soon..",
   "anotherPerson": {
@@ -162,5 +163,15 @@
     "coin": "Монета для оплаты",
     "send": "Далее",
     "cancel": "Отмена"
+  },
+  "timeloop": {
+    "title": "TimeLoop",
+    "content1": "Пополнение счета в игре. Монеты будут автоматически конвертированы в TIME.",
+    "coin": "Монета",
+    "value": "Количество",
+    "payload": "Payload",
+    "send": "Продолжить",
+    "cancel": "Отмена",
+    "success": "Успешно! Перейдите по ссылке ниже для зачисления TIME на игровой счет."
   }
 }
