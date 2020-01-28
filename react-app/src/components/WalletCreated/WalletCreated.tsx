@@ -1,15 +1,15 @@
-import './WalletCreated.scss';
+import "./WalletCreated.scss";
 
-import { Alert, Icon, List, message, Tabs } from 'antd';
-import copy from 'copy-to-clipboard';
-import React, { useEffect, useRef, useState } from 'react';
-import { isMobile } from 'react-device-detect';
-import { useTranslation } from 'react-i18next';
+import { Alert, Icon, List, message, Tabs } from "antd";
+import copy from "copy-to-clipboard";
+import React, { useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
+import { useTranslation } from "react-i18next";
 
-import config from '../../config';
-import { getBalance } from '../../services/createWaleltApi';
-import { getDeepLink, shortAddress } from '../../services/utils';
-import Loading from '../Layout/Loading';
+import config from "../../config";
+import { getBalance } from "../../services/createWaleltApi";
+import { getDeepLink, shortAddress } from "../../services/utils";
+import Loading from "../Layout/Loading";
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -54,7 +54,7 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
       let res = await getBalance(address);
       if (
         parseInt(res?.data?.result?.balance?.bip) > 0 ||
-        Object.keys(res?.data?.result?.balance).length > 1
+        Object.keys(res?.data?.result?.balance).length >= 1
       ) {
         let balances = res?.data?.result?.balance;
         setState({ ...state, balance: balances });
@@ -129,7 +129,7 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
             <Icon type="copy" />
           </div>
           <div className="balance">
-            {state.balance && (
+            {state.balance && ((+state.balance.BIP) !== 0 || getBalances().length > 1) && (
               <>
                 <h4>{t("walletCreated.currentBalance")}</h4>
                 <List
@@ -138,24 +138,32 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
                   dataSource={getBalances()}
                   renderItem={item => (
                     <List.Item>
-                      <p>{item.coin} </p> <p>{item.value}</p>
+                      <div className="left">
+                        <img
+                          src={`${config.avatarCoinURL}${item.coin}`}
+                          alt=""
+                        />
+                        <p>{item.coin} </p>
+                      </div>{" "}
+                      <p>{item.value}</p>
                     </List.Item>
                   )}
                 />
               </>
             )}
-            {!state.balance && (
+            {(!state.balance || ((+state?.balance?.BIP) === 0 && getBalances().length === 1)) && (
               <>
-                {isMobile &&
-                <a
-                  className="ant-btn ant-btn-primary"
-                  href={getDeepLink(address)}
-                  target="_blank"
-                  type="primary"
-                  style={{marginBottom: '15px'}}
-                >
-                  Pay via Link
-                </a>}
+                {isMobile && (
+                  <a
+                    className="ant-btn ant-btn-primary"
+                    href={getDeepLink(address)}
+                    target="_blank"
+                    type="primary"
+                    style={{ marginBottom: "15px" }}
+                  >
+                    DeepLink (100 BIP)
+                  </a>
+                )}
                 <h4>{t("walletCreated.waitingPayment")}</h4>
                 <Loading size="50px" />
               </>

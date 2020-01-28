@@ -12,6 +12,7 @@ import {
 } from "../utils/wallet";
 
 import bcrypt from "bcryptjs";
+import { createWalletLimit, getWalletLimit } from "./limit";
 
 const router = express.Router();
 
@@ -55,7 +56,10 @@ router.get("/wallet/:id", async (req, res) => {
   try {
     let wallet = await Wallet.findOne({ link: req.params.id });
 
-    if (!wallet) res.status(404).send("Wallet not found!");
+    if (!wallet) {
+      res.status(404).send("Wallet not found!");
+      return;
+    }
 
     wallet.status = WalletStatus.opened;
     wallet.save;

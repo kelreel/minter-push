@@ -26,7 +26,10 @@ const walletSchema = new mongoose.Schema(
     fromName: String,
     name: String,
     payload: String,
-    link: String,
+    link: {
+      type: String,
+      index: true,
+    },
     status: {
       type: String,
       enum: ["waiting", "created", "opened", "touched"],

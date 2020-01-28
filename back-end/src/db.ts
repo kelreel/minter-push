@@ -1,6 +1,8 @@
 import mongoose from 'mongoose';
 import config from './config';
 
+mongoose.set("useCreateIndex", true);
+
 mongoose.connect(config.db, {
   useNewUrlParser: true,
   useFindAndModify: false,

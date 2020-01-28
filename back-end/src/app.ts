@@ -5,6 +5,8 @@ import helmet from 'helmet';
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 import ApiController from './controllers/ApiController'
 
 app.use(helmet())

@@ -142,7 +142,8 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                     min={0}
                     max={
                       store.balance.find(x => x.coin === state.coin)?.value! -
-                        0.1 || 0
+                        0.1 > 0 ? store.balance.find(x => x.coin === state.coin)?.value! -
+                        0.1 : 0
                     }
                     value={state.amount}
                     // @ts-ignore

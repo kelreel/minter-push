@@ -26,17 +26,34 @@
   border-radius: 10px;
 
   .ant-list {
-    width: 220px;
+    min-width: 220px;
+    width: 100%;
   }
 
   .ant-list-item {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+    color: rgb(27, 27, 27);
+
+    .left {
+      display: flex;
+      flex-flow: row nowrap;
+    }
 
     p {
       padding-top: 12px;
       line-height: 0;
+    }
+
+    img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      user-select: none;
+      -webkit-user-drag: none;
+      margin-right: 10px;
+      margin-left: -5px;
     }
   }
 
@@ -57,6 +74,8 @@
     flex-flow: column wrap;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    font-weight: 600;
   }
 
   .click-copy {
