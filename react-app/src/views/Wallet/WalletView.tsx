@@ -1,19 +1,19 @@
-import './WalletView.scss';
+import "./WalletView.scss";
 
-import { Card, Layout } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { Card, Layout } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 
-import Balance from '../../components/Wallet/Balance/Balance';
-import PasswordForm from '../../components/Wallet/PasswordForm/PasswordForm';
-import Loyality from '../../components/Wallet/Transfers/Loyality';
-import Shops from '../../components/Wallet/Transfers/Shops';
-import Transfers from '../../components/Wallet/Transfers/Transfers';
-import { getWallet } from '../../services/walletApi';
-import { AppStoreContext } from '../../stores/appStore';
-import history from '../../stores/history';
+import Balance from "../../components/Wallet/Balance/Balance";
+import PasswordForm from "../../components/Wallet/PasswordForm/PasswordForm";
+import Loyality from "../../components/Wallet/Transfers/Loyality";
+import Shops from "../../components/Wallet/Transfers/Shops";
+import Transfers from "../../components/Wallet/Transfers/Transfers";
+import { getWallet } from "../../services/walletApi";
+import { AppStoreContext } from "../../stores/appStore";
+import history from "../../stores/history";
 
 const { Content } = Layout;
 
@@ -55,9 +55,8 @@ const WalletView: React.FC = observer(() => {
 
   return (
     <Content className="wallet-view">
-      {store.isPassword ? (
-        <PasswordForm />
-      ) : (
+      {store.isPassword && <PasswordForm />}
+      {store.seed && !store.isPassword && (
         <>
           <Card className="balance">
             <Balance />
