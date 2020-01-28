@@ -1,14 +1,14 @@
-import './HomeView.scss';
+import "./HomeView.scss";
 
-import { Card, Layout, Modal } from 'antd';
-import Title from 'antd/lib/typography/Title';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Card, Layout, Modal } from "antd";
+import Title from "antd/lib/typography/Title";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import SendForm from '../../components/SendForm/SendForm';
-import WalletCreated from '../../components/WalletCreated/WalletCreated';
-import { AppStoreContext } from '../../stores/appStore';
+import SendForm from "../../components/SendForm/SendForm";
+import WalletCreated from "../../components/WalletCreated/WalletCreated";
+import { AppStoreContext } from "../../stores/appStore";
 
 const { Content } = Layout;
 
@@ -51,10 +51,14 @@ const Home: React.FC = observer(() => {
   return (
     <Content className="home-view">
       {!state.created && (
-        <Card>
-          <Title level={4} style={{marginBottom: '20px'}}>{t("home.title")}</Title>
-          <SendForm created={created} />
-        </Card>
+        <>
+          <Title level={3} style={{ marginBottom: "20px" }}>
+            {t("home.title")}
+          </Title>
+          <Card>
+            <SendForm created={created} />
+          </Card>
+        </>
       )}
       {state.created && (
         <WalletCreated

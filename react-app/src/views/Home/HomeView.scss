@@ -9,18 +9,19 @@
 
 .home-view {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: column wrap;
   margin: 24px;
   align-items: center;
   justify-content: center;
 
-  h4 {
+  h3 {
     text-align: center;
   }
 
   .ant-card {
     margin-right: 10px;
     margin-top: 10px;
+    color: rgb(44, 44, 44);
 
     .ant-card-body {
       display: flex;
@@ -47,8 +48,8 @@
   }
 
   @media screen and (max-width: 600px) {
-    h4 {
-      font-size: 18px;
+    h3 {
+      font-size: 1.2rem;
     }
   }
 }
