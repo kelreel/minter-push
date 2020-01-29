@@ -1,6 +1,7 @@
 import { Layout, Button, Modal, Collapse } from "antd";
 import React, { useState } from "react";
 import "./Footer.scss";
+import { getWalletsHistory } from "../../../services/walletsHistory";
 
 const Footer: React.FC = () => {
   const { Footer } = Layout;
@@ -8,28 +9,40 @@ const Footer: React.FC = () => {
 
   const [state, setState] = useState({
     faq: false,
-    forDev: false
+    forDev: false,
+    history: false
   });
 
   const handleCancel = () => {
-    setState({ faq: false, forDev: false });
+    setState({ faq: false, forDev: false, history: false });
   };
 
   return (
     <Footer style={{ textAlign: "center" }}>
       {window.location.pathname === "/" && (
         <div className="actions">
+          {getWalletsHistory() && (
+            <Button
+              onClick={() => setState({ ...state, history: true })}
+              icon="calendar"
+              size="small"
+            >
+              History
+            </Button>
+          )}
           <Button
             onClick={() => setState({ ...state, faq: true })}
             icon="question-circle"
+            size="small"
           >
             FAQ
           </Button>
           <Button
             onClick={() => setState({ ...state, forDev: true })}
             icon="setting"
+            size="small"
           >
-            For Developers
+            API
           </Button>
         </div>
       )}
@@ -88,10 +101,53 @@ const Footer: React.FC = () => {
           </Button>
         }
       >
-        <p>У нас открытое API, и вы можете его использовать для массовых рассылок.</p>
-        <p>Так же вы можете добавить свой сервис (например, как NUT). Для этого сделайте Pull Request, либо свяжитесь с @bipAngel.</p>
+        <p>
+          У нас открытое API, и вы можете его использовать для массовых
+          рассылок.
+        </p>
+        <p>
+          Так же вы можете добавить свой сервис (например, как NUT). Для этого
+          сделайте Pull Request, либо свяжитесь с @bipAngel.
+        </p>
 
-        <a href="https://github.com/kanitelk/minter-push" target="_blank">Документация на GitHub</a>
+        <a href="https://github.com/kanitelk/minter-push" target="_blank">
+          Документация на GitHub
+        </a>
+      </Modal>
+
+      {/* HISTORY */}
+      <Modal
+        title="История"
+        visible={state.history}
+        onCancel={handleCancel}
+        footer={
+          <Button key="back" onClick={handleCancel}>
+            Закрыть
+          </Button>
+        }
+      >
+        <Collapse accordion>
+          {getWalletsHistory()?.map(item => (
+            <Panel
+              header={`${item.address} (${new Date(
+                item.date
+              ).toLocaleDateString()})`}
+              key={item.date}
+            >
+              <p>Address: {item.address}</p>
+              <p>
+                Link:{" "}
+                <a
+                  href={`https://push.scoring.mn/${item.link}`}
+                  target="_blank"
+                >
+                  {item.link}
+                </a>
+              </p>
+              <p>Seed: {item.seed}</p>
+            </Panel>
+          ))}
+        </Collapse>
       </Modal>
     </Footer>
   );

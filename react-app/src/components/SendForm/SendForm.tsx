@@ -66,7 +66,7 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
       <div className="field">
         <label>{t("sendForm.message")}</label>
         <TextArea
-          rows={3}
+          rows={2}
           maxLength={1200}
           placeholder={t("sendForm.payloadPlaceholder")}
           onChange={e => setState({ ...state, message: e.target.value })}

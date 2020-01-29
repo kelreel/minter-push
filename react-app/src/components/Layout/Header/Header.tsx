@@ -1,6 +1,6 @@
 import './Header.scss';
 
-import { Layout, Menu, Select, Modal } from 'antd';
+import { Layout, Modal, Select } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -9,13 +9,10 @@ import logo from '../../../assets/minter-logo-circle.svg';
 import ru from '../../../assets/rus.webp';
 import uk from '../../../assets/uk.svg';
 import { AppStoreContext } from '../../../stores/appStore';
-import history from '../../../stores/history';
 
 const Header: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
-  const [state, setState] = useState({});
-  const { SubMenu } = Menu;
-  const { Header, Content, Sider } = Layout;
+  const { Header,} = Layout;
   const { Option } = Select;
   const { t, i18n } = useTranslation();
 
@@ -73,21 +70,6 @@ const Header: React.FC = observer(() => {
           </Option>
         </Select>
       </div>
-      {/* <Menu
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          style={{ lineHeight: "64px" }}
-        >
-          <Menu.Item key="1">Спец. предложение</Menu.Item>
-        </Menu> */}
-      {/* <Modal
-        title="Modal"
-        visible={this.state.visible}
-        onOk={this.hideModal}
-        onCancel={this.hideModal}
-        okText="确认"
-        cancelText="取消"
-      ></Modal> */}
     </Header>
   );
 });

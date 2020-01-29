@@ -1,6 +1,8 @@
+const env = process.env.NODE_ENV;
+
 const config = {
   domain: "https://push.scoring.mn/",
-  apiURL: "https://push.minter-scoring.space/api",
+  apiURL: env === 'production' ? "https://push.minter-scoring.space/api" : 'http://localhost:3003/api',
   nodeURL: "https://api.minter.stakeholder.space/",
   avatarURL: "https://my.apps.minter.network/api/v1/avatar/by/address/",
   avatarCoinURL: 'https://my.minter.network/api/v1/avatar/by/coin/',

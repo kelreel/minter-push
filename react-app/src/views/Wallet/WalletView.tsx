@@ -65,13 +65,13 @@ const WalletView: React.FC = observer(() => {
           <div className="transfers">
             <Transfers />
           </div>
-          <div className="title">{t("shopListTitle")}</div>
-          <div className="transfers">
-            <Shops />
-          </div>
           <div className="title">{t("loyalityTitle")}</div>
           <div className="transfers">
             <Loyality />
+          </div>
+          <div className="title">{t("shopListTitle")}</div>
+          <div className="transfers">
+            <Shops />
           </div>
         </>
       )}
