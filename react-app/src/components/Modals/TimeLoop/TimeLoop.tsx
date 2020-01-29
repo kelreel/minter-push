@@ -66,7 +66,6 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(
         title={t("timeloop.title")}
         onOk={handleOk}
         onCancel={handleCancel}
-        afterClose={() => store.checkBalance()}
         footer={
           !state.success && (
             <>

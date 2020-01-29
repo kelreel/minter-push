@@ -48,12 +48,15 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
         setState({ ...state, loadScoring: true });
         getScoring(state.address)
           .then(res => {
-            setState({
-              ...state,
-              scoring: res.data.score,
-              name: res.data?.profile?.title,
-              loadScoring: false
-            });
+            if (state.hash.length > 1) return;
+            if (!state.success) {
+              setState({
+                ...state,
+                scoring: res.data.score,
+                name: res.data?.profile?.title,
+                loadScoring: false
+              });
+            }
           })
           .catch(err => {
             console.log(err);
@@ -73,7 +76,13 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           state.amount,
           state.payload
         );
-        setState({ ...state, success: true, hash: res, loading: false });
+        setState({
+          ...state,
+          success: true,
+          hash: res,
+          loading: false,
+          loadScoring: false
+        });
       } catch (error) {
         console.log(error);
         setState({ ...state, loading: false });
@@ -94,7 +103,10 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
         title={t("anotherWallet.title")}
         onOk={handleOk}
         onCancel={handleCancel}
-        afterClose={() => store.checkBalance()}
+        afterClose={() => {
+          store.checkBalance();
+          setState({ ...state, loadScoring: false, loading: false });
+        }}
         footer={
           !state.success && (
             <>
@@ -173,7 +185,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                         !state.loadScoring &&
                         state.name !== "" && <span>{state.name}</span>}
                       {state.address.length == 42 && state.loadScoring && (
-                        <Icon type="loading" />
+                        <>Loading Info... <Icon type="loading" /></>
                       )}
                     </>
                   }
