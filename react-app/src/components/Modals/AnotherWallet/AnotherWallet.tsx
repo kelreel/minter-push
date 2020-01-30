@@ -18,7 +18,7 @@ import { useDebounce } from "use-debounce";
 import { sendTx, estimateCommission } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { getScoring } from "../../../services/walletApi";
+import { getProfile } from "../../../services/walletApi";
 
 const AnotherWallet: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -33,9 +33,9 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       payload: "",
       success: false,
       hash: "",
-      scoring: 0,
-      name: "",
-      loadScoring: false,
+      profile: "",
+      loadProfile: false,
+      profileImg: "",
       maxVal: 0
     });
 
@@ -48,24 +48,25 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
     }, [visible]);
 
     useEffect(() => {
+      const r = async () => {
+        console.log("***");
+        setState({ ...state, loadProfile: true });
+        try {
+          let res = await getProfile(state.address);
+          if (!state.success) {
+            setState({
+              ...state,
+              profile: res.data?.title,
+              profileImg: res.data?.icon,
+              loadProfile: false
+            });
+          }
+        } catch (error) {
+          setState({...state, profile: '', profileImg: '', loadProfile: false})
+        }
+      };
       if (state.address.length === 42) {
-        setState({ ...state, loadScoring: true });
-        getScoring(state.address)
-          .then(res => {
-            if (state.hash.length > 1) return;
-            if (!state.success) {
-              setState({
-                ...state,
-                scoring: res.data.score,
-                name: res.data?.profile?.title,
-                loadScoring: false
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-            setState({ ...state, loadScoring: false, name: "", scoring: 0 });
-          });
+        r();
       }
     }, [state.address]);
 
@@ -76,11 +77,22 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           state.amount,
           state.payload
         );
-        let max = Math.floor(
-              (store.balance.find(x => x.coin === state.coin)?.value! - r - 0.001) * 100
-            ) / 100 > 0 ? Math.floor(
-              (store.balance.find(x => x.coin === state.coin)?.value! - r - 0.001) * 100
-            ) / 100 : 0
+        let max =
+          Math.floor(
+            (store.balance.find(x => x.coin === state.coin)?.value! -
+              r -
+              0.001) *
+              100
+          ) /
+            100 >
+          0
+            ? Math.floor(
+                (store.balance.find(x => x.coin === state.coin)?.value! -
+                  r -
+                  0.001) *
+                  100
+              ) / 100
+            : 0;
         setState({
           ...state,
           maxVal: max
@@ -106,8 +118,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           ...state,
           success: true,
           hash: res,
-          loading: false,
-          loadScoring: false
+          loading: false
         });
       } catch (error) {
         console.log(error);
@@ -131,7 +142,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
         onCancel={handleCancel}
         afterClose={() => {
           store.checkBalance();
-          setState({ ...state, loadScoring: false, loading: false });
+          setState({ ...state, loading: false });
         }}
         footer={
           !state.success && (
@@ -141,7 +152,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
               </Button>
               ,
               <Button
-                disabled={!mxRegExp.test(state.address)}
+                disabled={!mxRegExp.test(state.address) || state.loadProfile}
                 key="submit"
                 type="primary"
                 loading={state.loading}
@@ -202,12 +213,12 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   addonAfter={
                     <>
                       {state.address.length == 42 &&
-                        !state.loadScoring &&
-                        !state.name && <span>Score: {state.scoring}/100</span>}
+                        !state.loadProfile &&
+                        state.profile !== "" && <span>{state.profile} <img src={state.profileImg} /></span>}
                       {state.address.length == 42 &&
-                        !state.loadScoring &&
-                        state.name !== "" && <span>{state.name}</span>}
-                      {state.address.length == 42 && state.loadScoring && (
+                        !state.loadProfile &&
+                        state.profile === "" && <span>Anonim</span>}
+                      {state.address.length == 42 && state.loadProfile && (
                         <>
                           Loading Info... <Icon type="loading" />
                         </>

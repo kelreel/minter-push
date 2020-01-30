@@ -1,26 +1,12 @@
-import "./Nut.scss";
+import './Nut.scss';
 
-import {
-  Button,
-  Input,
-  InputNumber,
-  message,
-  Modal,
-  Result,
-  Select,
-  Icon,
-  Alert,
-  Upload,
-  Tag
-} from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Alert, Button, Icon, message, Modal, Result, Tag, Upload } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { sendTx } from "../../../services/tx";
-import { AppStoreContext } from "../../../stores/appStore";
-import Loading from "../../Layout/Loading";
-import { getScoring } from "../../../services/walletApi";
+import { AppStoreContext } from '../../../stores/appStore';
+import Loading from '../../Layout/Loading';
 
 function getBase64(img: any, callback: any) {
   const reader = new FileReader();

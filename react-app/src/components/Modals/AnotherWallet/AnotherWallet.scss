@@ -25,6 +25,21 @@
       }
     }
 
+    .ant-input-group-addon {
+      cursor: default;
+      span {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        align-items: center;
+      }
+      img {
+        width: 15px;
+        height: 15px;
+        margin-left: 5px;
+      }
+    }
+
     .field {
       margin-bottom: 16px;
     }
