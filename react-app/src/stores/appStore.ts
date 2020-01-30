@@ -52,9 +52,7 @@ class AppStore {
 
 
   @computed get totalInLocalCurrency() {
-    return Math.round(
-      (this.totalPrice * this.exchRate * 100) / 100
-    )
+    return Math.round(this.totalPrice * this.exchRate * 100) / 100;
   }
 
   @action changeLocale = (language: string) => {
@@ -106,6 +104,11 @@ class AppStore {
         delete item["amount"];
       }
       let r = balances.filter((x: { value: number }) => x.value !== 0);
+      r = r.filter((x: { value: number, bip_value: number }) => (x.bip_value > 0.1 || r.length === 1));
+      r = r.sort((a: { bip_value: number; }, b: { bip_value: number; }) => {
+        if (a.bip_value > b.bip_value) return -1
+        else return 1
+      })
       this.balance = r;
       console.log(r);
     } catch (error) {

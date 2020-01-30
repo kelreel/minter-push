@@ -29,8 +29,18 @@
       margin-bottom: 16px;
     }
 
-    textarea {
-      resize: none;
+    .total {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+
+      .red {
+        color: red;
+      }
+
+      p {
+        margin-left: 5px;
+      }
     }
   }
 }

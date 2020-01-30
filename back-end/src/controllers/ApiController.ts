@@ -1,18 +1,9 @@
-import express from "express";
-import bodyParser from "body-parser";
-import config from "../config";
+import bcrypt from 'bcryptjs';
+import bodyParser from 'body-parser';
+import express from 'express';
 
-import db from "../db";
-
-import { Wallet, WalletStatus } from "../models/WalletSchema";
-import {
-  getAddressFromSeed,
-  generateSeed,
-  createWallet
-} from "../utils/wallet";
-
-import bcrypt from "bcryptjs";
-import { createWalletLimit, getWalletLimit } from "./limit";
+import { Wallet, WalletStatus } from '../models/WalletSchema';
+import { createWallet } from '../utils/wallet';
 
 const router = express.Router();
 
@@ -28,6 +19,11 @@ router.use(
 
 router.get("/", async (req, res) => {
   res.send("Api works");
+});
+
+router.get("/count", async (req, res) => {
+  let r = await Wallet.estimatedDocumentCount()
+  res.send({count: r})
 });
 
 // Create new wallet

@@ -161,8 +161,12 @@
     "coin": "Coin",
     "value": "Value",
     "phoneNumber": "Phone Number",
+    "max": "Max amount:",
+    "total": "will be credited:",
     "send": "Next",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "success": "Success",
+    "successSub": "Money will be credited soon"
   },
   "timeloop": {
     "title": "TimeLoop",

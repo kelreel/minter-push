@@ -13,8 +13,9 @@ import {
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useDebounce } from "use-debounce";
 
-import { sendTx } from "../../../services/tx";
+import { sendTx, estimateCommission } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
 import { getScoring } from "../../../services/walletApi";
@@ -34,8 +35,11 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       hash: "",
       scoring: 0,
       name: "",
-      loadScoring: false
+      loadScoring: false,
+      maxVal: 0
     });
+
+    const [payload] = useDebounce(state.payload, 500);
 
     const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/gim;
 
@@ -64,6 +68,28 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           });
       }
     }, [state.address]);
+
+    useEffect(() => {
+      const setMax = async () => {
+        let r = await estimateCommission(
+          state.coin,
+          state.amount,
+          state.payload
+        );
+        let max = Math.floor(
+              (store.balance.find(x => x.coin === state.coin)?.value! - r - 0.001) * 100
+            ) / 100 > 0 ? Math.floor(
+              (store.balance.find(x => x.coin === state.coin)?.value! - r - 0.001) * 100
+            ) / 100 : 0
+        setState({
+          ...state,
+          maxVal: max
+        });
+      };
+      if (state.coin && state.coin !== "") {
+        setMax();
+      }
+    }, [state.coin, payload]);
 
     const { t, i18n } = useTranslation();
 
@@ -137,7 +163,11 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   <Select
                     value={state.coin}
                     onChange={(val: string) => {
-                      setState({ ...state, coin: val });
+                      setState({
+                        ...state,
+                        coin: val,
+                        amount: store.balance.find(x => x.coin === val)?.value!
+                      });
                     }}
                   >
                     {store.balance.map(item => {
@@ -153,17 +183,10 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   <label>{t("anotherWallet.value")}</label>
                   <InputNumber
                     min={0}
-                    max={
-                      store.balance.find(x => x.coin === state.coin)?.value! -
-                        0.1 >
-                      0
-                        ? store.balance.find(x => x.coin === state.coin)
-                            ?.value! - 0.1
-                        : 0
-                    }
+                    max={state.maxVal}
                     value={state.amount}
-                    // @ts-ignore
-                    onChange={val => setState({ ...state, amount: val })}
+                    autoFocus
+                    onChange={val => setState({ ...state, amount: val! })}
                   />
                 </div>
               </div>
@@ -185,7 +208,9 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                         !state.loadScoring &&
                         state.name !== "" && <span>{state.name}</span>}
                       {state.address.length == 42 && state.loadScoring && (
-                        <>Loading Info... <Icon type="loading" /></>
+                        <>
+                          Loading Info... <Icon type="loading" />
+                        </>
                       )}
                     </>
                   }

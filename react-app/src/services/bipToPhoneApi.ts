@@ -1,14 +1,18 @@
 import HTTP from "./http";
 import config from "../config";
+import qs from "qs";
 
 export const getInfo = async () => {
-  // let data = new FormData();
-  // data.set('curs', '1');
-  // data.set('key1', config.bipToPhoneKey);
-  // return await HTTP({
-  //   method: "post",
-  //   url: "https://biptophone.ru/api.php",
-  //   data,
-  //   headers: { "Content-Type": "multipart/form-data" }
-  // });
-}
+  return await HTTP.get(`${config.apiURL}/phone/getInfo`);
+};
+
+export const getKeyword = async (phone: string) => {
+  const data = { phone };
+  return await HTTP.post(
+    `${config.apiURL}/phone/getKeyword`,
+    qs.stringify(data),
+    {
+      headers: { "content-type": "application/x-www-form-urlencoded" }
+    }
+  );
+};

@@ -37,7 +37,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
     "sha.js": "^2.4.11",
-    "typescript": "^3.7.3"
+    "typescript": "^3.7.3",
+    "use-debounce": "^3.3.0"
   },
   "scripts": {
     "start": "react-scripts start ",

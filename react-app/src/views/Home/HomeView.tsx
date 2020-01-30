@@ -12,6 +12,7 @@ import { AppStoreContext } from "../../stores/appStore";
 import { getWalletsHistory, addToHistory } from "../../services/walletsHistory";
 import { getInfo } from "../../services/bipToPhoneApi";
 import config from "../../config";
+import { estimateCommission } from "../../services/tx";
 
 const { Content } = Layout;
 
@@ -25,10 +26,7 @@ const Home: React.FC = observer(() => {
       onOk() {}
     });
   }
-
-  console.log(config.apiURL)
   
-
   const [state, setState] = useState({
     created: false,
     address: "",
