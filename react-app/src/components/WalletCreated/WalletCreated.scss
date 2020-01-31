@@ -109,6 +109,14 @@
       align-self: center;
       margin-bottom: 20px;
     }
+
+    .share-buttons {
+      display: flex;
+      width: 100%;
+      flex-flow: row nowrap;
+      justify-content: space-evenly;
+      align-items: center;
+    }
   }
 }
 

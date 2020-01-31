@@ -11,6 +11,8 @@ import { getBalance } from "../../services/createWaleltApi";
 import { getDeepLink, shortAddress } from "../../services/utils";
 import Loading from "../Layout/Loading";
 
+import * as Share from 'react-share'
+
 var QRCodeCanvas = require("qrcode.react");
 
 type props = {
@@ -129,29 +131,31 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
             <Icon type="copy" />
           </div>
           <div className="balance">
-            {state.balance && ((+state.balance.BIP) !== 0 || getBalances().length > 1) && (
-              <>
-                <h4>{t("walletCreated.currentBalance")}</h4>
-                <List
-                  size="small"
-                  bordered
-                  dataSource={getBalances()}
-                  renderItem={item => (
-                    <List.Item>
-                      <div className="left">
-                        <img
-                          src={`${config.avatarCoinURL}${item.coin}`}
-                          alt=""
-                        />
-                        <p>{item.coin} </p>
-                      </div>{" "}
-                      <p>{item.value}</p>
-                    </List.Item>
-                  )}
-                />
-              </>
-            )}
-            {(!state.balance || ((+state?.balance?.BIP) === 0 && getBalances().length === 1)) && (
+            {state.balance &&
+              (+state.balance.BIP !== 0 || getBalances().length > 1) && (
+                <>
+                  <h4>{t("walletCreated.currentBalance")}</h4>
+                  <List
+                    size="small"
+                    bordered
+                    dataSource={getBalances()}
+                    renderItem={item => (
+                      <List.Item>
+                        <div className="left">
+                          <img
+                            src={`${config.avatarCoinURL}${item.coin}`}
+                            alt=""
+                          />
+                          <p>{item.coin} </p>
+                        </div>{" "}
+                        <p>{item.value}</p>
+                      </List.Item>
+                    )}
+                  />
+                </>
+              )}
+            {(!state.balance ||
+              (+state?.balance?.BIP === 0 && getBalances().length === 1)) && (
               <>
                 {isMobile && (
                   <a
@@ -206,6 +210,26 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
                 </div>
               </>
             )}
+            <div className="share-buttons">
+              {/* <Share.FacebookMessengerShareButton appId={'123'} url={`${config.domain}${link}`}>
+                <Share.FacebookMessengerIcon />
+              </Share.FacebookMessengerShareButton> */}
+              <Share.VKShareButton url={`${config.domain}${link}`}>
+                <Share.VKIcon size={32} round={true} />
+              </Share.VKShareButton>
+              <Share.TelegramShareButton url={`${config.domain}${link}`}>
+                <Share.TelegramIcon size={32} round={true} />
+              </Share.TelegramShareButton>
+              <Share.ViberShareButton url={`${config.domain}${link}`}>
+                <Share.ViberIcon size={32} round={true} />
+              </Share.ViberShareButton>
+              <Share.WhatsappShareButton url={`${config.domain}${link}`}>
+                <Share.WhatsappIcon size={32} round={true} />
+              </Share.WhatsappShareButton>
+              <Share.EmailShareButton url={`${config.domain}${link}`}>
+                <Share.EmailIcon size={32} round={true} />
+              </Share.EmailShareButton>
+            </div>
           </div>
         </TabPane>
       </Tabs>

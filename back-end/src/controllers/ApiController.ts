@@ -4,6 +4,7 @@ import express from 'express';
 
 import { Wallet, WalletStatus } from '../models/WalletSchema';
 import { createWallet } from '../utils/wallet';
+import { sendEmail } from '../utils/email';
 
 const router = express.Router();
 
@@ -106,6 +107,23 @@ router.post("/getSeed", async (req, res) => {
     } else {
       res.send({ seed: wallet.seed });
     }
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+});
+
+// Send e-mail
+router.post("/email", async (req, res) => {
+  let pass = req.body.pass;
+  let email = req.body.email;
+  let name = req.body.name;
+  let link = req.body.link;
+  let fromName = req.body.fromName;
+
+  try {
+    let result = await sendEmail(email, link, name, fromName, pass)
+    res.send({status: 'ok'});
   } catch (error) {
     res.status(400).send(error);
     console.log(error);

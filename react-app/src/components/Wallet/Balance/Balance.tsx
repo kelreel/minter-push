@@ -1,6 +1,6 @@
 import './Balance.scss';
 
-import { Alert, Layout, List } from 'antd';
+import { Alert, Layout, List, Icon, Button } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React, { useContext } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -29,10 +29,7 @@ const Balance: React.FC = observer(() => {
         )}
         {store.balance.length === 0 && (
           <div className="one-coin">
-            <div className="price">
-              ~ 0{" "}
-              {store.currency}
-            </div>
+            <div className="price">~ 0 {store.currency}</div>
           </div>
         )}
         {store.balance.length === 1 && (
@@ -83,6 +80,12 @@ const Balance: React.FC = observer(() => {
         {store.payload && (
           <Alert closable message={store.payload} type="success" />
         )}
+        {/* <Icon className="down" style={{ marginTop: "20px" }} type="down" /> */}
+        {/* <Button
+          shape="circle"
+          icon="arrow-down"
+          style={{ marginTop: "20px" }}
+        /> */}
       </div>
     );
   } else {

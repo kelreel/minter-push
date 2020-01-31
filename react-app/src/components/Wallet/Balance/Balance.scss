@@ -6,10 +6,11 @@
 
   .ant-card-body {
     width: 100%;
+    padding: 24px 24px 5px 24px;
   }
 
   .ant-alert {
-    margin-top: 10px; 
+    margin-top: 10px;
     max-width: 80%;
 
     .ant-alert-message {
@@ -90,4 +91,14 @@
       }
     }
   }
+
+  // .down {
+  //   padding: 10px;
+  //   border-radius: 50%;
+  //   transition: 0.5s;
+  //   &:hover {
+  //     transform: scale(1.1);
+  //     background-color: rgb(224, 224, 224);
+  //   }
+  // }
 }

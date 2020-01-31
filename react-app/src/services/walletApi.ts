@@ -6,6 +6,10 @@ export const getWallet = async (address: string) => {
   return await HTTP.get(`${config.apiURL}/wallet/${address}`);
 };
 
+export const getWalletCount = async () => {
+  return await HTTP.get(`${config.apiURL}/count`);
+};
+
 export const getSeed = async (
   pass: string,
   link: string
