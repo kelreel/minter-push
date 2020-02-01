@@ -101,7 +101,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       if (state.coin && state.coin !== "") {
         setMax();
       }
-    }, [state.coin, payload]);
+    }, [state.coin, payload, store.balance]);
 
     const { t, i18n } = useTranslation();
 
@@ -120,6 +120,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           hash: res,
           loading: false
         });
+        store.checkBalancesTimeout(5000);
       } catch (error) {
         console.log(error);
         setState({ ...state, loading: false });
@@ -141,7 +142,6 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
         onOk={handleOk}
         onCancel={handleCancel}
         afterClose={() => {
-          store.checkBalance();
           setState({ ...state, loading: false });
         }}
         footer={

@@ -1,14 +1,22 @@
-import './Phone.scss';
+import "./Phone.scss";
 
-import { Button, Input, InputNumber, message, Modal, Result, Select } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import {
+  Button,
+  Input,
+  InputNumber,
+  message,
+  Modal,
+  Result,
+  Select
+} from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { getInfo, getKeyword } from '../../../services/bipToPhoneApi';
-import { estimateCommission, sendMobileTx } from '../../../services/tx';
-import { AppStoreContext } from '../../../stores/appStore';
-import Loading from '../../Layout/Loading';
+import { getInfo, getKeyword } from "../../../services/bipToPhoneApi";
+import { estimateCommission, sendMobileTx } from "../../../services/tx";
+import { AppStoreContext } from "../../../stores/appStore";
+import Loading from "../../Layout/Loading";
 
 const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
@@ -25,7 +33,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     maxLimit: 0,
     bipPrice: 0,
     maxVal: 0,
-    loadInfo: true
+    loadInfo: false
   });
 
   useEffect(() => {
@@ -33,9 +41,10 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
       ...state,
       visible,
       coin: store.balance[0]?.coin,
-      amount: store.balance[0]?.value,
+      amount: store.balance[0]?.value
     });
     const f = async () => {
+      setState({...state, loadInfo: true})
       let r = await getInfo();
       setState({
         ...state,
@@ -45,8 +54,12 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         bipPrice: r.data.RUB,
         loadInfo: false
       });
+      console.log(r.data.RUB);
+      
     };
-    f();
+    if (visible) {
+      f();
+    }
   }, [visible]);
 
   useEffect(() => {
@@ -57,22 +70,20 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         "a".repeat(12)
       );
 
-              let max =
-                Math.floor(
-                  (store.balance.find(x => x.coin === state.coin)?.value! -
-                    r -
-                    0.001) *
-                    100
-                ) /
-                  100 >
-                0
-                  ? Math.floor(
-                      (store.balance.find(x => x.coin === state.coin)?.value! -
-                        r -
-                        0.001) *
-                        100
-                    ) / 100
-                  : 0;
+      let max =
+        Math.floor(
+          (store.balance.find(x => x.coin === state.coin)?.value! - r - 0.001) *
+            100
+        ) /
+          100 >
+        0
+          ? Math.floor(
+              (store.balance.find(x => x.coin === state.coin)?.value! -
+                r -
+                0.001) *
+                100
+            ) / 100
+          : 0;
       setState({
         ...state,
         maxVal: max
@@ -81,7 +92,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     if (state.coin && state.coin !== "") {
       setMax();
     }
-  }, [state.coin]);
+  }, [state.coin, store.balance]);
 
   const { t, i18n } = useTranslation();
 
@@ -95,8 +106,10 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         keyword.data.keyword
       );
       setState({ ...state, success: true, hash: tx });
+      store.checkBalancesTimeout(5000);
     } catch (error) {
-      message.error(error);
+      message.error(error.message);
+      setState({ ...state, loading: false });
     }
   };
 
@@ -183,8 +196,9 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
                 maxLength={12}
               />
             </div>
-            {/* {state.loadInfo ? 'load' : 'not load'} */}
-            {!state.loadInfo && (
+            {/* {state.loadInfo ? 'load' : 'not load'}
+            {state.bipPrice} */}
+            {!state.loadInfo && (state.amount > 0) && (
               <div className="total">
                 {t("phone.total")}{" "}
                 {state.coin === "BIP" && (

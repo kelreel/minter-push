@@ -1,22 +1,13 @@
-import "./TimeLoop.scss";
+import './TimeLoop.scss';
 
-import {
-  Button,
-  Input,
-  InputNumber,
-  message,
-  Modal,
-  Result,
-  Select,
-  Icon
-} from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Button, InputNumber, message, Modal, Result, Select } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { sendTx, sendTimeTx, estimateCommission } from "../../../services/tx";
-import { AppStoreContext } from "../../../stores/appStore";
-import Loading from "../../Layout/Loading";
+import { estimateCommission, sendTimeTx } from '../../../services/tx';
+import { AppStoreContext } from '../../../stores/appStore';
+import Loading from '../../Layout/Loading';
 
 const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
@@ -74,7 +65,7 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     if (state.coin && state.coin !== "") {
       setMax();
     }
-  }, [state.coin]);
+  }, [state.coin, store.balance]);
 
   const { t, i18n } = useTranslation();
 
@@ -83,6 +74,7 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     try {
       let res = await sendTimeTx(state.coin, state.amount, state.secret);
       setState({ ...state, success: true, hash: res, loading: false });
+      store.checkBalancesTimeout(5000);
     } catch (error) {
       console.log(error);
       setState({ ...state, loading: false });

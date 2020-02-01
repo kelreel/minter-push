@@ -119,6 +119,12 @@ class AppStore {
     }
   }
 
+  @action checkBalancesTimeout(timeout: number = 5000) {
+    setTimeout(() => {
+      this.checkBalance();
+    }, timeout);
+  }
+
   @action async getRubCourse() {
     try {
       let res = await HTTP.get(`https://www.cbr-xml-daily.ru/daily_json.js`);

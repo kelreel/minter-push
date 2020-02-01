@@ -14,6 +14,7 @@ import Transfers from "../../components/Wallet/Transfers/Transfers";
 import { getWallet } from "../../services/walletApi";
 import { AppStoreContext } from "../../stores/appStore";
 import history from "../../stores/history";
+import Loading from "../../components/Layout/Loading";
 
 const { Content } = Layout;
 
@@ -23,11 +24,13 @@ const WalletView: React.FC = observer(() => {
   const { link } = useParams();
 
   const [state, setState] = useState({
-    password: false
+    password: false,
+    isLoading: true
   });
 
   useEffect(() => {
     const init = async () => {
+      setState({ ...state, isLoading: true });
       try {
         let res = await getWallet(link as string);
         store.setWalletWithoutSeed(
@@ -46,6 +49,7 @@ const WalletView: React.FC = observer(() => {
       }
 
       await store.checkBalance();
+      setState({ ...state, isLoading: false });
       await store.getTotalPrice();
       await store.getRubCourse();
       console.log(store.rubCourse);
@@ -55,24 +59,30 @@ const WalletView: React.FC = observer(() => {
 
   return (
     <Content className="wallet-view">
-      {store.isPassword && <PasswordForm />}
-      {store.seed && !store.isPassword && (
+      {state.isLoading ? (
+        <Loading />
+      ) : (
         <>
-          <Card className="balance">
-            <Balance />
-          </Card>
-          <div className="title">{t("transfersTitle")}</div>
-          <div className="transfers">
-            <Transfers />
-          </div>
-          <div className="title">{t("loyalityTitle")}</div>
-          <div className="transfers">
-            <Loyality />
-          </div>
-          <div className="title">{t("shopListTitle")}</div>
-          <div className="transfers">
-            <Shops />
-          </div>
+          {store.isPassword && <PasswordForm />}
+          {store.seed && !store.isPassword && (
+            <>
+              <Card className="balance">
+                <Balance />
+              </Card>
+              <div className="title">{t("transfersTitle")}</div>
+              <div className="transfers">
+                <Transfers />
+              </div>
+              <div className="title">{t("loyalityTitle")}</div>
+              <div className="transfers">
+                <Loyality />
+              </div>
+              <div className="title">{t("shopListTitle")}</div>
+              <div className="transfers">
+                <Shops />
+              </div>
+            </>
+          )}
         </>
       )}
     </Content>
