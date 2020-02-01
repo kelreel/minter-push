@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { AppStoreContext } from '../../../stores/appStore';
 import Loading from '../../Layout/Loading';
+import { estimateCommission } from '../../../services/tx';
 
 const Bitcoin: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -20,12 +21,47 @@ const Bitcoin: React.FC<{ visible: boolean }> = observer(
       amount: 0,
       payload: "",
       success: false,
-      hash: ""
+      hash: "",
+      maxVal: 0
     });
 
     useEffect(() => {
       setState({ ...state, visible, coin: store.balance[0]?.coin });
     }, [visible]);
+
+
+        useEffect(() => {
+          const setMax = async () => {
+            let r = await estimateCommission(
+              state.coin,
+              state.amount,
+              state.payload
+            );
+            let max =
+              Math.floor(
+                (store.balance.find(x => x.coin === state.coin)?.value! -
+                  r -
+                  0.001) *
+                  100
+              ) /
+                100 >
+              0
+                ? Math.floor(
+                    (store.balance.find(x => x.coin === state.coin)?.value! -
+                      r -
+                      0.001) *
+                      100
+                  ) / 100
+                : 0;
+            setState({
+              ...state,
+              maxVal: max
+            });
+          };
+          if (state.coin && state.coin !== "") {
+            setMax();
+          }
+        }, [state.coin, store.balance]);
 
     const { t, i18n } = useTranslation();
 
@@ -101,13 +137,10 @@ const Bitcoin: React.FC<{ visible: boolean }> = observer(
                   <label>{t("bitcoin.value")}</label>
                   <InputNumber
                     min={0}
-                    max={
-                      store.balance.find(x => x.coin === state.coin)?.value! -
-                        0.1 || 0
-                    }
+                    max={state.maxVal}
                     value={state.amount}
-                    // @ts-ignore
-                    onChange={val => setState({ ...state, amount: val })}
+                    autoFocus
+                    onChange={val => setState({ ...state, amount: val! })}
                   />
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import './SendForm.scss';
 
-import { Button, Icon, Input, message } from 'antd';
+import { Button, Icon, Input, message, Switch } from 'antd';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -44,7 +44,9 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
         />
       </div>
       <div className="field">
-        <label>{t("sendForm.sender")}</label>
+        <label>
+          {t("sendForm.sender")}
+        </label>
         <Input
           prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
           size="large"
@@ -72,7 +74,12 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
           onChange={e => setState({ ...state, message: e.target.value })}
         />
       </div>
-      <Button loading={state.loading} onClick={send} type="primary" size="large">
+      <Button
+        loading={state.loading}
+        onClick={send}
+        type="primary"
+        size="large"
+      >
         {t("sendForm.send")}
       </Button>
     </div>

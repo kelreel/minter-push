@@ -106,7 +106,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         keyword.data.keyword
       );
       setState({ ...state, success: true, hash: tx });
-      store.checkBalancesTimeout(5000);
+      store.checkBalancesTimeout(6500);
     } catch (error) {
       message.error(error.message);
       setState({ ...state, loading: false });
@@ -116,6 +116,8 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const handleCancel = () => {
     setState({ ...state, visible: false, success: false, hash: "" });
   };
+
+  const phoneRegexp = /^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/;
 
   return (
     <Modal
@@ -134,7 +136,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             </Button>
             ,
             <Button
-              disabled={state.phone.length < 11}
+              disabled={!phoneRegexp.test(state.phone)}
               key="submit"
               type="primary"
               loading={state.loading}

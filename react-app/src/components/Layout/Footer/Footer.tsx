@@ -1,7 +1,10 @@
-import { Layout, Button, Modal, Collapse } from "antd";
+import { Layout, Button, Modal, Collapse, Icon, message } from "antd";
 import React, { useState } from "react";
 import "./Footer.scss";
+import copy from 'copy-to-clipboard'
 import { getWalletsHistory } from "../../../services/walletsHistory";
+import config from "../../../config";
+import { shortAddress } from "../../../services/utils";
 
 const Footer: React.FC = () => {
   const { Footer } = Layout;
@@ -21,7 +24,6 @@ const Footer: React.FC = () => {
     <Footer style={{ textAlign: "center" }}>
       {window.location.pathname === "/" && (
         <div className="actions">
-          {getWalletsHistory() && (
             <Button
               onClick={() => setState({ ...state, history: true })}
               icon="calendar"
@@ -29,7 +31,6 @@ const Footer: React.FC = () => {
             >
               History
             </Button>
-          )}
           <Button
             onClick={() => setState({ ...state, faq: true })}
             icon="question-circle"
@@ -102,8 +103,8 @@ const Footer: React.FC = () => {
         }
       >
         <p>
-          У нас открытое API, и вы можете его использовать для массовых
-          рассылок.
+          У нас открытое API, и вы можете его использовать для массовых платежей
+          и генерировать неограниченное количество адресов.
         </p>
         <p>
           Так же вы можете добавить свой сервис (например, как NUT). Для этого
@@ -126,28 +127,38 @@ const Footer: React.FC = () => {
           </Button>
         }
       >
-        <Collapse accordion>
+        {getWalletsHistory() ? <Collapse accordion>
           {getWalletsHistory()?.map(item => (
             <Panel
-              header={`${item.address} (${new Date(
+              header={`${shortAddress(item.address)} (${new Date(
                 item.date
               ).toLocaleDateString()})`}
               key={item.date}
             >
-              <p>Address: {item.address}</p>
               <p>
-                Link:{" "}
+                <strong>Address: </strong>
+                {item.address}
+              </p>
+              <p>
+                <strong>Link: </strong>
                 <a
                   href={`https://push.scoring.mn/${item.link}`}
                   target="_blank"
                 >
                   {item.link}
                 </a>
+                <Icon style={{marginLeft: '3px', cursor: 'pointer'}} onClick={() => {
+                  copy(`${config.domain}${item.link}`)
+                  message.success('Link copied')
+                }} type="copy" />
               </p>
-              <p>Seed: {item.seed}</p>
+              <p>
+                <strong>Seed: </strong>
+                {item.seed}
+              </p>
             </Panel>
           ))}
-        </Collapse>
+        </Collapse> : <p>Вы еще не отправляли переводов с этого устройства.</p>}
       </Modal>
     </Footer>
   );

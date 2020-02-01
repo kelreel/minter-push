@@ -2,6 +2,7 @@ import { generateWallet, walletFromMnemonic } from "minterjs-wallet";
 import { Wallet, WalletStatus } from "../models/WalletSchema";
 import bcrypt from 'bcryptjs'
 import uuid from 'uuid/v4'
+import short from 'short-uuid'
 
 export const generateSeed = () => {
   const wallet = generateWallet();
@@ -33,7 +34,7 @@ export const createWallet = async (
     hash = bcrypt.hashSync(password, salt);
   }
 
-  const link = uuid();
+  const link = short.generate().substring(0, 12)
 
   const wallet = new Wallet({
     address,

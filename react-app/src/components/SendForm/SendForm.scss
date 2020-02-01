@@ -7,6 +7,10 @@
     display: flex;
     flex-flow: column wrap;
     margin-bottom: 16px;
+
+    label {
+      margin-bottom: 5px;
+    }
   }
 
   textarea {

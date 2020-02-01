@@ -44,7 +44,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
     const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/gim;
 
     useEffect(() => {
-      setState({ ...state, visible, coin: store.balance[0]?.coin });
+      setState({ ...state, visible, coin: store.balance[0]?.coin, amount: store.balance[0]?.value });
     }, [visible]);
 
     useEffect(() => {
@@ -120,7 +120,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           hash: res,
           loading: false
         });
-        store.checkBalancesTimeout(5000);
+        store.checkBalancesTimeout(6500);
       } catch (error) {
         console.log(error);
         setState({ ...state, loading: false });

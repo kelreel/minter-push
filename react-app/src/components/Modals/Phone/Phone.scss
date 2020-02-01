@@ -12,16 +12,25 @@
       flex-flow: row nowrap;
       margin-bottom: 10px;
 
+      label {
+        margin-bottom: 5px;
+      }
+
       .coin {
         display: flex;
         flex-flow: column wrap;
-        flex: 1;
+        flex: 2;
         margin-right: 10px;
       }
 
       .amount {
+        flex: 1;
         display: flex;
         flex-flow: column wrap;
+      }
+
+      .ant-input-number {
+        width: unset !important;
       }
     }
 

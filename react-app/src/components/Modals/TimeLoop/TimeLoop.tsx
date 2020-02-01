@@ -74,7 +74,7 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     try {
       let res = await sendTimeTx(state.coin, state.amount, state.secret);
       setState({ ...state, success: true, hash: res, loading: false });
-      store.checkBalancesTimeout(5000);
+      store.checkBalancesTimeout(6500);
     } catch (error) {
       console.log(error);
       setState({ ...state, loading: false });

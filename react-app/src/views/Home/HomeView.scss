@@ -1,11 +1,11 @@
-  .ant-modal-confirm-info .ant-modal-confirm-body {
-    .ant-modal-confirm-content {
-      white-space: pre-wrap;
-    }
-    .anticon {
-      display: none;
-    }
+.ant-modal-confirm-info .ant-modal-confirm-body {
+  .ant-modal-confirm-content {
+    white-space: pre-wrap;
   }
+  .anticon {
+    display: none;
+  }
+}
 
 .home-view {
   display: flex;
@@ -16,6 +16,10 @@
 
   h3 {
     text-align: center;
+  }
+
+  .ant-tabs {
+    color: rgba(0, 0, 0, 0.9)
   }
 
   .ant-card {
