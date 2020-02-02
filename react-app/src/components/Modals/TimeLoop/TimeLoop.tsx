@@ -1,6 +1,6 @@
 import './TimeLoop.scss';
 
-import { Button, InputNumber, message, Modal, Result, Select } from 'antd';
+import { Button, InputNumber, message, Modal, Result, Select, Alert } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -117,7 +117,11 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     >
       {store.balance && !state.success && (
         <>
-          <p>{t("timeloop.content1")}</p>
+          <Alert
+            type="success"
+            style={{ marginBottom: "20px" }}
+            message={t("timeloop.content1")}
+          />
           <div className="send-form">
             <div className="coin-val">
               <div className="coin">

@@ -31,10 +31,6 @@ const Perekrestok: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     setState({ ...state, visible, coin: store.balance[0]?.coin });
   }, [visible]);
 
-  useEffect(() => {
-    setState({ ...state, visible });
-  }, [visible]);
-
   const { t, i18n } = useTranslation();
 
   const handleOk = async () => {

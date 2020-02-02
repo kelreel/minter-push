@@ -7,7 +7,8 @@ import {
   message,
   Modal,
   Result,
-  Select
+  Select,
+  Alert
 } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
@@ -150,7 +151,11 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
     >
       {store.balance && !state.success && (
         <>
-          <p>{t("phone.content2")}</p>
+          <Alert
+            type="success"
+            style={{ marginBottom: "20px" }}
+            message={t("phone.content2")}
+          />
           <p>
             {t("phone.max")} {state.maxLimit} RUB
           </p>
@@ -200,7 +205,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             </div>
             {/* {state.loadInfo ? 'load' : 'not load'}
             {state.bipPrice} */}
-            {!state.loadInfo && (state.amount > 0) && (
+            {!state.loadInfo && state.amount > 0 && (
               <div className="total">
                 {t("phone.total")}{" "}
                 {state.coin === "BIP" && (

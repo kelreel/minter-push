@@ -66,7 +66,7 @@
   "comingSoon": "Coming soon..",
   "anotherPerson": {
     "title": "Перевод другому человеку",
-    "content1": "Перевод через Push.",
+    "content1": "Перевод через Push",
     "content2": "Точно так же, как вы получили ссылку на эту страницу.",
     "send": "Отправить",
     "cancel": "Отмена"
@@ -83,7 +83,7 @@
     "success": "Транзакция отправлена"
   },
   "creditCard": {
-    "title": "Кредитная карта.",
+    "title": "Кредитная карта",
     "content1": "Это Mock! Ожидаем публичного API 1001 или BipBanker",
     "cardNumber": "Номер карты",
     "coin": "Монета",

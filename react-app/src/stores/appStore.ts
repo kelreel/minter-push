@@ -120,8 +120,9 @@ class AppStore {
   }
 
   @action checkBalancesTimeout(timeout: number = 5000) {
-    setTimeout(() => {
-      this.checkBalance();
+    setTimeout(async () => {
+      await this.checkBalance();
+      await this.getTotalPrice();
     }, timeout);
   }
 

@@ -1,20 +1,12 @@
-import "./DS.scss";
+import './DS.scss';
 
-import {
-  Alert,
-  Button,
-  Input,
-  InputNumber,
-  message,
-  Modal,
-  Select
-} from "antd";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Alert, Button, message, Modal, Select } from 'antd';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { AppStoreContext } from "../../../stores/appStore";
-import Loading from "../../Layout/Loading";
+import { AppStoreContext } from '../../../stores/appStore';
+import Loading from '../../Layout/Loading';
 
 const DS: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
@@ -28,10 +20,6 @@ const DS: React.FC<{ visible: boolean }> = observer(({ visible }) => {
 
   useEffect(() => {
     setState({ ...state, visible, coin: store.balance[0]?.coin });
-  }, [visible]);
-
-  useEffect(() => {
-    setState({ ...state, visible });
   }, [visible]);
 
   const { t, i18n } = useTranslation();

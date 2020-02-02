@@ -8,7 +8,8 @@ import {
   Modal,
   Result,
   Select,
-  Icon
+  Icon,
+  Alert
 } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
@@ -49,7 +50,6 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
 
     useEffect(() => {
       const r = async () => {
-        console.log("***");
         setState({ ...state, loadProfile: true });
         try {
           let res = await getProfile(state.address);
@@ -166,7 +166,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       >
         {store.balance && !state.success && (
           <>
-            <p>{t("anotherWallet.content1")}</p>
+            <Alert type="success" style={{marginBottom: '20px'}} message={t("anotherWallet.content1")} />
             <div className="send-form">
               <div className="coin-val">
                 <div className="coin">
@@ -214,7 +214,11 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                     <>
                       {state.address.length == 42 &&
                         !state.loadProfile &&
-                        state.profile !== "" && <span>{state.profile} <img src={state.profileImg} /></span>}
+                        state.profile !== "" && (
+                          <span>
+                            {state.profile} <img src={state.profileImg} />
+                          </span>
+                        )}
                       {state.address.length == 42 &&
                         !state.loadProfile &&
                         state.profile === "" && <span>Anonim</span>}

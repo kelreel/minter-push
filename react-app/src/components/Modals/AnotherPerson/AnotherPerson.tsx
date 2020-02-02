@@ -1,11 +1,12 @@
 import './AnotherPerson.scss';
 
-import { Button, Modal } from 'antd';
+import { Button, Modal, Alert } from 'antd';
 import { observer } from 'mobx-react-lite';
 import React, { useContext, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { AppStoreContext } from '../../../stores/appStore';
+import SendForm from '../../SendForm/SendForm';
 
 const AnotherPerson: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -52,7 +53,11 @@ const AnotherPerson: React.FC<{ visible: boolean }> = observer(
           </Button>
         ]}
       >
-        <p>{t("anotherPerson.content1")}</p>
+        <Alert
+          type="success"
+          style={{ marginBottom: "20px" }}
+          message={t("anotherPerson.content1")}
+        />
         <p>{t("anotherPerson.content2")}</p>
       </Modal>
     );
