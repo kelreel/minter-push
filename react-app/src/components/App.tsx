@@ -13,6 +13,7 @@ import HomeView from '../views/Home/HomeView';
 import WalletView from '../views/Wallet/WalletView';
 import Footer from './Layout/Footer/Footer';
 import Header from './Layout/Header/Header';
+import PresetView from '../views/Preset/Preset';
 
 const { Content } = Layout;
 
@@ -29,6 +30,9 @@ const App: React.FC = observer(() => {
           <Switch>
             <Route exact path="/">
               <HomeView />
+            </Route>
+            <Route exact path="/preset">
+              <PresetView />
             </Route>
             <Route path="/:link">
               <WalletView />

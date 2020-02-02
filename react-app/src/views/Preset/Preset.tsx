@@ -1,6 +1,6 @@
-import "./WalletView.scss";
+import "./Preset.scss";
 
-import { Card, Layout, Affix, Button } from "antd";
+import { Card, Layout, Affix, Button, Drawer, Collapse } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -19,10 +19,12 @@ import Editor from "../../components/Editor/Editor";
 
 const { Content } = Layout;
 
-const WalletView: React.FC = observer(() => {
+const PresetView: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
   const { t, i18n } = useTranslation();
   const { link } = useParams();
+
+  const { Panel } = Collapse;
 
   const [state, setState] = useState({
     password: false,
@@ -32,23 +34,6 @@ const WalletView: React.FC = observer(() => {
   useEffect(() => {
     const init = async () => {
       setState({ ...state, isLoading: true });
-      try {
-        let res = await getWallet(link as string);
-        store.setWalletWithoutSeed(
-          res.data.address,
-          res.data.name,
-          res.data.fromName,
-          res.data.payload,
-          res.data.password,
-          // @ts-ignore
-          link
-        );
-        if (res.data.seed) store.setSeed(res.data.seed);
-      } catch (error) {
-        console.log(error);
-        history.push("/");
-      }
-
       await store.checkBalance();
       setState({ ...state, isLoading: false });
       await store.getTotalPrice();
@@ -67,9 +52,30 @@ const WalletView: React.FC = observer(() => {
           {store.isPassword && <PasswordForm />}
           {store.seed && !store.isPassword && (
             <>
-              {/* <Affix  style={{position: 'absolute', right: '0', top: '120px'}} onChange={affixed => console.log(affixed)}>
-                <Editor visible={true} />
-              </Affix> */}
+              <Drawer
+                title="Push Editor"
+                placement="right"
+                closable={false}
+                visible={true}
+                mask={false}
+              >
+                <Collapse bordered={false} accordion>
+                  <Panel
+                    showArrow={false}
+                    header="This is panel header 1"
+                    key="1"
+                  >
+                    <p>123</p>
+                  </Panel>
+                  <Panel
+                    showArrow={false}
+                    header="This is panel header 1"
+                    key="2"
+                  >
+                    <p>123</p>
+                  </Panel>
+                </Collapse>
+              </Drawer>
               <Card className="balance">
                 <Balance />
               </Card>
@@ -93,4 +99,4 @@ const WalletView: React.FC = observer(() => {
   );
 });
 
-export default WalletView;
+export default PresetView;

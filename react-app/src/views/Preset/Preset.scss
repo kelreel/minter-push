@@ -1,0 +1,50 @@
+.wallet-view {
+  display: flex;
+  flex-flow: column wrap;
+  margin: 24px;
+  align-items: center;
+  justify-content: center;
+
+  .balance {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 10px;
+  }
+
+  .title {
+    text-transform: uppercase;
+    text-align: center;
+    color: rgba(78, 78, 78, 0.767);
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+  }
+
+  .transfers {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .transfers {
+      flex-flow: row nowrap;
+      overflow-x: scroll;
+      justify-content: flex-start;
+
+      .ant-card {
+        display: flex;
+        margin-right: 20px;
+        max-width: 150px;
+        flex: 1;
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@
     flex-flow: row nowrap;
     align-items: center;
     user-select: none;
+    max-width: 70%;
 
     img {
       margin-right: 1rem;
@@ -19,6 +20,10 @@
     h2 {
       margin-top: 8px;
       cursor: pointer;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      display: inline-block;
     }
   }
 
@@ -36,4 +41,10 @@
 
 .ant-layout-header {
   padding: 0 25px;
+}
+
+@media screen and (max-width: 600px) {
+  .header .logo h2 {
+    font-size: 1rem;
+  }
 }
