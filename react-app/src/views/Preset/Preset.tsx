@@ -44,7 +44,7 @@ const PresetView: React.FC = observer(() => {
   }, []);
 
   return (
-    <Content className="wallet-view">
+    <Content className="preset-view">
       {state.isLoading ? (
         <Loading />
       ) : (
@@ -59,22 +59,7 @@ const PresetView: React.FC = observer(() => {
                 visible={true}
                 mask={false}
               >
-                <Collapse bordered={false} accordion>
-                  <Panel
-                    showArrow={false}
-                    header="This is panel header 1"
-                    key="1"
-                  >
-                    <p>123</p>
-                  </Panel>
-                  <Panel
-                    showArrow={false}
-                    header="This is panel header 1"
-                    key="2"
-                  >
-                    <p>123</p>
-                  </Panel>
-                </Collapse>
+                <Editor />
               </Drawer>
               <Card className="balance">
                 <Balance />

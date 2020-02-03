@@ -1,4 +1,4 @@
-.wallet-view {
+.preset-view {
   display: flex;
   flex-flow: column wrap;
   margin: 24px;
@@ -47,4 +47,8 @@
       }
     }
   }
+}
+
+.ant-drawer-body {
+  padding: 0 !important;
 }

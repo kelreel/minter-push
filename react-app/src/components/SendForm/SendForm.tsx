@@ -44,9 +44,7 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
         />
       </div>
       <div className="field">
-        <label>
-          {t("sendForm.sender")}
-        </label>
+        <label>{t("sendForm.sender")}</label>
         <Input
           prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
           size="large"
@@ -66,7 +64,9 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
         />
       </div>
       <div className="field">
-        <label>{t("sendForm.message")}</label>
+        <label>
+          {t("sendForm.message")}
+        </label>
         <TextArea
           rows={2}
           maxLength={1200}

@@ -14,18 +14,24 @@ import WalletView from '../views/Wallet/WalletView';
 import Footer from './Layout/Footer/Footer';
 import Header from './Layout/Header/Header';
 import PresetView from '../views/Preset/Preset';
+import { PresetStoreContext } from '../stores/presetStore';
 
 const { Content } = Layout;
 
 const App: React.FC = observer(() => {
   const { t, i18n } = useTranslation();
   const store = useContext(AppStoreContext);
+  const pStore = useContext(PresetStoreContext);
   store.changeLocale(i18n.language.substring(0,2))
+
+  let layoutStyle = {
+    minHeight: "100vh",
+    backgroundImage: `url(${pStore.background})`
+  };
 
   return (
     <Router history={history}>
-      <Layout style={{ minHeight: "100vh" }}>
-        <Layout>
+      <Layout style={layoutStyle}>
           <Header />
           <Switch>
             <Route exact path="/">
@@ -44,7 +50,6 @@ const App: React.FC = observer(() => {
             </Route>
           </Switch>
           <Footer />
-        </Layout>
       </Layout>
     </Router>
   );

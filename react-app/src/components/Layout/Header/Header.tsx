@@ -9,9 +9,11 @@ import logo from '../../../assets/minter-logo-circle.svg';
 import ru from '../../../assets/rus.webp';
 import uk from '../../../assets/uk.svg';
 import { AppStoreContext } from '../../../stores/appStore';
+import { PresetStoreContext } from '../../../stores/presetStore';
 
 const Header: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
+  const pStore = useContext(PresetStoreContext);
   const { Header,} = Layout;
   const { Option } = Select;
   const { t, i18n } = useTranslation();
@@ -32,10 +34,17 @@ const Header: React.FC = observer(() => {
     });
   }
 
+  const headerStyle = {
+    background: pStore.headerBgc
+  }
+
+  console.log(pStore.headerBgc);
+  
+
   return (
-    <Header className="header">
+    <Header className="header" style={headerStyle}>
       <div className="logo" onClick={showConfirm}>
-        <img src={logo} style={{ width: "30px", height: "30px" }} />
+        {pStore.showLogo && <img src={logo} style={{ width: "30px", height: "30px" }} />}
         {store.name && store.seed ? <h2>Hi, {store.name}</h2> : <h2>Push</h2>}
       </div>
       <div className="language">

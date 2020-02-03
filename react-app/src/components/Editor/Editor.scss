@@ -1,0 +1,16 @@
+.editor {
+  .item {
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+  .switch {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+    p {
+      padding-top: 10px;
+    }
+  }
+}
