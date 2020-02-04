@@ -24,13 +24,13 @@ const Footer: React.FC = () => {
     <Footer style={{ textAlign: "center" }}>
       {window.location.pathname === "/" && (
         <div className="actions">
-            <Button
-              onClick={() => setState({ ...state, history: true })}
-              icon="calendar"
-              size="small"
-            >
-              History
-            </Button>
+          <Button
+            onClick={() => setState({ ...state, history: true })}
+            icon="calendar"
+            size="small"
+          >
+            History
+          </Button>
           <Button
             onClick={() => setState({ ...state, faq: true })}
             icon="question-circle"
@@ -127,38 +127,50 @@ const Footer: React.FC = () => {
           </Button>
         }
       >
-        {getWalletsHistory() ? <Collapse accordion>
-          {getWalletsHistory()?.map(item => (
-            <Panel
-              header={`${shortAddress(item.address)} (${new Date(
-                item.date
-              ).toLocaleDateString()})`}
-              key={item.date}
-            >
-              <p>
-                <strong>Address: </strong>
-                {item.address}
-              </p>
-              <p>
-                <strong>Link: </strong>
-                <a
-                  href={`https://push.scoring.mn/${item.link}`}
-                  target="_blank"
-                >
-                  {item.link}
-                </a>
-                <Icon style={{marginLeft: '3px', cursor: 'pointer'}} onClick={() => {
-                  copy(`${config.domain}${item.link}`)
-                  message.success('Link copied')
-                }} type="copy" />
-              </p>
-              <p>
-                <strong>Seed: </strong>
-                {item.seed}
-              </p>
-            </Panel>
-          ))}
-        </Collapse> : <p>Вы еще не отправляли переводов с этого устройства.</p>}
+        {getWalletsHistory() ? (
+          <Collapse accordion>
+            {getWalletsHistory()?.map(item => (
+              <Panel
+                header={`${shortAddress(item.address)} (${new Date(
+                  item.date
+                ).toLocaleDateString()})`}
+                key={item.date}
+              >
+                <p>
+                  <strong>Address: </strong>
+                  {item.address}
+                </p>
+                <p>
+                  <strong>Link: </strong>
+                  <a
+                    href={`https://push.scoring.mn/${item.link}`}
+                    target="_blank"
+                  >
+                    {item.link}
+                  </a>
+                  <Icon
+                    style={{ marginLeft: "3px", cursor: "pointer" }}
+                    onClick={() => {
+                      copy(`${config.domain}${item.link}`);
+                      message.success("Link copied");
+                    }}
+                    type="copy"
+                  />
+                </p>
+                <p>
+                  <strong>Seed: </strong>
+                  {item.seed}
+                </p>
+                {item.password && <p>
+                  <strong>Password: </strong>
+                  {item.password}
+                </p>}
+              </Panel>
+            ))}
+          </Collapse>
+        ) : (
+          <p>Вы еще не отправляли переводов с этого устройства.</p>
+        )}
       </Modal>
     </Footer>
   );

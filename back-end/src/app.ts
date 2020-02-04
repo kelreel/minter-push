@@ -5,6 +5,7 @@ import morgan from 'morgan';
 
 import ApiController from './controllers/ApiController';
 import BipToPhone from './controllers/BipToPhone';
+import CampaignController from './controllers/CampaignController'
 
 const app = express();
 
@@ -16,5 +17,6 @@ app.use(morgan("combined"));
 
 app.use("/api", ApiController);
 app.use("/api/phone", BipToPhone);
+app.use("/api/campaign", CampaignController);
 
 export default app;

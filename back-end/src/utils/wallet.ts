@@ -1,8 +1,9 @@
 import { generateWallet, walletFromMnemonic } from "minterjs-wallet";
-import { Wallet, WalletStatus } from "../models/WalletSchema";
-import bcrypt from 'bcryptjs'
-import uuid from 'uuid/v4'
-import short from 'short-uuid'
+import { Wallet, WalletStatus, WalletDocument } from "../models/WalletSchema";
+import bcrypt from "bcryptjs";
+import uuid from "uuid/v4";
+import short from "short-uuid";
+import { Campaign } from "../models/CampaignSchema";
 
 export const generateSeed = () => {
   const wallet = generateWallet();
@@ -34,7 +35,7 @@ export const createWallet = async (
     hash = bcrypt.hashSync(password, salt);
   }
 
-  const link = short.generate().substring(0, 12)
+  const link = short.generate().substring(0, 6);
 
   const wallet = new Wallet({
     address,
@@ -45,13 +46,30 @@ export const createWallet = async (
     password: hash,
     fromName,
     link
-  })
+  });
 
-  await wallet.save()
+  await wallet.save();
 
   return {
     address,
     seed,
     link
-  }
+  };
+};
+
+export const getWalletFromCampaign = async (wallet: WalletDocument) => {
+  let camp = await Campaign.findOne({ _id: wallet.campaign });
+  console.log(camp);
+  
+  wallet.status = WalletStatus.opened;
+  await wallet.save();
+
+  return {
+    address: wallet.address,
+    name: wallet.name,
+    fromName: camp.fromName,
+    payload: camp.payload,
+    password: wallet.password ? true : false,
+    seed: wallet.password ? null : wallet.seed
+  };
 };

@@ -1,10 +1,10 @@
-import bcrypt from 'bcryptjs';
-import bodyParser from 'body-parser';
-import express from 'express';
+import bcrypt from "bcryptjs";
+import bodyParser from "body-parser";
+import express from "express";
 
-import { Wallet, WalletStatus } from '../models/WalletSchema';
-import { createWallet } from '../utils/wallet';
-import { sendEmail } from '../utils/email';
+import { Wallet, WalletStatus } from "../models/WalletSchema";
+import { createWallet, getWalletFromCampaign } from "../utils/wallet";
+import { sendEmail } from "../utils/email";
 
 const router = express.Router();
 
@@ -23,8 +23,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/count", async (req, res) => {
-  let r = await Wallet.estimatedDocumentCount()
-  res.send({count: r})
+  let r = await Wallet.estimatedDocumentCount();
+  res.send({ count: r });
 });
 
 // Create new wallet
@@ -58,8 +58,10 @@ router.get("/wallet/:id", async (req, res) => {
       return;
     }
 
-    wallet.status = WalletStatus.opened;
-    wallet.save;
+    if (wallet.campaign) {
+      res.send(await getWalletFromCampaign(wallet))
+      return
+    }
 
     if (wallet.password !== null) {
       res.send({
@@ -78,6 +80,8 @@ router.get("/wallet/:id", async (req, res) => {
         password: false,
         seed: wallet.seed
       });
+      wallet.status = WalletStatus.opened;
+      wallet.save();
     }
   } catch (error) {
     console.log(error);
@@ -106,7 +110,22 @@ router.post("/getSeed", async (req, res) => {
       res.status(401).send("Invalid password");
     } else {
       res.send({ seed: wallet.seed });
+      wallet.status = WalletStatus.opened;
+      wallet.save();
     }
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+});
+
+router.post("/touched", async (req, res) => {
+  let link = req.body.link;
+
+  try {
+    let wallet = await Wallet.findOne({link});
+    wallet.status = WalletStatus.touched;
+    res.send({ status: "ok" });
   } catch (error) {
     res.status(400).send(error);
     console.log(error);
@@ -122,8 +141,8 @@ router.post("/email", async (req, res) => {
   let fromName = req.body.fromName;
 
   try {
-    let result = await sendEmail(email, link, name, fromName, pass)
-    res.send({status: 'ok'});
+    let result = await sendEmail(email, link, name, fromName, pass);
+    res.send({ status: "ok" });
   } catch (error) {
     res.status(400).send(error);
     console.log(error);

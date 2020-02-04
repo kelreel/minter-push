@@ -15,7 +15,8 @@ export type WalletDocument = mongoose.Document & {
   fromName: string | null;
   payload: string | null;
   status: WalletStatus;
-  link: string
+  link: string,
+  campaign: mongoose.Types.ObjectId | null
 };
 
 const walletSchema = new mongoose.Schema(
@@ -26,6 +27,10 @@ const walletSchema = new mongoose.Schema(
     fromName: String,
     name: String,
     payload: String,
+    campaign: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Campaign'
+    },
     link: {
       type: String,
       index: true,
@@ -33,7 +38,7 @@ const walletSchema = new mongoose.Schema(
     status: {
       type: String,
       enum: ["waiting", "created", "opened", "touched"],
-      default: "waiting"
+      default: "created"
     }
   },
   {

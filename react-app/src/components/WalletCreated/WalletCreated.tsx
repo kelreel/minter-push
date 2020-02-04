@@ -198,10 +198,6 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
             <div onClick={copyLink} className="link">
               <Alert message={`${config.domain}${link}`} type="success" />
             </div>
-            <p className="click-copy">{t("walletCreated.mnemonic")}</p>
-            <div onClick={copySeed} className="seed">
-              <Alert message={seed} type="success" />
-            </div>
             {password !== "" && (
               <>
                 <p className="click-copy">{t("walletCreated.password")}</p>

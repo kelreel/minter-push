@@ -66,7 +66,7 @@ const Home: React.FC = observer(() => {
       link,
       password
     });
-    addToHistory(address, link, seed);
+    addToHistory(address, link, seed, password);
     showAboutModal();
   };
 
