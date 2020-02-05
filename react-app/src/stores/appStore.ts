@@ -116,6 +116,12 @@ class AppStore {
       message.error("Error while getting balance");
     } finally {
       this.isLoading = false;
+      if (this.totalBipBalance === 0) {
+        setTimeout(() => {
+          this.checkBalance()
+          this.getTotalPrice()
+        }, 5000);
+      }
     }
   }
 

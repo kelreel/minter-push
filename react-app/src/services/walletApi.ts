@@ -23,6 +23,17 @@ export const getSeed = async (
   });
 };
 
+export const setTouched = async (
+  link: string
+) => {
+  const data = {
+    link
+  };
+  return await HTTP.post(`${config.apiURL}/touched`, qs.stringify(data), {
+    headers: { "content-type": "application/x-www-form-urlencoded" }
+  });
+};
+
 export const getBalanceFromExplorer = async (address: string) => {
   return await HTTP.get(`${config.explorerURL}/addresses/${address}`);
 };

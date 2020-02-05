@@ -19,7 +19,7 @@ import { useDebounce } from "use-debounce";
 import { sendTx, estimateCommission } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { getProfile } from "../../../services/walletApi";
+import { getProfile, setTouched } from "../../../services/walletApi";
 
 const AnotherWallet: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -120,6 +120,7 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
           hash: res,
           loading: false
         });
+        setTouched(store.link!);
         store.checkBalancesTimeout(6500);
       } catch (error) {
         console.log(error);

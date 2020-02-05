@@ -3,8 +3,9 @@ import { observer } from "mobx-react-lite";
 import { MultiStoreContext } from "../../../stores/multiStore";
 import { useTranslation } from "react-i18next";
 import copy from "copy-to-clipboard";
-import { message, Statistic, Row, Col } from "antd";
+import { message, Statistic, Row, Col, Icon } from "antd";
 import { shortAddress } from "../../../services/utils";
+import config from "../../../config";
 var QRCodeCanvas = require("qrcode.react");
 
 const MultiInfo: React.FC = observer(() => {
@@ -12,41 +13,33 @@ const MultiInfo: React.FC = observer(() => {
   const { t, i18n } = useTranslation();
 
   const copyLink = () => {
-    copy(mStore.address!);
+    copy(`${config.domain}${mStore.link}`);
     message.success(t("walletCreated.copyLinkSuccess"));
   };
 
   console.log(mStore.created);
 
   return (
-    <div className="multy-info">
+    <div className="multi-info">
       <h3>{mStore.name}</h3>
+      <p className="link" onClick={copyLink}>{`${config.domain}${mStore.link}`} <Icon type="copy"/></p>
       <p>Created: {new Date(mStore.created!).toLocaleString()}</p>
-      <Row type="flex" justify="space-between">
-        <Col span={4}>
-          <Statistic title="Wallets" value={mStore.walletsData.length} />
-        </Col>
-        <Col span={4}>
-          <Statistic
-            title="Opened"
-            suffix={`/ ${mStore.walletsData.length}`}
-            value={
-              mStore.walletsData.filter(
-                x => x.status === "opened" || x.status === "touched"
-              ).length
-            }
-          />
-        </Col>
-        <Col span={4}>
-          <Statistic
-            title="Touched"
-            suffix={`/ ${mStore.walletsData.length}`}
-            value={
-              mStore.walletsData.filter(x => x.status === "touched").length
-            }
-          />
-        </Col>
-      </Row>
+      <div className="stats">
+        <Statistic
+          title="Opened"
+          suffix={`/ ${mStore.walletsData.length}`}
+          value={
+            mStore.walletsData.filter(
+              x => x.status === "opened" || x.status === "touched"
+            ).length
+          }
+        />
+        <Statistic
+          title="Touched"
+          suffix={`/ ${mStore.walletsData.length}`}
+          value={mStore.walletsData.filter(x => x.status === "touched").length}
+        />
+      </div>
     </div>
   );
 });

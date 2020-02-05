@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { estimateCommission, sendTimeTx } from '../../../services/tx';
 import { AppStoreContext } from '../../../stores/appStore';
 import Loading from '../../Layout/Loading';
+import { setTouched } from '../../../services/walletApi';
 
 const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
@@ -75,6 +76,7 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
       let res = await sendTimeTx(state.coin, state.amount, state.secret);
       setState({ ...state, success: true, hash: res, loading: false });
       store.checkBalancesTimeout(6500);
+      setTouched(store.link!);
     } catch (error) {
       console.log(error);
       setState({ ...state, loading: false });

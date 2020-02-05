@@ -71,7 +71,7 @@ export const addWallets = async (campaignId: any, number: number = 10) => {
         payload: null,
         password: null,
         fromName: null,
-        campaign: campaignId,
+        campaign: campaignId
       };
       wallets.push(wallet);
     }
@@ -89,9 +89,31 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
   let camp = await Campaign.findOne({ _id: wallet.campaign });
 
   if (wallet.status === WalletStatus.created) {
-    await payToWallet(wallet.address, camp.seed, camp.coin, camp.amount);
-    wallet.status = WalletStatus.opened;
-    await wallet.save();
+    try {
+      await payToWallet(wallet.address, camp.seed, camp.coin, camp.value);
+      wallet.status = WalletStatus.opened;
+      await wallet.save();
+      // setTimeout(() => {
+      //   return {
+      //     address: wallet.address,
+      //     name: wallet.name,
+      //     fromName: camp.fromName,
+      //     payload: camp.payload,
+      //     password: wallet.password ? true : false,
+      //     seed: wallet.password ? null : wallet.seed
+      //   };
+      // }, 5000);
+      // return;
+    } catch (error) {
+      return {
+        address: wallet.address,
+        name: wallet.name,
+        fromName: camp.fromName,
+        payload: camp.payload,
+        password: wallet.password ? true : false,
+        seed: wallet.password ? null : wallet.seed
+      };
+    }
   }
 
   return {
@@ -110,7 +132,6 @@ export const payToWallet = async (
   coin: string = "BIP",
   amount: number = 1
 ) => {
-  try {
     const wallet = walletFromMnemonic(seed);
     const privateKey = wallet.getPrivateKeyString();
 
@@ -128,21 +149,18 @@ export const payToWallet = async (
 
     let res = await minter.postTx(txParams, { gasRetryLimit: 2 });
     console.log(res);
-    
+
     return res;
-  } catch (error) {
-    console.log(error?.response?.data?.error?.tx_result?.message);
-  }
 };
 
-export const getWallets = async (campaignId) => {
+export const getWallets = async campaignId => {
   let camp = await Campaign.findOne({ _id: campaignId });
-  let wallets = await Wallet.find({'link': {$in: camp.wallets}})
+  let wallets = await Wallet.find({ link: { $in: camp.wallets } });
   return wallets.map(x => {
     return {
       link: x.link,
       status: x.status,
       address: x.address
-    }
-  })
-}
+    };
+  });
+};

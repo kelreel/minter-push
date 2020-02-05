@@ -3,6 +3,7 @@ import { Minter, TX_TYPE, prepareSignedTx } from "minter-js-sdk";
 import { sha256 } from "js-sha256";
 
 import config from "../config";
+import { setTouched } from "./walletApi";
 
 const { walletFromMnemonic, isValidMnemonic } = require("minterjs-wallet");
 

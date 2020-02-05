@@ -18,6 +18,7 @@ import { getInfo, getKeyword } from "../../../services/bipToPhoneApi";
 import { estimateCommission, sendMobileTx } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
+import { setTouched } from "../../../services/walletApi";
 
 const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
@@ -107,6 +108,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         keyword.data.keyword
       );
       setState({ ...state, success: true, hash: tx });
+      setTouched(store.link!)
       store.checkBalancesTimeout(6500);
     } catch (error) {
       message.error(error.message);

@@ -17,6 +17,12 @@ const MultiWallet: React.FC = observer(() => {
     message.success(t("walletCreated.copyAddressSuccess"));
   };
 
+  
+  const copySeed = () => {
+    copy(mStore.seed!);
+    message.success(t("walletCreated.copySeedSuccess"));
+  };
+
   return (
     <div
       className="wallet"
@@ -43,8 +49,8 @@ const MultiWallet: React.FC = observer(() => {
         {mStore.coin}
       </strong>
       <div className="actions">
-        <Button>Copy Seed</Button>
-        <Button>Explorer</Button>
+        <Button onClick={copySeed}>Copy Seed</Button>
+        <a href={`https://minterscan.net/address/${mStore.address}`} target="_blank" className="ant-btn">Explorer</a>
       </div>
     </div>
   );

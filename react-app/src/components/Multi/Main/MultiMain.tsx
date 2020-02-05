@@ -25,9 +25,23 @@ const MultiMain: React.FC = observer(() => {
   const alertMessage = `Списание с кошелька выполняется по факту перехода по ссылке. 
   Не забудьте пополнить баланс (и еще немного на комисии) перед тем, как поделиться ссылками.`;
 
+  const alert2 = `Обязательно сохраните ссылку и пароль для данной страницы для последующего доступа`
+
   return (
     <div className="multi-main">
-      <Alert closable style={{margin: '10px'}} type="info" message={alertMessage} />
+      <Alert
+        closable
+        style={{ margin: "10px" }}
+        type="warning"
+        message={alert2}
+        showIcon
+      />
+      <Alert
+        closable
+        style={{ margin: "10px" }}
+        type="info"
+        message={alertMessage}
+      />
       <div className="row">
         <Card style={{ flex: "1" }}>
           <MultiInfo />

@@ -60,7 +60,16 @@ router.get("/wallet/:id", async (req, res) => {
     }
 
     if (wallet.campaign) {
-      res.send(await getWalletFromCampaign(wallet))
+      try {
+        let w = await getWalletFromCampaign(wallet)
+        res.send(w);
+      } catch (error) {
+        res
+          .status(400)
+          .send(
+            "Error while activating wallet. maybe the main wallet does not have enough funds"
+          );
+      }
       return
     }
 
@@ -126,6 +135,7 @@ router.post("/touched", async (req, res) => {
   try {
     let wallet = await Wallet.findOne({link});
     wallet.status = WalletStatus.touched;
+    await wallet.save()
     res.send({ status: "ok" });
   } catch (error) {
     res.status(400).send(error);

@@ -44,16 +44,16 @@ const WalletView: React.FC = observer(() => {
           link
         );
         if (res.data.seed) store.setSeed(res.data.seed);
+        await store.checkBalance();
+        setState({ ...state, isLoading: false });
+        await store.getTotalPrice();
+        await store.getRubCourse();
+        console.log(store.rubCourse);
       } catch (error) {
         console.log(error);
         history.push("/");
+        setState({ ...state, isLoading: false });
       }
-
-      await store.checkBalance();
-      setState({ ...state, isLoading: false });
-      await store.getTotalPrice();
-      await store.getRubCourse();
-      console.log(store.rubCourse);
     };
     init();
   }, []);
