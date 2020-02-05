@@ -33,6 +33,7 @@
     "express-rate-limit": "^5.0.0",
     "form-data": "^3.0.0",
     "helmet": "^3.21.2",
+    "minter-js-sdk": "^0.28.0",
     "minterjs-wallet": "^4.0.4",
     "mongoose": "^5.7.13",
     "morgan": "^1.9.1",

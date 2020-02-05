@@ -6,7 +6,7 @@ import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
 import { sendEmail } from "../utils/email";
 import { Campaign } from "../models/CampaignSchema";
-import { createCampaign, addWallets } from "../utils/campaign";
+import { createCampaign, addWallets, getWallets } from "../utils/campaign";
 
 const router = express.Router();
 
@@ -28,12 +28,15 @@ router.get("/", async (req, res) => {
 router.post("/new", async (req, res) => {
   let pass = req.body.pass;
   let name = req.body.name;
+  let number = req.body.number;
 
   if (pass === "") pass = null;
   if (name === "") name = null;
+  if (number === "") number = 10;
 
   try {
     let result = await createCampaign(pass, name);
+    await addWallets(result._id, number);
     res.send(result);
   } catch (error) {
     res.status(400).send(error);
@@ -74,6 +77,9 @@ router.post("/set", async (req, res) => {
     let link = req.body.link;
     let fromName = req.body.fromName;
     let payload = req.body.payload;
+    let coin = req.body.coin;
+    let value = req.body.value;
+    let target = req.body.target;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -89,6 +95,9 @@ router.post("/set", async (req, res) => {
     } else {
       campaign.fromName = fromName;
       campaign.payload = payload;
+      campaign.coin = coin;
+      campaign.value = value;
+      campaign.target = target;
       await campaign.save();
       res.send({ status: "ok" });
     }
@@ -120,6 +129,34 @@ router.post("/addWallets", async (req, res) => {
     } else {
       await addWallets(campaign._id, number);
       res.send({ status: "ok" });
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+// Get campaign wallets
+router.post("/getWallets", async (req, res) => {
+  try {
+    let pass = req.body.pass;
+    let link = req.body.link;
+
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+      let wallets = await getWallets(campaign._id)
+      res.send(wallets);
     }
     return;
   } catch (error) {

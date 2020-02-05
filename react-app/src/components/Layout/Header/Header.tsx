@@ -38,14 +38,13 @@ const Header: React.FC = observer(() => {
     background: pStore.headerBgc
   }
 
-  console.log(pStore.headerBgc);
-  
+  const headerLabel = document.location.href.includes('multi') ? "Push Enterprise" : "Push"
 
   return (
     <Header className="header" style={headerStyle}>
       <div className="logo" onClick={showConfirm}>
         {pStore.showLogo && <img src={logo} style={{ width: "30px", height: "30px" }} />}
-        {store.name && store.seed ? <h2>Hi, {store.name}</h2> : <h2>Push</h2>}
+        {store.name && store.seed ? <h2>Hi, {store.name}</h2> : <h2>{headerLabel}</h2>}
       </div>
       <div className="language">
         <Select

@@ -10,10 +10,11 @@ export type CampaignDocument = mongoose.Document & {
   payload: string | null;
   status: WalletStatus;
   link: string;
-  walelts: String[] | null;
-  amount: Number | null,
-  coin: String | null,
-  returnDay: Number | null
+  wallets: string[] | null;
+  value: number | null;
+  coin: string | null;
+  returnDay: number | null;
+  target: string | null
 };
 
 const campaignSchema = new mongoose.Schema(
@@ -29,9 +30,10 @@ const campaignSchema = new mongoose.Schema(
       index: true
     },
     wallets: [String],
-    amount: Number,
+    value: Number,
     coin: String,
-    returnDay: Number
+    returnDay: Number,
+    target: String
   },
   {
     timestamps: true

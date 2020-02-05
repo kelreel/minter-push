@@ -3,7 +3,8 @@ import bodyParser from "body-parser";
 import express from "express";
 
 import { Wallet, WalletStatus } from "../models/WalletSchema";
-import { createWallet, getWalletFromCampaign } from "../utils/wallet";
+import { createWallet } from "../utils/wallet";
+import { getWalletFromCampaign } from "../utils/campaign";
 import { sendEmail } from "../utils/email";
 
 const router = express.Router();

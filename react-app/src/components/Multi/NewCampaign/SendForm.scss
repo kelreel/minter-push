@@ -1,0 +1,27 @@
+.send-form {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: flex-start;
+
+  .field {
+    display: flex;
+    flex-flow: column wrap;
+    margin-bottom: 16px;
+
+    label {
+      // display: flex;
+      // flex-flow: row nowrap;
+      // justify-content: space-between;
+      // align-items: center;
+      margin-bottom: 5px;
+    }
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+}

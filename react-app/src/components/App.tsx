@@ -15,6 +15,8 @@ import Footer from './Layout/Footer/Footer';
 import Header from './Layout/Header/Header';
 import PresetView from '../views/Preset/Preset';
 import { PresetStoreContext } from '../stores/presetStore';
+import NewMultiView from '../views/NewMulti/NewMulti';
+import MultiView from '../views/Multi/Multi';
 
 const { Content } = Layout;
 
@@ -32,24 +34,30 @@ const App: React.FC = observer(() => {
   return (
     <Router history={history}>
       <Layout style={layoutStyle}>
-          <Header />
-          <Switch>
-            <Route exact path="/">
-              <HomeView />
-            </Route>
-            <Route exact path="/preset">
-              <PresetView />
-            </Route>
-            <Route path="/:link">
-              <WalletView />
-            </Route>
-            <Route>
-              <h2 style={{ marginTop: "2rem", textAlign: "center" }}>
-                404: Not Found
-              </h2>
-            </Route>
-          </Switch>
-          <Footer />
+        <Header />
+        <Switch>
+          <Route exact path="/">
+            <HomeView />
+          </Route>
+          <Route exact path="/multi">
+            <NewMultiView />
+          </Route>
+          <Route path="/multi/:link">
+            <MultiView />
+          </Route>
+          <Route exact path="/preset">
+            <PresetView />
+          </Route>
+          <Route path="/:link">
+            <WalletView />
+          </Route>
+          <Route>
+            <h2 style={{ marginTop: "2rem", textAlign: "center" }}>
+              404: Not Found
+            </h2>
+          </Route>
+        </Switch>
+        <Footer />
       </Layout>
     </Router>
   );

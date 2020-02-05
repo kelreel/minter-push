@@ -1,0 +1,67 @@
+.multi-main {
+  display: flex;
+  flex-flow: column wrap;
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+
+  .row {
+    display: flex;
+    flex-flow: row wrap;
+  }
+
+  .ant-card {
+    border-radius: 1px !important;
+    margin: 10px;
+    &-body {
+      padding: 16px;
+    }
+  }
+
+  .wallet-table {
+    margin: 10px;
+    padding: 16px;
+    background-color: #fff;
+  }
+
+  .params-form {
+    .field {
+      margin-top: 15px;
+    }
+
+    label {
+      margin-bottom: 5px;
+    }
+
+    .actions {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: flex-end;
+      margin-top: 10px;
+    }
+
+    .coin-val {
+      display: flex;
+      flex-flow: row nowrap;
+      margin-bottom: 10px;
+      margin-top: 15px;
+
+      .coin {
+        display: flex;
+        flex-flow: column wrap;
+        flex: 2;
+        margin-right: 10px;
+      }
+
+      .amount {
+        flex: 1;
+        display: flex;
+        flex-flow: column wrap;
+      }
+
+      .ant-input-number {
+        width: unset !important;
+      }
+    }
+  }
+}

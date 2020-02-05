@@ -1,0 +1,59 @@
+.ant-modal-confirm-info .ant-modal-confirm-body {
+  .ant-modal-confirm-content {
+    white-space: pre-wrap;
+  }
+  .anticon {
+    display: none;
+  }
+}
+
+.new-multi-view {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: center;
+
+  h3 {
+    text-align: center;
+  }
+
+  .ant-tabs {
+    color: rgba(0, 0, 0, 0.9)
+  }
+
+  .ant-card {
+    margin-right: 10px;
+    margin-top: 10px;
+    color: rgb(44, 44, 44);
+
+    .ant-card-body {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .actions {
+      display: flex;
+      flex-flow: row wrap;
+      flex: 1;
+      justify-content: center;
+
+      button:first-of-type {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  @media screen and (max-width: 600px) {
+    h3 {
+      font-size: 1.2rem;
+    }
+  }
+}
