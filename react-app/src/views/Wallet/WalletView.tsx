@@ -11,11 +11,12 @@ import PasswordForm from "../../components/Wallet/PasswordForm/PasswordForm";
 import Loyality from "../../components/Wallet/Transfers/Loyality";
 import Shops from "../../components/Wallet/Transfers/Shops";
 import Transfers from "../../components/Wallet/Transfers/Transfers";
-import { getWallet } from "../../services/walletApi";
+import { getWallet, sendBrowserInfo } from "../../services/walletApi";
 import { AppStoreContext } from "../../stores/appStore";
 import history from "../../stores/history";
 import Loading from "../../components/Layout/Loading";
 import Editor from "../../components/Editor/Editor";
+import { BrowserInfo } from "detect-browser";
 
 const { Content } = Layout;
 
@@ -48,6 +49,7 @@ const WalletView: React.FC = observer(() => {
         setState({ ...state, isLoading: false });
         await store.getTotalPrice();
         await store.getRubCourse();
+        sendBrowserInfo(store.link!);
         console.log(store.rubCourse);
       } catch (error) {
         console.log(error);

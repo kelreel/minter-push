@@ -1,8 +1,11 @@
 import { Layout, Button, Modal, Collapse, Icon, message } from "antd";
 import React, { useState } from "react";
 import "./Footer.scss";
-import copy from 'copy-to-clipboard'
-import { getWalletsHistory } from "../../../services/walletsHistory";
+import copy from "copy-to-clipboard";
+import {
+  getWalletsHistory,
+  historyEntryType
+} from "../../../services/walletsHistory";
 import config from "../../../config";
 import { shortAddress } from "../../../services/utils";
 
@@ -131,19 +134,31 @@ const Footer: React.FC = () => {
           <Collapse accordion>
             {getWalletsHistory()?.map(item => (
               <Panel
-                header={`${shortAddress(item.address)} (${new Date(
-                  item.date
-                ).toLocaleDateString()})`}
+                header={
+                  item.type == "multi"
+                    ? `Multi Push ${item.link} (${new Date(
+                        item.date
+                      ).toLocaleDateString()})`
+                    : `${shortAddress(item.address)} (${new Date(
+                        item.date
+                      ).toLocaleDateString()})`
+                }
                 key={item.date}
               >
-                <p>
-                  <strong>Address: </strong>
-                  {item.address}
-                </p>
+                {item.address && (
+                  <p>
+                    <strong>Address: </strong>
+                    {item.address}
+                  </p>
+                )}
                 <p>
                   <strong>Link: </strong>
                   <a
-                    href={`https://push.scoring.mn/${item.link}`}
+                    href={
+                      item.type == "multi"
+                        ? `https://push.scoring.mn/multi/${item.link}`
+                        : `https://push.scoring.mn/${item.link}`
+                    }
                     target="_blank"
                   >
                     {item.link}
@@ -157,14 +172,16 @@ const Footer: React.FC = () => {
                     type="copy"
                   />
                 </p>
-                <p>
+                {item.seed && <p>
                   <strong>Seed: </strong>
                   {item.seed}
-                </p>
-                {item.password && <p>
-                  <strong>Password: </strong>
-                  {item.password}
                 </p>}
+                {item.password && (
+                  <p>
+                    <strong>Password: </strong>
+                    {item.password}
+                  </p>
+                )}
               </Panel>
             ))}
           </Collapse>

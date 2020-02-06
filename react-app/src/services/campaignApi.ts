@@ -27,6 +27,18 @@ export const getCampaign = async (link: string, pass: string) => {
   });
 };
 
+export const deleteWalletFromCampaign = async (link: string, pass: string, walletLink: string) => {
+  const data = {
+    link,
+    pass,
+    walletLink
+  };
+  return await HTTP.post(`${config.apiURL}/campaign/deleteWallet`, qs.stringify(data), {
+    headers: { "content-type": "application/x-www-form-urlencoded" }
+  });
+};
+
+
 export const getWallets = async (link: string, pass: string) => {
   const data = {
     link,
@@ -60,32 +72,17 @@ export const setCampaign = async (
   });
 };
 
-// export const getWallet = async (address: string) => {
-//   return await HTTP.get(`${config.apiURL}/wallet/${address}`);
-// };
-
-// export const getWalletCount = async () => {
-//   return await HTTP.get(`${config.apiURL}/count`);
-// };
-
-// export const getSeed = async (pass: string, link: string) => {
-//   const data = {
-//     pass,
-//     link
-//   };
-//   return await HTTP.post(`${config.apiURL}/getSeed`, qs.stringify(data), {
-//     headers: { "content-type": "application/x-www-form-urlencoded" }
-//   });
-// };
-
-// export const getBalanceFromExplorer = async (address: string) => {
-//   return await HTTP.get(`${config.explorerURL}/addresses/${address}`);
-// };
-
-// export const getPrice = async () => {
-//   return await HTTP.get(`${config.mbankAPI}/price`);
-// };
-
-// export const getProfile = async (address: string) => {
-//   return await HTTP.get(`https://minter-scoring.space/api/profile/${address}`);
-// };
+export const addWallets = async (link: string, pass: string, number: number = 10) => {
+  const data = {
+    link,
+    pass,
+    number
+  };
+  return await HTTP.post(
+    `${config.apiURL}/campaign/addWallets`,
+    qs.stringify(data),
+    {
+      headers: { "content-type": "application/x-www-form-urlencoded" }
+    }
+  );
+};

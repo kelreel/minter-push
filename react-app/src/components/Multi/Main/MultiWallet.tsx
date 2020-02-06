@@ -45,7 +45,7 @@ const MultiWallet: React.FC = observer(() => {
         size={120}
       />
       <strong style={{ alignSelf: "center", marginTop: '15px' }}>
-        Оптимальный баланс: {Math.round(mStore.wallets.length * mStore.value! * 100) / 100}{" "}
+        Оптимальный баланс: {Math.round(mStore.walletsData.length * mStore.value! * 100) / 100}{" "}
         {mStore.coin}
       </strong>
       <div className="actions">

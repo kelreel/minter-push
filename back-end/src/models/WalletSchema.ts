@@ -16,7 +16,10 @@ export type WalletDocument = mongoose.Document & {
   payload: string | null;
   status: WalletStatus;
   link: string,
-  campaign: mongoose.Types.ObjectId | null
+  campaign: mongoose.Types.ObjectId | null,
+  redeem: any,
+  browser: any,
+  active: boolean
 };
 
 const walletSchema = new mongoose.Schema(
@@ -39,6 +42,12 @@ const walletSchema = new mongoose.Schema(
       type: String,
       enum: ["waiting", "created", "opened", "touched"],
       default: "created"
+    },
+    browser: mongoose.Schema.Types.Mixed,
+    redeem: mongoose.Schema.Types.Mixed,
+    active: {
+      type: Boolean,
+      default: true
     }
   },
   {

@@ -10,6 +10,7 @@ import MultiWallet from "./MultiWallet";
 import ParamsForm from "./ParamsForm";
 import MultiInfo from "./MultiInfo";
 import WalletTable from "./WalletTable";
+import { addWallets } from "../../../services/campaignApi";
 
 const MultiMain: React.FC = observer(() => {
   const mStore = useContext(MultiStoreContext);
@@ -22,20 +23,28 @@ const MultiMain: React.FC = observer(() => {
     loading: false
   });
 
+  const addWalletsAction = async () => {
+    try {
+      await addWallets(mStore.link!, mStore.password!);
+      await mStore.getWalletsData();
+      message.success("Wallets created");
+    } catch (error) {
+      message.error("Error while creating wallets");
+    }
+  };
+
   const alertMessage = `Списание с кошелька выполняется по факту перехода по ссылке. 
   Не забудьте пополнить баланс (и еще немного на комисии) перед тем, как поделиться ссылками.`;
 
-  const alert2 = `Обязательно сохраните ссылку и пароль для данной страницы для последующего доступа`
-
   return (
     <div className="multi-main">
-      <Alert
+      {/* <Alert
         closable
         style={{ margin: "10px" }}
         type="warning"
         message={alert2}
         showIcon
-      />
+      /> */}
       <Alert
         closable
         style={{ margin: "10px" }}
@@ -54,6 +63,11 @@ const MultiMain: React.FC = observer(() => {
         </Card>
       </div>
       <WalletTable />
+      <div className="actions">
+        <Button type="primary" onClick={addWalletsAction}>
+          Add 10 wallets
+        </Button>
+      </div>
     </div>
   );
 });

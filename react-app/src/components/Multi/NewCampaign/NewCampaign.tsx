@@ -1,13 +1,17 @@
-import './SendForm.scss';
+import "./SendForm.scss";
 
-import { Button, Icon, Input, InputNumber, message } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Button, Icon, Input, InputNumber, message } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { newCampaign } from '../../../services/campaignApi';
-import history from '../../../stores/history';
-import { MultiStoreContext } from '../../../stores/multiStore';
+import { newCampaign } from "../../../services/campaignApi";
+import history from "../../../stores/history";
+import { MultiStoreContext } from "../../../stores/multiStore";
+import {
+  addToHistory,
+  historyEntryType
+} from "../../../services/walletsHistory";
 
 const NewMultiForm: React.FC = observer(() => {
   const mStore = useContext(MultiStoreContext);
@@ -27,6 +31,13 @@ const NewMultiForm: React.FC = observer(() => {
       window.localStorage.setItem("mpass", state.password);
       window.localStorage.setItem("mlink", res.data.link);
       history.push(`/multi/${res.data.link}`);
+      addToHistory(
+        historyEntryType.multi,
+        undefined,
+        res.data.link,
+        undefined,
+        state.password
+      );
       console.log(res.data);
     } catch (error) {
       message.warning(error.message);

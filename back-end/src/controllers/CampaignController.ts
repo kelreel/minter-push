@@ -33,6 +33,7 @@ router.post("/new", async (req, res) => {
   if (pass === "") pass = null;
   if (name === "") name = null;
   if (number === "") number = 10;
+  if (number > 50) number = 50;
 
   try {
     let result = await createCampaign(pass, name);
@@ -157,6 +158,41 @@ router.post("/getWallets", async (req, res) => {
     } else {
       let wallets = await getWallets(campaign._id)
       res.send(wallets);
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+// Delete wallet
+router.post("/deleteWallet", async (req, res) => {
+  try {
+    let pass = req.body.pass;
+    let link = req.body.link;
+    let walletLink = req.body.walletLink;
+
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+      let wallet = await Wallet.findOne({link: walletLink})  
+      console.log(wallet.campaign, campaign._id);    
+      if (wallet.campaign.equals(campaign._id)) {
+        await Wallet.deleteOne({link: walletLink})
+        res.send({status: 'ok'})
+        return
+      }
+      res.status(400).send({ status: "false" });
     }
     return;
   } catch (error) {

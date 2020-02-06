@@ -60,6 +60,7 @@ export const createCampaign = async (
 export const addWallets = async (campaignId: any, number: number = 10) => {
   try {
     //let campaign = await Campaign.findById(campaignId);
+    if (number > 50) number = 50;
     let wallets = [];
     for (let i = 0; i < number; i++) {
       let seed = generateSeed();
@@ -88,23 +89,31 @@ export const addWallets = async (campaignId: any, number: number = 10) => {
 export const getWalletFromCampaign = async (wallet: WalletDocument) => {
   let camp = await Campaign.findOne({ _id: wallet.campaign });
 
+  if (wallet.active === false) return null;
+
   if (wallet.status === WalletStatus.created) {
     try {
-      await payToWallet(wallet.address, camp.seed, camp.coin, camp.value);
+      let r = await payToWallet(
+        wallet.address,
+        camp.seed,
+        camp.coin,
+        camp.value
+      );
+      wallet.redeem = {
+        coin: camp.coin,
+        value: camp.value,
+        result: r
+      };
       wallet.status = WalletStatus.opened;
       await wallet.save();
-      // setTimeout(() => {
-      //   return {
-      //     address: wallet.address,
-      //     name: wallet.name,
-      //     fromName: camp.fromName,
-      //     payload: camp.payload,
-      //     password: wallet.password ? true : false,
-      //     seed: wallet.password ? null : wallet.seed
-      //   };
-      // }, 5000);
-      // return;
     } catch (error) {
+      wallet.redeem = {
+        coin: camp.coin,
+        value: camp.value,
+        result: null
+      };
+      wallet.status = WalletStatus.opened;
+      await wallet.save();
       return {
         address: wallet.address,
         name: wallet.name,
@@ -132,25 +141,25 @@ export const payToWallet = async (
   coin: string = "BIP",
   amount: number = 1
 ) => {
-    const wallet = walletFromMnemonic(seed);
-    const privateKey = wallet.getPrivateKeyString();
+  const wallet = walletFromMnemonic(seed);
+  const privateKey = wallet.getPrivateKeyString();
 
-    const txParams = {
-      privateKey,
-      chainId: config.chainId,
-      type: TX_TYPE.SEND,
-      data: {
-        to: toAddress,
-        value: amount,
-        coin
-      },
-      gasCoin: coin
-    };
+  const txParams = {
+    privateKey,
+    chainId: config.chainId,
+    type: TX_TYPE.SEND,
+    data: {
+      to: toAddress,
+      value: amount,
+      coin
+    },
+    gasCoin: coin
+  };
 
-    let res = await minter.postTx(txParams, { gasRetryLimit: 2 });
-    console.log(res);
+  let res = await minter.postTx(txParams, { gasRetryLimit: 2 });
+  console.log(res);
 
-    return res;
+  return res;
 };
 
 export const getWallets = async campaignId => {
@@ -160,7 +169,11 @@ export const getWallets = async campaignId => {
     return {
       link: x.link,
       status: x.status,
-      address: x.address
+      address: x.address,
+      active: x.active,
+      redeem: x.redeem,
+      browser: x.browser,
+      lastVisit: x.status !== WalletStatus.created ? x.updatedAt : null
     };
   });
 };

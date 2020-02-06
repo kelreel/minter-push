@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next";
 import SendForm from "../../components/SendForm/SendForm";
 import WalletCreated from "../../components/WalletCreated/WalletCreated";
 import { AppStoreContext } from "../../stores/appStore";
-import { getWalletsHistory, addToHistory } from "../../services/walletsHistory";
+import { getWalletsHistory, addToHistory, historyEntryType } from "../../services/walletsHistory";
 import { getInfo } from "../../services/bipToPhoneApi";
 import config from "../../config";
 import { estimateCommission } from "../../services/tx";
@@ -66,7 +66,7 @@ const Home: React.FC = observer(() => {
       link,
       password
     });
-    addToHistory(address, link, seed, password);
+    addToHistory(historyEntryType.push, address, link, seed, password);
     showAboutModal();
   };
 
