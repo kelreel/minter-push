@@ -58,6 +58,7 @@ const WalletTable: React.FC = observer(() => {
         pagination={false}
         dataSource={mStore.walletsData}
         rowKey="link"
+        scroll={{x: 1000}}
       >
         <Column
           title="Link"

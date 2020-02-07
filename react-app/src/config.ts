@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV;
 const config = {
   domain:
     env === "production"
-      ? "https://push.scoring.mn/"
+      ? "https://tap.mn/"
       : "http://localhost:3000/",
   apiURL:
     env === "production"
