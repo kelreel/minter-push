@@ -102,7 +102,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
       wallet.redeem = {
         coin: camp.coin,
         value: camp.value,
-        result: r
+        result: r,
+        date: Date.now()
       };
       wallet.status = WalletStatus.opened;
       await wallet.save();
@@ -110,7 +111,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
       wallet.redeem = {
         coin: camp.coin,
         value: camp.value,
-        result: null
+        result: null,
+        date: Date.now()
       };
       wallet.status = WalletStatus.opened;
       await wallet.save();
@@ -119,6 +121,7 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
         name: wallet.name,
         fromName: camp.fromName,
         payload: camp.payload,
+        target: camp.target,
         password: wallet.password ? true : false,
         seed: wallet.password ? null : wallet.seed
       };
@@ -131,7 +134,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
     fromName: camp.fromName,
     payload: camp.payload,
     password: wallet.password ? true : false,
-    seed: wallet.password ? null : wallet.seed
+    seed: wallet.password ? null : wallet.seed,
+    target: camp.target
   };
 };
 
@@ -177,3 +181,22 @@ export const getWallets = async campaignId => {
     };
   });
 };
+
+export const getWalletsLinksTxt = async campaignId => {
+  let camp = await Campaign.findOne({ _id: campaignId });
+  let wallets = await Wallet.find({ link: { $in: camp.wallets } });
+  let res = "";
+
+  wallets.forEach(item => {
+    res += `https://tap.mn/${item.link}\n`;
+  });
+  return res;
+};
+
+
+export const getStats = async (link: string) => {
+  let camp = await Campaign.findOne({link})
+  let wallets = await Wallet.find({ link: { $in: camp.wallets } });
+
+  
+}

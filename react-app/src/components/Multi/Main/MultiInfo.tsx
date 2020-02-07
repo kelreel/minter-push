@@ -17,8 +17,6 @@ const MultiInfo: React.FC = observer(() => {
     message.success(t("walletCreated.copyLinkSuccess"));
   };
 
-  console.log(mStore.created);
-
   return (
     <div className="multi-info">
       <h3>{mStore.name}</h3>

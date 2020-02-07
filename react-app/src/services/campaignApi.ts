@@ -86,3 +86,17 @@ export const addWallets = async (link: string, pass: string, number: number = 10
     }
   );
 };
+
+export const getWalletsTxt = async (link: string, pass: string) => {
+  const data = {
+    link,
+    pass
+  };
+  return await HTTP.post(
+    `${config.apiURL}/campaign/getWalletsTxt.txt`,
+    qs.stringify(data),
+    {
+      headers: { "content-type": "application/x-www-form-urlencoded" }
+    }
+  );
+};

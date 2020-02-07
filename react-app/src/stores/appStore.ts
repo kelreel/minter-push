@@ -6,6 +6,7 @@ import { createContext } from 'react';
 import config from '../config';
 import HTTP from '../services/http';
 import { getBalanceFromExplorer, getPrice } from '../services/walletApi';
+import { TargetEnum } from '../components/Multi/Main/MultiMain';
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
@@ -33,6 +34,7 @@ class AppStore {
   @observable rubCourse: number = 0;
   @observable locale: string | null = window.localStorage.getItem("i18nextLng");
   @observable currency: string = "USD";
+  @observable target: TargetEnum | null = null;
 
   constructor() {
     if (this.locale?.substring(0,2) === 'ru') {
@@ -155,13 +157,15 @@ class AppStore {
     fromName = null,
     payload = null,
     password = false,
-    link = null
+    link = null,
+    target: TargetEnum | null
   ) {
     this.address = address;
     this.name = name;
     this.fromName = fromName;
     this.payload = payload;
     this.link = link;
+    this.target = target;
 
     try {
       if (walletFromMnemonic(this.seed).getAddressString() === address) {

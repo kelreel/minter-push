@@ -2,13 +2,16 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MultiStoreContext } from "../../../stores/multiStore";
-import { Card, message, Button, Input, Icon, InputNumber } from "antd";
+import { Card, message, Button, Input, Icon, InputNumber, Select } from "antd";
 import { shortAddress } from "../../../services/utils";
 import copy from "copy-to-clipboard";
+import { TargetEnum } from "./MultiMain";
 
 const ParamsForm: React.FC = observer(() => {
   const mStore = useContext(MultiStoreContext);
   const { t, i18n } = useTranslation();
+
+  const { Option } = Select;
 
   const [loading, setLoading] = useState(false)
 
@@ -35,7 +38,7 @@ const ParamsForm: React.FC = observer(() => {
           maxLength={40}
           value={mStore.fromName!}
           placeholder="NUT.mn"
-          onChange={e => mStore.fromName = e.target.value}
+          onChange={e => (mStore.fromName = e.target.value)}
         />
       </div>
       <div className="field">
@@ -44,8 +47,18 @@ const ParamsForm: React.FC = observer(() => {
           maxLength={120}
           value={mStore.payload!}
           placeholder="Cashback for fuel (January)"
-          onChange={e => mStore.payload = e.target.value}
+          onChange={e => (mStore.payload = e.target.value)}
         />
+      </div>
+      <div className="field">
+        <label>Приоритет</label>
+        <Select value={mStore.target!} onChange={(val: string) => mStore.target = val}>
+          <Option value={TargetEnum.timeloop}>Timeloop</Option>
+          <Option value={TargetEnum.bip2phone}>BipToPhone</Option>
+          <Option value={TargetEnum.yandexEda}>Yandex Eda</Option>
+          <Option value={TargetEnum.nut}>NUT</Option>
+          <Option value={undefined}>Нет</Option>
+        </Select>
       </div>
       <div className="coin-val">
         <div className="coin">
@@ -54,7 +67,7 @@ const ParamsForm: React.FC = observer(() => {
             value={mStore.coin!}
             maxLength={10}
             placeholder="BIP"
-            onChange={e => mStore.coin = e.target.value.toUpperCase() }
+            onChange={e => (mStore.coin = e.target.value.toUpperCase())}
           />
         </div>
         <div className="amount">
@@ -63,7 +76,7 @@ const ParamsForm: React.FC = observer(() => {
             min={0.1}
             max={999999999}
             value={mStore.value!}
-            onChange={val => mStore.value = val!}
+            onChange={val => (mStore.value = val!)}
           />
         </div>
       </div>

@@ -79,7 +79,8 @@ router.get("/wallet/:id", async (req, res) => {
         name: wallet.name,
         fromName: wallet.fromName,
         payload: wallet.payload,
-        password: true
+        password: true,
+        target: null
       });
     } else {
       res.send({
@@ -88,7 +89,8 @@ router.get("/wallet/:id", async (req, res) => {
         fromName: wallet.fromName,
         payload: wallet.payload,
         password: false,
-        seed: wallet.seed
+        seed: wallet.seed,
+        target: null
       });
       wallet.status = WalletStatus.opened;
       wallet.save();

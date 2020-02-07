@@ -14,6 +14,8 @@ import Ozon from "../../Modals/Ozon/Ozon";
 import YandexEda from "../../Modals/YandexEda/YandexEda";
 import Perekrestok from "../../Modals/Perekrestok/Perekrestok";
 import DS from "../../Modals/DS/DS";
+import { TargetEnum } from "../../Multi/Main/MultiMain";
+import { targetClass } from "./Loyality";
 
 const Shops: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
@@ -52,7 +54,8 @@ const Shops: React.FC = observer(() => {
             setState({ ...state, yandex: true });
           }, 0);
         }}
-        className="transfer-card"
+        className={`transfer-card ${store.target === TargetEnum.yandexEda &&
+          targetClass}`}
       >
         <Avatar
           style={{ backgroundColor: "#682ED6" }}

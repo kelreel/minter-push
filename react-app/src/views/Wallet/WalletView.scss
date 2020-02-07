@@ -33,6 +33,24 @@
     max-width: 800px;
   }
 
+  .target {
+    // border: 2px dashed rgb(245, 106, 0);
+    background: rgb(59, 7, 155);
+
+    h3 {
+      color: #fff;
+    }
+
+    img {
+      outline: 2px solid white;
+    }
+
+    &:hover {
+      background: rgb(59, 7, 155);
+      border: 2px solid black;
+    }
+  }
+
   @media screen and (max-width: 600px) {
     .transfers {
       flex-flow: row nowrap;

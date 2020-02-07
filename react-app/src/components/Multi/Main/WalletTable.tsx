@@ -55,7 +55,7 @@ const WalletTable: React.FC = observer(() => {
       <Table
         size="small"
         bordered
-        pagination={false}
+        pagination={mStore.walletsData.length < 50 ? false : {position: "bottom", pageSize: 50}}
         dataSource={mStore.walletsData}
         rowKey="link"
         scroll={{x: 1000}}

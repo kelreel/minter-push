@@ -12,6 +12,9 @@ import { AppStoreContext } from "../../../stores/appStore";
 import Phone from "../../Modals/Phone/Phone";
 import Nut from "../../Modals/Nut/Nut";
 import TimeLoop from "../../Modals/TimeLoop/TimeLoop";
+import { TargetEnum } from "../../Multi/Main/MultiMain";
+
+export const targetClass = `animated infinite pulse delay-2s target`;
 
 const Loyality: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
@@ -32,7 +35,8 @@ const Loyality: React.FC = observer(() => {
             setState({ ...state, nut: true });
           }, 0);
         }}
-        className="transfer-card"
+        className={`transfer-card ${store.target === TargetEnum.nut &&
+          targetClass}`}
       >
         <Avatar
           style={{ backgroundColor: "rgb(245, 106, 0)" }}
@@ -48,7 +52,8 @@ const Loyality: React.FC = observer(() => {
             setState({ ...state, phone: true });
           }, 0);
         }}
-        className="transfer-card"
+        className={`transfer-card ${store.target === TargetEnum.bip2phone &&
+          targetClass}`}
       >
         <Avatar style={{ backgroundColor: "#de16c5" }} size={64} icon="phone" />
         <h3>{t("loyalityList.phone")}</h3>
@@ -60,9 +65,14 @@ const Loyality: React.FC = observer(() => {
             setState({ ...state, timeloop: true });
           }, 0);
         }}
-        className="transfer-card"
+        className={`transfer-card ${store.target === TargetEnum.timeloop &&
+          targetClass}`}
       >
-        <Avatar style={{ backgroundColor: "#0dc367" }} size={64} src={timeLogo} />
+        <Avatar
+          style={{ backgroundColor: "#0dc367" }}
+          size={64}
+          src={timeLogo}
+        />
         <h3>{t("loyalityList.timeloop")}</h3>
       </Card>
       <Card className="transfer-card disabled">

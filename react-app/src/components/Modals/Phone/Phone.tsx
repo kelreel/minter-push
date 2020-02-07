@@ -22,7 +22,7 @@ import { setTouched } from "../../../services/walletApi";
 
 const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
-
+  
   const [state, setState] = useState({
     visible,
     loading: false,

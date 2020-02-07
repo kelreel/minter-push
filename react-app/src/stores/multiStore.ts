@@ -7,6 +7,7 @@ import config from "../config";
 import HTTP from "../services/http";
 import { getBalanceFromExplorer, getPrice } from "../services/walletApi";
 import { getCampaign, setCampaign, getWallets } from "../services/campaignApi";
+import { getBalance } from "../services/createWaleltApi";
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
@@ -33,6 +34,7 @@ class MultiStore {
   @observable created: Date | null = null;
   @observable wallets: string[] = [];
   @observable walletsData: any[] = [];
+  @observable balance: number = 0;
 
   constructor() {}
 
@@ -108,11 +110,27 @@ class MultiStore {
     this.created = res.data.createdAt;
     this.coin = res.data.coin;
     this.value = res.data.value;
+    this.target = res.data.target;
 
     window.localStorage.setItem("mpass", pass);
     window.localStorage.setItem("mlink", link);
 
     await this.getWalletsData();
+    await this.checkBalance();
+  }
+
+  @action async checkBalance() {
+    try {
+      let res = await getBalance(this.address!);
+      this.balance =
+        Math.round(
+          (parseFloat(res.data.result.balance[this.coin!]) /
+            1000000000000000000) *
+            100
+        ) / 100;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   @action async setCampaign() {

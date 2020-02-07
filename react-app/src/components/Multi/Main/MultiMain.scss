@@ -18,14 +18,16 @@
     }
   }
 
-  .actions {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    margin: 20px 10px;
+  .stat {
+    .ant-card-body {
+      width: 100%;
+      min-height: 80vh;
 
-    button {
-      margin-right: 7px;
+      div {
+        width: unset !important;
+        height: unset !important;
+        max-height: 400px;
+      }
     }
   }
 
@@ -68,15 +70,22 @@
   .wallet-table {
     margin: 10px;
     background-color: #fff;
+    max-width: 100%;
   }
 
   .params-form {
     .field {
-      margin-top: 15px;
+      display: flex;
+      flex-flow: column wrap;
+      margin-top: 10px;
     }
 
     label {
       margin-bottom: 5px;
+    }
+
+    .ant-select {
+      width: 100%;
     }
 
     .actions {
@@ -119,6 +128,10 @@
     td {
       text-align: center;
     }
+  }
+
+  .ant-table-body {
+    overflow-x: auto !important;
   }
 }
 
@@ -173,3 +186,15 @@
     }
   }
 }
+
+
+.multi-main > .actions {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: 20px 10px;
+
+    button {
+      margin-right: 7px;
+    }
+  }

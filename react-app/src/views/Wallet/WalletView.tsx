@@ -42,7 +42,8 @@ const WalletView: React.FC = observer(() => {
           res.data.payload,
           res.data.password,
           // @ts-ignore
-          link
+          link,
+          res.data.target
         );
         if (res.data.seed) store.setSeed(res.data.seed);
         await store.checkBalance();

@@ -1,6 +1,13 @@
 import mongoose from "mongoose";
 import { WalletStatus } from "./WalletSchema";
 
+export enum TargetEnum {
+  timeloop = "timeloop",
+  bip2phone = "bip2phone",
+  yandexEda = "yandexEda",
+  nut = "nut"
+}
+
 export type CampaignDocument = mongoose.Document & {
   address: string;
   seed: string;
@@ -14,7 +21,7 @@ export type CampaignDocument = mongoose.Document & {
   value: number | null;
   coin: string | null;
   returnDay: number | null;
-  target: string | null
+  target: TargetEnum | null
 };
 
 const campaignSchema = new mongoose.Schema(
@@ -33,7 +40,11 @@ const campaignSchema = new mongoose.Schema(
     value: Number,
     coin: String,
     returnDay: Number,
-    target: String
+    target: {
+      type: String,
+      default: null,
+      enum: ["timeloop", "yandexEda", "bip2phone", "nut", null]
+    }
   },
   {
     timestamps: true

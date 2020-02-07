@@ -16,7 +16,6 @@ const MultiWallet: React.FC = observer(() => {
     copy(mStore.address!);
     message.success(t("walletCreated.copyAddressSuccess"));
   };
-
   
   const copySeed = () => {
     copy(mStore.seed!);
@@ -35,7 +34,11 @@ const MultiWallet: React.FC = observer(() => {
     >
       <h3>Wallet</h3>
       <p>Кошелек для списания монет при активации ссылок</p>
-      <p className="address" onClick={copyAddress} style={{ alignSelf: "center" }}>
+      <p
+        className="address"
+        onClick={copyAddress}
+        style={{ alignSelf: "center" }}
+      >
         {shortAddress(mStore.address!)}
       </p>
       <QRCodeCanvas
@@ -44,13 +47,25 @@ const MultiWallet: React.FC = observer(() => {
         value={mStore.address}
         size={120}
       />
-      <strong style={{ alignSelf: "center", marginTop: '15px' }}>
-        Оптимальный баланс: {Math.round(mStore.walletsData.length * mStore.value! * 100) / 100}{" "}
+      <strong style={{ alignSelf: "center", marginTop: "15px" }}>
+        Баланс:{" "}
+        {mStore.balance}{" "}
+        {mStore.coin}
+      </strong>
+      <strong style={{ alignSelf: "center", marginTop: "15px" }}>
+        Оптимальный баланс:{" "}
+        {Math.round(mStore.walletsData.length * mStore.value! * 100) / 100}{" "}
         {mStore.coin}
       </strong>
       <div className="actions">
         <Button onClick={copySeed}>Copy Seed</Button>
-        <a href={`https://minterscan.net/address/${mStore.address}`} target="_blank" className="ant-btn">Explorer</a>
+        <a
+          href={`https://minterscan.net/address/${mStore.address}`}
+          target="_blank"
+          className="ant-btn"
+        >
+          Explorer
+        </a>
       </div>
     </div>
   );

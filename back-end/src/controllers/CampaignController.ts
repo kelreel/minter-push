@@ -6,7 +6,7 @@ import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
 import { sendEmail } from "../utils/email";
 import { Campaign } from "../models/CampaignSchema";
-import { createCampaign, addWallets, getWallets } from "../utils/campaign";
+import { createCampaign, addWallets, getWallets, getWalletsLinksTxt, getStats } from "../utils/campaign";
 
 const router = express.Router();
 
@@ -166,6 +166,37 @@ router.post("/getWallets", async (req, res) => {
   }
 });
 
+// Get campaign wallets
+router.post("/getWalletsTxt.txt", async (req, res) => {
+  try {
+    let pass = req.body.pass;
+    let link = req.body.link;
+
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+      let wallets = await getWalletsLinksTxt(campaign._id);
+      res.setHeader("Content-type", "application/octet-stream");
+
+      res.setHeader("Content-disposition", "attachment; filename=file.txt");
+      res.send(wallets)
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
 // Delete wallet
 router.post("/deleteWallet", async (req, res) => {
   try {
@@ -200,5 +231,16 @@ router.post("/deleteWallet", async (req, res) => {
     res.status(400).send(error);
   }
 });
+
+router.get('/stat/:link', async(req, res) => {
+  const link = req.params.link;
+
+  try {
+    let r = await getStats(link)
+    res.send(r)
+  } catch (error) {
+    res.status(400).send('Error while getting statistics')
+  }
+})
 
 export default router;
