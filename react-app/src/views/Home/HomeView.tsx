@@ -1,19 +1,16 @@
-import "./HomeView.scss";
+import './HomeView.scss';
 
-import { Card, Layout, Modal } from "antd";
-import Title from "antd/lib/typography/Title";
-import { observer } from "mobx-react-lite";
-import React, { useContext, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Card, Layout, Modal } from 'antd';
+import Title from 'antd/lib/typography/Title';
+import { observer } from 'mobx-react-lite';
+import React, { useContext, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import SendForm from "../../components/SendForm/SendForm";
-import WalletCreated from "../../components/WalletCreated/WalletCreated";
-import { AppStoreContext } from "../../stores/appStore";
-import { getWalletsHistory, addToHistory, historyEntryType } from "../../services/walletsHistory";
-import { getInfo } from "../../services/bipToPhoneApi";
-import config from "../../config";
-import { estimateCommission } from "../../services/tx";
-import { getWalletCount } from "../../services/walletApi";
+import SendForm from '../../components/SendForm/SendForm';
+import WalletCreated from '../../components/WalletCreated/WalletCreated';
+import { getWalletCount } from '../../services/walletApi';
+import { addToHistory, historyEntryType } from '../../services/walletsHistory';
+import { AppStoreContext } from '../../stores/appStore';
 
 const { Content } = Layout;
 

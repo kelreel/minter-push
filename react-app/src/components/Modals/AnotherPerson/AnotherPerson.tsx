@@ -10,6 +10,7 @@ import config from '../../../config';
 import { repackWallet } from '../../../services/walletApi';
 import { AppStoreContext } from '../../../stores/appStore';
 import copy from 'copy-to-clipboard';
+import qrlogo from '../../../assets/qr.png'
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -89,7 +90,7 @@ const AnotherPerson: React.FC<{ visible: boolean }> = observer(
                   placeholder={t("sendForm.toPlaceholder")}
                   onChange={e => setState({ ...state, name: e.target.value })}
                 />
-              </div>
+              </div> 
             </div>
           </>
         ) : (
@@ -97,7 +98,15 @@ const AnotherPerson: React.FC<{ visible: boolean }> = observer(
             <QRCodeCanvas
               value={`${config.domain}${state.link}`}
               onClick={copyLink}
-              size={200}
+              size={220}
+              includeMargin={true}
+              imageSettings={{
+                src: qrlogo,
+                height: 23,
+                width: 150,
+                y: 170,
+                excavate: true
+              }}
             />
             <p className="click-copy">Click link to copy</p>
             <div onClick={() => copyLink(state.link)} className="link">

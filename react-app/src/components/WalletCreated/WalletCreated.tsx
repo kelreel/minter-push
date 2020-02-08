@@ -12,6 +12,7 @@ import { getDeepLink, shortAddress } from "../../services/utils";
 import Loading from "../Layout/Loading";
 
 import * as Share from 'react-share'
+import qrlogo from '../../assets/qr.png'
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -192,9 +193,19 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
             <QRCodeCanvas
               value={`${config.domain}${link}`}
               onClick={copyLink}
-              size={200}
+              size={220}
+              includeMargin={true}
+              imageSettings={{
+                src: qrlogo,
+                height: 23,
+                width: 150,
+                y: 170,
+                excavate: true
+              }}
             />
-            <p style={{alignSelf: 'center'}} className="click-copy">{t("walletCreated.clickLink")}</p>
+            <p style={{ alignSelf: "center" }} className="click-copy">
+              {t("walletCreated.clickLink")}
+            </p>
             <div onClick={copyLink} className="link">
               <Alert message={`${config.domain}${link}`} type="success" />
             </div>
