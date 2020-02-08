@@ -50,11 +50,11 @@ const NewMultiForm: React.FC = observer(() => {
     <div className="send-form">
       <div className="field">
         {/* <label>{t("sendForm.recipient")}</label> */}
-        <label>Название рассылки</label>
+        <label>{t("newCampaign.name")}</label>
         <Input
           prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
           maxLength={40}
-          placeholder="Кэшбэк за январь"
+          placeholder="January CashBack"
           onChange={e => setState({ ...state, name: e.target.value })}
         />
       </div>
@@ -68,7 +68,7 @@ const NewMultiForm: React.FC = observer(() => {
         />
       </div>
       <div className="field">
-        <label>Количество получателей</label>
+        <label>{t("newCampaign.receivers")}</label>
         <InputNumber
           min={1}
           max={50}

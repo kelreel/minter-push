@@ -9,13 +9,16 @@ export const sendEmail = async (
   password?: string
 ) => {
   try {
-    sgMail.setApiKey(config.SENDGRID_API_KEY);
+    sgMail.setApiKey('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');
+    console.log(config.SENDGRID_API_KEY);
+    
     const msg = {
-      to: "derodroll@gmail.com",
-      from: "push@scoring.mn",
+      to: email,
+      from: "push@tap.mn",
       subject: "You received a transfer to your Push wallet",
       html: getHTML(link, name, fromName, password)
     };
+    console.log(email);
     let res = await sgMail.send(msg);
     return res
   } catch (error) {

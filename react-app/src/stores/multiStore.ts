@@ -143,7 +143,7 @@ class MultiStore {
       this.value!,
       this.target!
     );
-    await this.initCampaign(this.link!, window.localStorage.getItem("mpass")!);
+    this.initCampaign(this.link!, window.localStorage.getItem("mpass")!);
   }
 
   @action async getWalletsData() {

@@ -29,8 +29,8 @@ const ParamsForm: React.FC = observer(() => {
 
   return (
     <div className="params-form">
-      <h3>Settings</h3>
-      <p>Общие параметры для всех получателей</p>
+      <h3>{t("multi.settings")}</h3>
+      <p>{t("multi.settingsDesc")}</p>
       <div className="field">
         <label>{t("sendForm.sender")}</label>
         <Input
@@ -51,7 +51,7 @@ const ParamsForm: React.FC = observer(() => {
         />
       </div>
       <div className="field">
-        <label>Приоритет</label>
+        <label>{t("multi.target")}</label>
         <Select
           value={mStore.target!}
           onChange={(val: string) => (mStore.target = val)}
@@ -68,14 +68,14 @@ const ParamsForm: React.FC = observer(() => {
           <Option key={4} value={TargetEnum.nut}>
             NUT
           </Option>
-          <Option key={5} value={undefined}>
+          <Option key={5} value={null!}>
             Нет
           </Option>
         </Select>
       </div>
       <div className="coin-val">
         <div className="coin">
-          <label>Монета</label>
+          <label>{t("multi.coin")}</label>
           <Input
             value={mStore.coin!}
             maxLength={10}
@@ -84,7 +84,7 @@ const ParamsForm: React.FC = observer(() => {
           />
         </div>
         <div className="amount">
-          <label>Количество</label>
+          <label>{t("multi.amount")}</label>
           <InputNumber
             min={0.1}
             max={999999999}
@@ -95,7 +95,7 @@ const ParamsForm: React.FC = observer(() => {
       </div>
       <div className="actions">
         <Button loading={loading} onClick={save} type="primary">
-          Сохранить
+          {t("multi.save")}
         </Button>
       </div>
     </div>

@@ -67,6 +67,31 @@
     }
   }
 
+  .table-switches {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 30px;
+    margin-bottom: 0;
+
+    .item {
+      display: flex;
+      flex-flow: row nowrap;
+      align-items: center;
+
+      p {
+        padding-top: 12px;
+        margin-right: 5px;
+      }
+
+      +.item {
+        margin-left: 15px;
+      }
+    }
+  }
+
   .wallet-table {
     margin: 10px;
     background-color: #fff;
@@ -142,6 +167,7 @@
     justify-content: center;
     align-items: center;
   }
+
   .share {
     display: flex;
     flex-flow: column wrap;
@@ -180,9 +206,15 @@
     .share-buttons {
       display: flex;
       width: 100%;
+      margin-top: 15px;
       flex-flow: row nowrap;
       justify-content: space-evenly;
       align-items: center;
+    }
+
+    .email {
+      display: flex;
+      flex-flow: row nowrap;
     }
   }
 }

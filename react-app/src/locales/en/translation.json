@@ -2,6 +2,8 @@
   "home": {
     "title": "Send money. It's that easy!"
   },
+  "multibtn": "Multi Push",
+  "singlebtn": "One Push",
   "sendForm": {
     "toPlaceholder": "Alice",
     "fromPlaceholder": "Samantha",
@@ -178,5 +180,24 @@
     "send": "Send",
     "cancel": "Cancel",
     "success": "Transaction ok! Go the link to get TIME."
+  },
+  "newCampaign": {
+    "title": "Multipush in a few clicks!",
+    "name": "Campaign Name",
+    "receivers": "Number of Recipients"
+  },
+  "multi": {
+    "alert": "Withdrawal from the wallet is carried out upon clicking on the link. Do not forget to replenish the balance (and a little more on the commission) before you share the links.",
+    "created": "Created:",
+    "wallet": "Wallet",
+    "walletDesc": "Coin debiting wallet when links are activated",
+    "balance": "Balance",
+    "optimalBalance": "Optimal Balance",
+    "settings": "Settings",
+    "settingsDesc": "Common settings for all recipients",
+    "coin": "Coin",
+    "amount": "Amount",
+    "target": "Target",
+    "save": "Save"
   }
 }

@@ -21,7 +21,7 @@ const MultiInfo: React.FC = observer(() => {
     <div className="multi-info">
       <h3>{mStore.name}</h3>
       <p className="link" onClick={copyLink}>{`${config.domain}${mStore.link}`} <Icon type="copy"/></p>
-      <p>Created: {new Date(mStore.created!).toLocaleString()}</p>
+      <p>{t('multi.created')} {new Date(mStore.created!).toLocaleString()}</p>
       <div className="stats">
         <Statistic
           title="Opened"

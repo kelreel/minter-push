@@ -10,6 +10,7 @@ import ru from '../../../assets/rus.webp';
 import uk from '../../../assets/uk.svg';
 import { AppStoreContext } from '../../../stores/appStore';
 import { PresetStoreContext } from '../../../stores/presetStore';
+import history from '../../../stores/history';
 
 const Header: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
@@ -32,6 +33,7 @@ const Header: React.FC = observer(() => {
       },
       onCancel() { }
     });
+    if (window.location.pathname.includes('multi')) history.push('/')
   }
 
   const headerStyle = {

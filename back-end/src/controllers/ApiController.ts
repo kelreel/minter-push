@@ -192,7 +192,8 @@ router.post("/email", async (req, res) => {
 
   try {
     let result = await sendEmail(email, link, name, fromName, pass);
-    res.send({ status: "ok" });
+    //res.send({ status: "ok" });
+    res.send(result)
   } catch (error) {
     res.status(400).send(error);
     console.log(error);

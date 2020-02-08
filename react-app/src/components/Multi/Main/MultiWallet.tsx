@@ -32,8 +32,8 @@ const MultiWallet: React.FC = observer(() => {
         alignItems: "flex-start"
       }}
     >
-      <h3>Wallet</h3>
-      <p>Кошелек для списания монет при активации ссылок</p>
+      <h3>{t("multi.wallet")}</h3>
+      <p>{t("multi.walletDesc")}</p>
       <p
         className="address"
         onClick={copyAddress}
@@ -48,12 +48,10 @@ const MultiWallet: React.FC = observer(() => {
         size={120}
       />
       <strong style={{ alignSelf: "center", marginTop: "15px" }}>
-        Баланс:{" "}
-        {mStore.balance}{" "}
-        {mStore.coin}
+        {t("multi.balance")}: {mStore.balance} {mStore.coin}
       </strong>
       <strong style={{ alignSelf: "center", marginTop: "15px" }}>
-        Оптимальный баланс:{" "}
+        {t("multi.optimalBalance")}:{" "}
         {Math.round(mStore.walletsData.length * mStore.value! * 100) / 100}{" "}
         {mStore.coin}
       </strong>

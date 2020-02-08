@@ -43,7 +43,7 @@ const campaignSchema = new mongoose.Schema(
     target: {
       type: String,
       default: null,
-      enum: ["timeloop", "yandexEda", "bip2phone", "nut", null]
+      enum: ["timeloop", "yandexEda", "bip2phone", "nut", "", null]
     }
   },
   {

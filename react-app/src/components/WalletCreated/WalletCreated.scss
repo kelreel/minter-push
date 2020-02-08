@@ -5,13 +5,17 @@
 
 .card-container {
   .nav {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
     margin-top: 10px;
-    text-align: center;
     color: rgb(30, 96, 219);
     cursor: pointer;
 
-    &:hover {
-      text-decoration: underline;
+    button {
+      justify-self: center;
+      align-self: center;
     }
   }
 }

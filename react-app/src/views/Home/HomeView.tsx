@@ -1,16 +1,19 @@
-import './HomeView.scss';
+import "./HomeView.scss";
 
-import { Card, Layout, Modal } from 'antd';
-import Title from 'antd/lib/typography/Title';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Card, Layout, Modal, Button } from "antd";
+import Title from "antd/lib/typography/Title";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import SendForm from '../../components/SendForm/SendForm';
-import WalletCreated from '../../components/WalletCreated/WalletCreated';
-import { getWalletCount } from '../../services/walletApi';
-import { addToHistory, historyEntryType } from '../../services/walletsHistory';
-import { AppStoreContext } from '../../stores/appStore';
+import SendForm from "../../components/SendForm/SendForm";
+import WalletCreated from "../../components/WalletCreated/WalletCreated";
+import { getWalletCount } from "../../services/walletApi";
+import { addToHistory, historyEntryType } from "../../services/walletsHistory";
+import { AppStoreContext } from "../../stores/appStore";
+import history from "../../stores/history";
+
+import Particles from "react-particles-js";
 
 const { Content } = Layout;
 
@@ -69,6 +72,33 @@ const Home: React.FC = observer(() => {
 
   return (
     <Content className="home-view">
+      <Particles
+        className="particles"
+        params={{
+          particles: {
+            number: {
+              value: 7
+            },
+            size: {
+              value: 3
+            },
+            color: {
+              value: "#de3838"
+            },
+            line_linked: {
+              enable: false
+            }
+          },
+          interactivity: {
+            events: {
+              onhover: {
+                enable: true,
+                mode: "repulse"
+              }
+            }
+          }
+        }}
+      />
       {!state.created && (
         <>
           <Title level={3} style={{ marginBottom: "20px" }}>
@@ -78,6 +108,9 @@ const Home: React.FC = observer(() => {
           <Card>
             <SendForm created={created} />
           </Card>
+          <Button className="multi-btn" onClick={() => history.push("/multi")}>
+            {t('multibtn')}
+          </Button>
         </>
       )}
       {state.created && (

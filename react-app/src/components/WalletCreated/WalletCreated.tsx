@@ -1,6 +1,6 @@
 import "./WalletCreated.scss";
 
-import { Alert, Icon, List, message, Tabs } from "antd";
+import { Alert, Icon, List, message, Tabs, Button } from "antd";
 import copy from "copy-to-clipboard";
 import React, { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
@@ -11,8 +11,8 @@ import { getBalance } from "../../services/createWaleltApi";
 import { getDeepLink, shortAddress } from "../../services/utils";
 import Loading from "../Layout/Loading";
 
-import * as Share from 'react-share'
-import qrlogo from '../../assets/qr.png'
+import * as Share from "react-share";
+import qrlogo from "../../assets/qr.png";
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -239,15 +239,17 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
       </Tabs>
 
       {/* Next, back buttons */}
-      {state.tab === "1" ? (
-        <p onClick={() => setState({ ...state, tab: "2" })} className="nav">
-          {t("walletCreated.next")}
-        </p>
-      ) : (
-        <p onClick={() => setState({ ...state, tab: "1" })} className="nav">
-          {t("walletCreated.back")}
-        </p>
-      )}
+      <div className="nav">
+        {state.tab === "1" ? (
+          <Button onClick={() => setState({ ...state, tab: "2" })}>
+            {t("walletCreated.next")}
+          </Button>
+        ) : (
+          <Button onClick={() => setState({ ...state, tab: "1" })}>
+            {t("walletCreated.back")}
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

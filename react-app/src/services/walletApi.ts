@@ -62,3 +62,12 @@ export const repackWallet = async (seed: string, name?: string) => {
     headers: { "content-type": "application/x-www-form-urlencoded" }
   });
 };
+
+export const sendEmail = async (email: string, link: string, fromName?: string | null) => {
+  const data = {
+    email, link, fromName
+  };
+  return await HTTP.post(`${config.apiURL}/email`, qs.stringify(data), {
+    headers: { "content-type": "application/x-www-form-urlencoded" }
+  });
+};

@@ -160,15 +160,18 @@ export const payToWallet = async (
     gasCoin: coin
   };
 
-  let res = await minter.postTx(txParams, { gasRetryLimit: 2 });
-  console.log(res);
-
-  return res;
+  console.log(txParams);
+  try {
+    let res = await minter.postTx(txParams, { gasRetryLimit: 2 });
+    return res;
+  } catch (error) {
+    console.log(error?.response?.data?.error?.tx_result?.message);
+  }
 };
 
 export const getWallets = async campaignId => {
   let camp = await Campaign.findOne({ _id: campaignId });
-  let wallets = await Wallet.find({ link: { $in: camp.wallets } });
+  let wallets = await Wallet.find({ campaign: camp._id });
   return wallets.map(x => {
     return {
       link: x.link,
@@ -184,7 +187,7 @@ export const getWallets = async campaignId => {
 
 export const getWalletsLinksTxt = async campaignId => {
   let camp = await Campaign.findOne({ _id: campaignId });
-  let wallets = await Wallet.find({ link: { $in: camp.wallets } });
+  let wallets = await Wallet.find({ campaign: camp._id });
   let res = "";
 
   wallets.forEach(item => {
@@ -193,10 +196,7 @@ export const getWalletsLinksTxt = async campaignId => {
   return res;
 };
 
-
 export const getStats = async (link: string) => {
-  let camp = await Campaign.findOne({link})
-  let wallets = await Wallet.find({ link: { $in: camp.wallets } });
-
-  
-}
+  let camp = await Campaign.findOne({ link });
+  let wallets = await Wallet.find({ campaign: camp._id });
+};
