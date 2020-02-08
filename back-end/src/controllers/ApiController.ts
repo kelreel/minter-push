@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import bodyParser from "body-parser";
 import express from "express";
+import short from "short-uuid";
 
 import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
@@ -154,6 +155,27 @@ router.post("/detect", async (req, res) => {
     wallet.browser = JSON.parse(browser)
     await wallet.save();
     res.send({ status: "ok" });
+  } catch (error) {
+    res.status(400).send(error);
+    console.log(error);
+  }
+});
+
+// Repack wallet
+router.post("/repack", async (req, res) => {
+  let seed = req.body.seed;
+  let name = req.body.name;
+
+  try {
+    let w = await Wallet.findOne({seed});
+    w.link = short.generate().substring(0, 6);
+    w.name = name;
+    w.password = null;
+    w.payload = null;
+    w.fromName = null;
+    await w.save()
+    
+    res.send({ link: w.link });
   } catch (error) {
     res.status(400).send(error);
     console.log(error);

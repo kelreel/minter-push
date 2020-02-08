@@ -52,12 +52,25 @@ const ParamsForm: React.FC = observer(() => {
       </div>
       <div className="field">
         <label>Приоритет</label>
-        <Select value={mStore.target!} onChange={(val: string) => mStore.target = val}>
-          <Option value={TargetEnum.timeloop}>Timeloop</Option>
-          <Option value={TargetEnum.bip2phone}>BipToPhone</Option>
-          <Option value={TargetEnum.yandexEda}>Yandex Eda</Option>
-          <Option value={TargetEnum.nut}>NUT</Option>
-          <Option value={undefined}>Нет</Option>
+        <Select
+          value={mStore.target!}
+          onChange={(val: string) => (mStore.target = val)}
+        >
+          <Option key={1} value={TargetEnum.timeloop}>
+            Timeloop
+          </Option>
+          <Option key={2} value={TargetEnum.bip2phone}>
+            BipToPhone
+          </Option>
+          <Option key={3} value={TargetEnum.yandexEda}>
+            Yandex Eda
+          </Option>
+          <Option key={4} value={TargetEnum.nut}>
+            NUT
+          </Option>
+          <Option key={5} value={undefined}>
+            Нет
+          </Option>
         </Select>
       </div>
       <div className="coin-val">

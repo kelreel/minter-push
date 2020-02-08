@@ -52,3 +52,13 @@ export const getPrice = async () => {
 export const getProfile = async (address: string) => {
   return await HTTP.get(`https://minter-scoring.space/api/profile/${address}`);
 };
+
+export const repackWallet = async (seed: string, name?: string) => {
+  const data = {
+    seed,
+    name
+  };
+  return await HTTP.post(`${config.apiURL}/repack`, qs.stringify(data), {
+    headers: { "content-type": "application/x-www-form-urlencoded" }
+  });
+};

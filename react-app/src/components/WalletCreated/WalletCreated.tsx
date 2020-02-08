@@ -194,7 +194,7 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
               onClick={copyLink}
               size={200}
             />
-            <p className="click-copy">{t("walletCreated.clickLink")}</p>
+            <p style={{alignSelf: 'center'}} className="click-copy">{t("walletCreated.clickLink")}</p>
             <div onClick={copyLink} className="link">
               <Alert message={`${config.domain}${link}`} type="success" />
             </div>
@@ -207,9 +207,6 @@ const WalletCreated: React.FC<props> = ({ address, seed, link, password }) => {
               </>
             )}
             <div className="share-buttons">
-              {/* <Share.FacebookMessengerShareButton appId={'123'} url={`${config.domain}${link}`}>
-                <Share.FacebookMessengerIcon />
-              </Share.FacebookMessengerShareButton> */}
               <Share.VKShareButton url={`${config.domain}${link}`}>
                 <Share.VKIcon size={32} round={true} />
               </Share.VKShareButton>

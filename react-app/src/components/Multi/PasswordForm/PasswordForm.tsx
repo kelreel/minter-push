@@ -36,7 +36,7 @@ const MultiPasswordForm: React.FC<{ link: string }> = observer(({ link }) => {
 
   return (
     <div className="wallet-password">
-      <Card title={t("password.title")}>
+      <Card title="Protected">
         <Input.Password
           onPressEnter={login}
           onChange={e => setState({ ...state, password: e.target.value })}
