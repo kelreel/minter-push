@@ -1,5 +1,5 @@
-import sgMail from "@sendgrid/mail";
 import config from "../config";
+import nodemailer from 'nodemailer'
 
 export const sendEmail = async (
   email: string,
@@ -9,18 +9,26 @@ export const sendEmail = async (
   password?: string
 ) => {
   try {
-    sgMail.setApiKey('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');
-    console.log(config.SENDGRID_API_KEY);
+      let transporter = nodemailer.createTransport({
+        host: config.mailHOST,
+        // port: config.mailPORT,
+        secure: true, // true for 465, false for other ports
+        auth: {
+          user: config.mailUSER, // generated ethereal user
+          pass: config.mailPASS // generated ethereal password
+        }
+      });
     
-    const msg = {
+    let info = await transporter.sendMail({
       to: email,
-      from: "push@tap.mn",
+      from: "hello@tap.mn",
       subject: "You received a transfer to your Push wallet",
       html: getHTML(link, name, fromName, password)
-    };
-    console.log(email);
-    let res = await sgMail.send(msg);
-    return res
+    });
+
+    console.log(info.messageId);
+    
+    return info
   } catch (error) {
     console.log(error);
   }
