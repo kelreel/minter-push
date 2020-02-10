@@ -298,3 +298,34 @@
     margin-top: 10px;
   }
 }
+
+.sheets-modal {
+  .sheets {
+    display: flex;
+    flex-flow: column wrap;
+
+    .description {
+      margin-bottom: 10px;
+      p {
+        margin-bottom: 0;
+      }
+
+      strong {
+        margin-bottom: 10px !important;
+      }
+
+      a {
+        line-height: 40px;
+      }
+    }
+
+    .field {
+      display: flex;
+      flex-flow: column wrap;
+      label {
+        margin-bottom: 7px;
+        font-weight: 600;
+      }
+    }
+  }
+}

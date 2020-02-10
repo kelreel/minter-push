@@ -27,6 +27,17 @@ export const getCampaign = async (link: string, pass: string) => {
   });
 };
 
+export const sheetAdd = async (link: string, pass: string, sheet: string) => {
+  const data = {
+    link,
+    pass,
+    sheet
+  };
+  return await HTTP.post(`${config.apiURL}/campaign/sheetAdd`, qs.stringify(data), {
+    headers: { "content-type": "application/x-www-form-urlencoded" }
+  });
+};
+
 export const deleteWalletFromCampaign = async (link: string, pass: string, walletLink: string) => {
   const data = {
     link,

@@ -6,7 +6,15 @@ import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
 import { sendEmail } from "../utils/email";
 import { Campaign } from "../models/CampaignSchema";
-import { createCampaign, addWallets, getWallets, getWalletsLinksTxt, getStats, editWallet } from "../utils/campaign";
+import {
+  createCampaign,
+  addWallets,
+  getWallets,
+  getWalletsLinksTxt,
+  getStats,
+  editWallet
+} from "../utils/campaign";
+import { getWalletsTable, addWalletsFromSheet } from "../utils/sheets";
 
 const router = express.Router();
 
@@ -22,6 +30,48 @@ router.use(
 
 router.get("/", async (req, res) => {
   res.send("Api works");
+});
+
+router.post("/sheetPreview", async (req, res) => {
+  let link = req.body.sheet;
+  try {
+    link = link.substring(link.indexOf("/d/") + 3, link.indexOf("/edit"));
+    let r = await getWalletsTable(link);
+    res.send(r);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+router.post("/sheetAdd", async (req, res) => {
+  let sheet = req.body.sheet;
+  let pass = req.body.pass;
+  let link = req.body.link;
+
+  try {
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+      sheet = sheet.substring(sheet.indexOf("/d/") + 3, sheet.indexOf("/edit"));
+      
+      let r = await getWalletsTable(sheet);
+      let count = await addWalletsFromSheet(campaign._id, r)
+      res.send({count});
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).send(error.message);
+  }
 });
 
 // Create new campaign
@@ -156,7 +206,7 @@ router.post("/getWallets", async (req, res) => {
     if (!compare) {
       res.status(401).send("Invalid password");
     } else {
-      let wallets = await getWallets(campaign._id)
+      let wallets = await getWallets(campaign._id);
       res.send(wallets);
     }
     return;
@@ -188,7 +238,7 @@ router.post("/getWalletsTxt.txt", async (req, res) => {
       res.setHeader("Content-type", "application/octet-stream");
 
       res.setHeader("Content-disposition", "attachment; filename=file.txt");
-      res.send(wallets)
+      res.send(wallets);
     }
     return;
   } catch (error) {
@@ -221,7 +271,15 @@ router.post("/editWallet", async (req, res) => {
     if (!compare) {
       res.status(401).send("Invalid password");
     } else {
-      let r = await editWallet(walletLink, campaign._id, coin, amount, status, name, email);
+      let r = await editWallet(
+        walletLink,
+        campaign._id,
+        coin,
+        amount,
+        status,
+        name,
+        email
+      );
       res.send({ status: "ok" });
     }
     return;
@@ -250,12 +308,12 @@ router.post("/deleteWallet", async (req, res) => {
     if (!compare) {
       res.status(401).send("Invalid password");
     } else {
-      let wallet = await Wallet.findOne({link: walletLink})  
-      console.log(wallet.campaign, campaign._id);    
+      let wallet = await Wallet.findOne({ link: walletLink });
+      console.log(wallet.campaign, campaign._id);
       if (wallet.campaign.equals(campaign._id)) {
-        await Wallet.deleteOne({link: walletLink})
-        res.send({status: 'ok'})
-        return
+        await Wallet.deleteOne({ link: walletLink });
+        res.send({ status: "ok" });
+        return;
       }
       res.status(400).send({ status: "false" });
     }
@@ -266,15 +324,15 @@ router.post("/deleteWallet", async (req, res) => {
   }
 });
 
-router.get('/stat/:link', async(req, res) => {
+router.get("/stat/:link", async (req, res) => {
   const link = req.params.link;
 
   try {
-    let r = await getStats(link)
-    res.send(r)
+    let r = await getStats(link);
+    res.send(r);
   } catch (error) {
-    res.status(400).send('Error while getting statistics')
+    res.status(400).send("Error while getting statistics");
   }
-})
+});
 
 export default router;

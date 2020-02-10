@@ -28,7 +28,6 @@ export const addToHistory = (
     let history = getWalletsHistory();
     if (!history) history = [];
     if (history.length > 9) history.splice(-1,1);
-    console.log(history);
     history.unshift({ type, address, link, seed, date: Date.now(), password });
     localStorage.setItem("history", JSON.stringify(history));
   } catch (error) {
