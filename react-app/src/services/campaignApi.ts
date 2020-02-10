@@ -49,6 +49,35 @@ export const getWallets = async (link: string, pass: string) => {
   });
 };
 
+export const editWallet = async (
+         link: string,
+         pass: string,
+         walletLink: string,
+         coin: string,
+         amount: number,
+         status: string,
+         name: string,
+         email: string
+       ) => {
+         const data = {
+           link,
+           pass,
+           walletLink,
+           coin,
+           amount,
+           status,
+           name,
+           email
+         };
+         return await HTTP.post(
+           `${config.apiURL}/campaign/editWallet`,
+           qs.stringify(data),
+           {
+             headers: { "content-type": "application/x-www-form-urlencoded" }
+           }
+         );
+       };
+
 export const setCampaign = async (
   link: string,
   pass: string,

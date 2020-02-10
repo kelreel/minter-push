@@ -6,7 +6,7 @@ import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
 import { sendEmail } from "../utils/email";
 import { Campaign } from "../models/CampaignSchema";
-import { createCampaign, addWallets, getWallets, getWalletsLinksTxt, getStats } from "../utils/campaign";
+import { createCampaign, addWallets, getWallets, getWalletsLinksTxt, getStats, editWallet } from "../utils/campaign";
 
 const router = express.Router();
 
@@ -189,6 +189,40 @@ router.post("/getWalletsTxt.txt", async (req, res) => {
 
       res.setHeader("Content-disposition", "attachment; filename=file.txt");
       res.send(wallets)
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+// Edit wallet
+router.post("/editWallet", async (req, res) => {
+  try {
+    let pass = req.body.pass;
+    let link = req.body.link;
+    let walletLink = req.body.walletLink;
+    let coin = req.body.coin;
+    let status = req.body.status;
+    let amount = req.body.amount;
+    let name = req.body.name;
+    let email = req.body.email;
+
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+      let r = await editWallet(walletLink, campaign._id, coin, amount, status, name, email);
+      res.send({ status: "ok" });
     }
     return;
   } catch (error) {

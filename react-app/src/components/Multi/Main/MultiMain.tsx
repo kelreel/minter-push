@@ -100,7 +100,11 @@ const MultiMain: React.FC = observer(() => {
           link: `${config.domain}${x.link}`,
           status: x.status,
           address: x.address,
-          lastVisit: x.lastVisit
+          lastVisit: x.lastVisit,
+          name: x.name,
+          email: x.email,
+          coin: x.coin,
+          value: x.value
         };
       })
     );
@@ -126,7 +130,6 @@ const MultiMain: React.FC = observer(() => {
           <ParamsForm />
         </Card>
       </div>
-      <WalletTable />
       <div className="actions">
         <Button type="primary" onClick={addWalletsAction}>
           Add 10 wallets
@@ -135,6 +138,7 @@ const MultiMain: React.FC = observer(() => {
         <Button onClick={getTxt}>Export .txt</Button>
         <Button onClick={getCSV}>Export .csv</Button>
       </div>
+      <WalletTable />
     </div>
   );
 });

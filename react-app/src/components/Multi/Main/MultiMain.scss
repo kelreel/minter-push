@@ -76,6 +76,10 @@
     margin-top: 30px;
     margin-bottom: 0;
 
+    .refresh {
+      margin-right: 0 auto;
+    }
+
     .item {
       display: flex;
       flex-flow: row nowrap;
@@ -86,7 +90,7 @@
         margin-right: 5px;
       }
 
-      +.item {
+      + .item {
         margin-left: 15px;
       }
     }
@@ -219,14 +223,78 @@
   }
 }
 
-
-.multi-main > .actions {
+.edit-modal {
+  .edit-wallet {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    margin: 20px 10px;
+    flex-flow: column wrap;
 
-    button {
-      margin-right: 7px;
+    .send-form {
+      display: flex;
+      flex-flow: column wrap;
+      justify-content: flex-start;
+
+      label {
+        margin-bottom: 5px;
+      }
+
+      .coin-val {
+        display: flex;
+        flex-flow: row nowrap;
+        margin-bottom: 10px;
+
+        .coin {
+          display: flex;
+          flex-flow: column wrap;
+          flex: 2;
+          margin-right: 10px;
+        }
+
+        .amount {
+          flex: 1;
+          display: flex;
+          flex-flow: column wrap;
+        }
+
+        .ant-input-number {
+          width: unset !important;
+        }
+      }
+
+      .ant-input-group-addon {
+        cursor: default;
+        span {
+          display: flex;
+          flex-flow: row;
+          justify-content: center;
+          align-items: center;
+        }
+        img {
+          width: 15px;
+          height: 15px;
+          margin-left: 5px;
+        }
+      }
+
+      .field {
+        margin-bottom: 16px;
+      }
+
+      textarea {
+        resize: none;
+      }
     }
   }
+}
+
+.multi-main > .actions {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  margin-bottom: 0;
+  margin-top: 20px;
+
+  button {
+    margin-right: 7px;
+    margin-top: 10px;
+  }
+}

@@ -93,15 +93,13 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
 
   if (wallet.status === WalletStatus.created) {
     try {
-      let r = await payToWallet(
-        wallet.address,
-        camp.seed,
-        camp.coin,
-        camp.value
-      );
+      let coin = wallet.coin ? wallet.coin : camp.coin;
+      let amount = wallet.amount ? wallet.amount : camp.value;
+
+      let r = await payToWallet(wallet.address, camp.seed, coin, amount);
       wallet.redeem = {
-        coin: camp.coin,
-        value: camp.value,
+        coin,
+        value: amount,
         result: r,
         date: Date.now()
       };
@@ -109,8 +107,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
       await wallet.save();
     } catch (error) {
       wallet.redeem = {
-        coin: camp.coin,
-        value: camp.value,
+        coin,
+        value: amount,
         result: null,
         date: Date.now()
       };
@@ -175,6 +173,10 @@ export const getWallets = async campaignId => {
   return wallets.map(x => {
     return {
       link: x.link,
+      name: x.name,
+      email: x.email,
+      coin: x.coin,
+      amount: x.amount,
       status: x.status,
       address: x.address,
       active: x.active,
@@ -183,6 +185,26 @@ export const getWallets = async campaignId => {
       lastVisit: x.status !== WalletStatus.created ? x.updatedAt : null
     };
   });
+};
+
+export const editWallet = async (
+  walletLink: string,
+  campaignId: string,
+  coin: string,
+  amount: number,
+  status: string,
+  name: string,
+  email: string
+) => {
+  let wallet = await Wallet.findOne({link: walletLink});
+  if (wallet.campaign.equals(campaignId)) {
+    wallet.status = status;
+    wallet.coin = coin;
+    wallet.amount = amount;
+    wallet.name = name;
+    wallet.email = email;
+    await wallet.save();
+  } else throw 'Wallet and campaign are different'
 };
 
 export const getWalletsLinksTxt = async campaignId => {

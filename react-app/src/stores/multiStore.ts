@@ -35,64 +35,9 @@ class MultiStore {
   @observable wallets: string[] = [];
   @observable walletsData: any[] = [];
   @observable balance: number = 0;
+  @observable isLoadingWalletsData: boolean = false;
 
   constructor() {}
-
-  // @action async checkBalance() {
-  //   this.isLoading = true;
-  //   try {
-  //     let res = await getBalanceFromExplorer(
-  //       // `Mxa0240b1070cb72f9600f4f4c3e427dd0dbc94cd6`
-  //       // "Mx63f5509fe5347916c829664c6d92d09d87229998"
-  //       // "Mxcf3b7531dd5ee878c5cc30ab198d30b427555555"
-  //       this.address!
-  //     );
-  //     let balances = res?.data?.data?.balances;
-
-  //     for (let item of balances) {
-  //     let bipVal = 0;
-  //       if (item.coin === "BIP") {
-  //         bipVal += parseFloat(item.amount as string);
-  //         this.totalBipBalance += bipVal;
-  //         item.bip_value = bipVal;
-  //         item.value =
-  //           Math.round(parseFloat(item.amount as string) * 100) / 100;
-  //       } else {
-  //         let r;
-  //         try {
-  //           r = await minter.estimateCoinSell({
-  //             coinToSell: item.coin,
-  //             valueToSell: parseFloat(item.amount as string),
-  //             coinToBuy: "BIP"
-  //           });
-  //         } catch (error) {
-  //           r.will_get = 0;
-  //         }
-  //         bipVal = Math.round(parseFloat(r.will_get) * 100) / 100;
-  //         this.totalBipBalance += Math.round(
-  //           (parseFloat(r.will_get) * 100) / 100
-  //         );
-  //         item.bip_value = bipVal;
-  //         item.value =
-  //           Math.round(parseFloat(item.amount as string) * 100) / 100;
-  //       }
-  //       delete item["amount"];
-  //     }
-  //     let r = balances.filter((x: { value: number }) => x.value !== 0);
-  //     r = r.filter((x: { value: number, bip_value: number }) => (x.bip_value > 0.1 || r.length === 1));
-  //     r = r.sort((a: { bip_value: number; }, b: { bip_value: number; }) => {
-  //       if (a.bip_value > b.bip_value) return -1
-  //       else return 1
-  //     })
-  //     this.balance = r;
-  //     console.log(r);
-  //   } catch (error) {
-  //     console.log(error);
-  //     message.error("Error while getting balance");
-  //   } finally {
-  //     this.isLoading = false;
-  //   }
-  // }
 
   @action async initCampaign(
     link: string,
@@ -122,12 +67,14 @@ class MultiStore {
   @action async checkBalance() {
     try {
       let res = await getBalance(this.address!);
-      this.balance =
+      let val =
         Math.round(
           (parseFloat(res.data.result.balance[this.coin!]) /
             1000000000000000000) *
             100
         ) / 100;
+      if (isNaN(val)) val = 0;
+      this.balance = val;
     } catch (error) {
       console.log(error);
     }
@@ -148,12 +95,14 @@ class MultiStore {
 
   @action async getWalletsData() {
     try {
+      this.isLoadingWalletsData = true;
       let res = await getWallets(this.link!, this.password!);
       this.walletsData = res.data;
     } catch (error) {
       console.log(error);
       message.error("Error while getting wallets");
     }
+    this.isLoadingWalletsData = false;
   }
 }
 

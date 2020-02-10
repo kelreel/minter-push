@@ -156,8 +156,8 @@ const Footer: React.FC = () => {
                   <a
                     href={
                       item.type == "multi"
-                        ? `https://push.scoring.mn/multi/${item.link}`
-                        : `https://push.scoring.mn/${item.link}`
+                        ? `${config.domain}${item.link}`
+                        : `${config.domain}${item.link}`
                     }
                     target="_blank"
                   >
@@ -172,10 +172,12 @@ const Footer: React.FC = () => {
                     type="copy"
                   />
                 </p>
-                {item.seed && <p>
-                  <strong>Seed: </strong>
-                  {item.seed}
-                </p>}
+                {item.seed && (
+                  <p>
+                    <strong>Seed: </strong>
+                    {item.seed}
+                  </p>
+                )}
                 {item.password && (
                   <p>
                     <strong>Password: </strong>

@@ -15,11 +15,14 @@ export type WalletDocument = mongoose.Document & {
   fromName: string | null;
   payload: string | null;
   status: WalletStatus;
-  link: string,
-  campaign: mongoose.Types.ObjectId | null,
-  redeem: any,
-  browser: any,
-  active: boolean
+  link: string;
+  campaign: mongoose.Types.ObjectId | null;
+  redeem: any;
+  browser: any;
+  active: boolean;
+  coin: string | null;
+  amount: string | null;
+  email: string | null;
 };
 
 const walletSchema = new mongoose.Schema(
@@ -32,11 +35,11 @@ const walletSchema = new mongoose.Schema(
     payload: String,
     campaign: {
       type: mongoose.Types.ObjectId,
-      ref: 'Campaign'
+      ref: "Campaign"
     },
     link: {
       type: String,
-      index: true,
+      index: true
     },
     status: {
       type: String,
@@ -48,6 +51,18 @@ const walletSchema = new mongoose.Schema(
     active: {
       type: Boolean,
       default: true
+    },
+    coin: {
+      type: String,
+      default: null
+    },
+    amount: {
+      type: String,
+      default: null
+    },
+    email: {
+      type: String,
+      default: null
     }
   },
   {

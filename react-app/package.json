@@ -22,6 +22,7 @@
     "copy-to-clipboard": "^3.2.0",
     "detect-browser": "^4.8.0",
     "file-saver": "^2.0.2",
+    "fingerprintjs2": "^2.1.0",
     "history": "^4.10.1",
     "i18next": "^19.0.3",
     "i18next-browser-languagedetector": "^4.0.1",
