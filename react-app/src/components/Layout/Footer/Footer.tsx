@@ -156,7 +156,7 @@ const Footer: React.FC = () => {
                   <a
                     href={
                       item.type == "multi"
-                        ? `${config.domain}${item.link}`
+                        ? `${config.domain}multi/${item.link}`
                         : `${config.domain}${item.link}`
                     }
                     target="_blank"

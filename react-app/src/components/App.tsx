@@ -28,12 +28,16 @@ const App: React.FC = observer(() => {
 
   let layoutStyle = {
     minHeight: "100vh",
-    backgroundImage: `url(${pStore.background})`
+    backgroundRepeat: pStore.backgroundRepeat,
+    backgroundImage: `url(${pStore.background})`,
+    backgroundColor: pStore.backgroundColor,
   };
 
   return (
     <Router history={history}>
-      <Layout style={layoutStyle}>
+      <Layout
+        style={layoutStyle}
+      >
         <Header />
         <Switch>
           <Route exact path="/">
@@ -57,7 +61,7 @@ const App: React.FC = observer(() => {
             </h2>
           </Route>
         </Switch>
-        <Footer />
+        {pStore.showFooter && <Footer />}
       </Layout>
     </Router>
   );

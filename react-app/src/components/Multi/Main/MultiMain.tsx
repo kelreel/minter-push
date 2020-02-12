@@ -51,6 +51,7 @@ const MultiMain: React.FC = observer(() => {
       let r = await sheetAdd(mStore.link!, mStore.password!, state.sheetsLink);
       message.success(`Imported wallets: ${r.data.count}`);
       setState({ ...state, sheetsLoading: false, sheetsModal: false, sheetsLink: '' });
+      mStore.getWalletsData()
     } catch (error) {
       message.error(error.message);
       setState({ ...state, sheetsLoading: false });

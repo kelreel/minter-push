@@ -13,14 +13,14 @@ const MultiInfo: React.FC = observer(() => {
   const { t, i18n } = useTranslation();
 
   const copyLink = () => {
-    copy(`${config.domain}${mStore.link}`);
+    copy(`${config.domain}multi/${mStore.link}`);
     message.success(t("walletCreated.copyLinkSuccess"));
   };
 
   return (
     <div className="multi-info">
       <h3>{mStore.name}</h3>
-      <p className="link" onClick={copyLink}>{`${config.domain}${mStore.link}`} <Icon type="copy"/></p>
+      <p className="link" onClick={copyLink}>{`${config.domain}multi/${mStore.link}`} <Icon type="copy"/></p>
       <p>{t('multi.created')} {new Date(mStore.created!).toLocaleString()}</p>
       <div className="stats">
         <Statistic

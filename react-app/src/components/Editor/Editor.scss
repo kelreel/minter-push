@@ -1,7 +1,25 @@
 .editor {
+  .ant-drawer-body {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: flex-start;
+    flex: 1;
+  }
+
+  .actions {
+    align-self: center;
+    justify-self: flex-end;
+  }
+
   .item {
     display: flex;
     flex-flow: column wrap;
+
+    p {
+      margin-bottom: 5px;
+    }
+
+    margin-bottom: 10px;
   }
 
   .switch {
@@ -12,5 +30,26 @@
     p {
       padding-top: 10px;
     }
+  }
+
+  .ant-collapse-item-active {
+    border-top: 1px solid rgb(122, 122, 122);
+    border-bottom: 1px solid rgb(122, 122, 122);
+  }
+
+  .picker-cover {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    z-index: 3;
+    background-color: #97979759;
+  }
+
+  .picker {
+    display: flex;
+    position: absolute;
+    z-index: 4;
   }
 }

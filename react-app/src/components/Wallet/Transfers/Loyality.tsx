@@ -13,11 +13,13 @@ import Phone from "../../Modals/Phone/Phone";
 import Nut from "../../Modals/Nut/Nut";
 import TimeLoop from "../../Modals/TimeLoop/TimeLoop";
 import { TargetEnum } from "../../Multi/Main/MultiMain";
+import { PresetStoreContext } from "../../../stores/presetStore";
 
 export const targetClass = `animated infinite pulse delay-2s target`;
 
 const Loyality: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
+  const pStore = useContext(PresetStoreContext);
   const { t, i18n } = useTranslation();
 
   const [state, setState] = useState({
@@ -26,9 +28,18 @@ const Loyality: React.FC = observer(() => {
     timeloop: false
   });
 
+  const cardPreset = {
+    background: pStore.cardsBgc
+  };
+
+  const cardTextPreset = {
+    color: pStore.cardsTextColor
+  };
+
   return (
     <>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, nut: false });
           setTimeout(() => {
@@ -43,9 +54,12 @@ const Loyality: React.FC = observer(() => {
           size={64}
           src={nutLogo}
         />
-        <h3 style={{ padding: "0 5px" }}>{t("loyalityList.nut")}</h3>
+        <h3 style={{ padding: "0 5px", color: pStore.cardsTextColor }}>
+          {t("loyalityList.nut")}
+        </h3>
       </Card>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, phone: false });
           setTimeout(() => {
@@ -56,9 +70,10 @@ const Loyality: React.FC = observer(() => {
           targetClass}`}
       >
         <Avatar style={{ backgroundColor: "#de16c5" }} size={64} icon="phone" />
-        <h3>{t("loyalityList.phone")}</h3>
+        <h3 style={cardTextPreset}>{t("loyalityList.phone")}</h3>
       </Card>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, timeloop: false });
           setTimeout(() => {
@@ -73,11 +88,11 @@ const Loyality: React.FC = observer(() => {
           size={64}
           src={timeLogo}
         />
-        <h3>{t("loyalityList.timeloop")}</h3>
+        <h3 style={cardTextPreset}>{t("loyalityList.timeloop")}</h3>
       </Card>
-      <Card className="transfer-card disabled">
+      <Card style={cardPreset} className="transfer-card disabled">
         <Avatar size={64} icon={"clock-circle"} src={popeLogo} />
-        <h3>{t("comingSoon")}</h3>
+        <h3 style={cardTextPreset}>{t("comingSoon")}</h3>
       </Card>
       <Phone visible={state.phone} />
       <Nut visible={state.nut} />

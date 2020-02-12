@@ -16,9 +16,11 @@ import Perekrestok from "../../Modals/Perekrestok/Perekrestok";
 import DS from "../../Modals/DS/DS";
 import { TargetEnum } from "../../Multi/Main/MultiMain";
 import { targetClass } from "./Loyality";
+import { PresetStoreContext } from "../../../stores/presetStore";
 
 const Shops: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
+  const pStore = useContext(PresetStoreContext);
   const { t, i18n } = useTranslation();
 
   const [state, setState] = useState({
@@ -28,9 +30,18 @@ const Shops: React.FC = observer(() => {
     ds: false
   });
 
+  const cardPreset = {
+    background: pStore.cardsBgc
+  };
+
+  const cardTextPreset = {
+    color: pStore.cardsTextColor
+  };
+
   return (
     <>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, ozon: false });
           setTimeout(() => {
@@ -45,9 +56,10 @@ const Shops: React.FC = observer(() => {
           size={64}
           src={ozonLogo}
         />
-        <h3>{t("shopList.ozon")}</h3>
+        <h3 style={cardTextPreset}>{t("shopList.ozon")}</h3>
       </Card>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, yandex: false });
           setTimeout(() => {
@@ -62,9 +74,10 @@ const Shops: React.FC = observer(() => {
           size={64}
           src={yandexLogo}
         />
-        <h3>{t("shopList.yandex")}</h3>
+        <h3 style={cardTextPreset}>{t("shopList.yandex")}</h3>
       </Card>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, perekrestok: false });
           setTimeout(() => {
@@ -78,9 +91,10 @@ const Shops: React.FC = observer(() => {
           size={64}
           src={perekrestokLogo}
         />
-        <h3>{t("shopList.perekrestok")}</h3>
+        <h3 style={cardTextPreset}>{t("shopList.perekrestok")}</h3>
       </Card>
       <Card
+        style={cardPreset}
         onClick={() => {
           setState({ ...state, ds: false });
           setTimeout(() => {
@@ -90,7 +104,7 @@ const Shops: React.FC = observer(() => {
         className="transfer-card"
       >
         <Avatar style={{ backgroundColor: "#f7931a" }} size={64} src={dsLogo} />
-        <h3>{t("shopList.ds")}</h3>
+        <h3 style={cardTextPreset}>{t("shopList.ds")}</h3>
       </Card>
       <Ozon visible={state.ozon} />
       <YandexEda visible={state.yandex} />

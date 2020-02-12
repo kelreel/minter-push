@@ -7,11 +7,13 @@ import { useTranslation } from "react-i18next";
 
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
+import { PresetStoreContext } from "../../../stores/presetStore";
 
 const { Content } = Layout;
 
 const Balance: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
+  const pStore = useContext(PresetStoreContext)
   const { t, i18n } = useTranslation();
 
   return (
@@ -37,18 +39,18 @@ const Balance: React.FC = observer(() => {
             {store.balance[0].value.toLocaleString("ru-RU")}{" "}
             <span className="coin">{store.balance[0].coin}</span>
           </div>
-          <div className="price">
+          {pStore.showLocalBalance && <div className="price">
             ~ {store.totalInLocalCurrency.toLocaleString("ru-RU")}{" "}
             {store.currency}
-          </div>
+          </div>}
         </div>
       )}
       {store.balance.length > 1 && (
         <div className="coin-list">
-          <div className="value">
+          {pStore.showLocalBalance && <div className="value">
             ~ {store.totalInLocalCurrency.toLocaleString("ru-RU")}{" "}
             {store.currency}
-          </div>
+          </div>}
           <List
             size="small"
             bordered
@@ -73,7 +75,7 @@ const Balance: React.FC = observer(() => {
           />
         </div>
       )}
-      {store.payload && (
+      {pStore.showPaylaod && store.payload && (
         <Alert closable message={store.payload} type="success" />
       )}
       {/* <Icon className="down" style={{ marginTop: "20px" }} type="down" /> */}

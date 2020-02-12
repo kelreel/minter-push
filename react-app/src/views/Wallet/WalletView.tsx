@@ -17,11 +17,13 @@ import history from "../../stores/history";
 import Loading from "../../components/Layout/Loading";
 import Editor from "../../components/Editor/Editor";
 import { BrowserInfo } from "detect-browser";
+import { PresetStoreContext } from "../../stores/presetStore";
 
 const { Content } = Layout;
 
 const WalletView: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
+  const pStore = useContext(PresetStoreContext);
   const { t, i18n } = useTranslation();
   const { link } = useParams();
 
@@ -70,21 +72,33 @@ const WalletView: React.FC = observer(() => {
           {store.isPassword && <PasswordForm />}
           {store.seed && !store.isPassword && (
             <>
-              {/* <Affix  style={{position: 'absolute', right: '0', top: '120px'}} onChange={affixed => console.log(affixed)}>
-                <Editor visible={true} />
-              </Affix> */}
               <Card className="balance">
                 <Balance />
               </Card>
-              <div className="title">{t("transfersTitle")}</div>
+              <div
+                className="title"
+                style={{ color: pStore.categoryTitleColor }}
+              >
+                {pStore.showCategoryTitle && <>{t("transfersTitle")}</>}
+              </div>
               <div className="transfers">
                 <Transfers />
               </div>
-              <div className="title">{t("loyalityTitle")}</div>
+              <div
+                className="title"
+                style={{ color: pStore.categoryTitleColor }}
+              >
+                {pStore.showCategoryTitle && <>{t("loyalityTitle")}</>}
+              </div>
               <div className="transfers">
                 <Loyality />
               </div>
-              <div className="title">{t("shopListTitle")}</div>
+              <div
+                className="title"
+                style={{ color: pStore.categoryTitleColor }}
+              >
+                {pStore.showCategoryTitle && <>{t("shopListTitle")}</>}
+              </div>
               <div className="transfers">
                 <Shops />
               </div>

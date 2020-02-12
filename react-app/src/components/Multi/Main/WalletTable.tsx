@@ -90,7 +90,7 @@ const WalletTable: React.FC = observer(() => {
         state.editEmail
       );
       message.success("Wallet saved");
-      mStore.getWalletsData()
+      mStore.getWalletsData();
     } catch (error) {
       message.error("Error while saving wallet settings");
     }
@@ -357,9 +357,12 @@ const WalletTable: React.FC = observer(() => {
                     <Button
                       size="small"
                       icon="notification"
-                      onClick={() =>
-                        setState({ ...state, share: true, link: item })
-                      }
+                      onClick={() => {
+                        let wallet = mStore.walletsData.find(
+                          x => x.link === item
+                        );
+                        setState({ ...state, share: true, link: item, email: wallet.email });
+                      }}
                     />
                     <Button
                       size="small"
