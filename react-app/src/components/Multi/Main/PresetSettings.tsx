@@ -30,6 +30,8 @@ const PresetSettings: React.FC = observer(() => {
                 {mStore.preset ? <Tag color="green">Custom</Tag> : <Tag color="blue">Default</Tag>}
             </div>
 
+            <p>Настройте внешний вид Пуш-страниц</p>
+
             <div className="actions">
                 <Popconfirm
                     title="Are you sure reset preset?"

@@ -70,10 +70,11 @@ const WalletTable: React.FC = observer(() => {
     showBrowser: false,
     showRedeem: true,
     showLastVisit: true,
-    showName: true,
+    showName: false,
     showEmail: false,
     showCoin: true,
-    showAmount: true
+    showAmount: true,
+    hideSwitches: true
   });
 
   const saveEditWallet = async () => {
@@ -127,6 +128,16 @@ const WalletTable: React.FC = observer(() => {
 
   return (
     <>
+      {state.hideSwitches ? <div className="table-switches">
+        <div className="item">
+          <p style={{marginRight: '5px'}}>Show Table Settings</p>
+          <Switch
+              size="small"
+              checked={!state.hideSwitches}
+              onChange={val => setState({ ...state, hideSwitches: !val })}
+          />
+        </div>
+      </div> :
       <div className="table-switches">
         <div className="item">
           <p>Address</p>
@@ -201,7 +212,7 @@ const WalletTable: React.FC = observer(() => {
             Refresh
           </Button>
         </div>
-      </div>
+      </div>}
       <div className="wallet-table">
         <Table
           size="small"
