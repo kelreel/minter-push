@@ -55,7 +55,6 @@ const Perekrestok: React.FC<{ visible: boolean }> = observer(({ visible }) => {
           <Button key="back" onClick={handleCancel}>
             {t("perekrestok.cancel")}
           </Button>
-          ,
           <Button
             disabled={!state.certificate || !state.coin}
             key="submit"

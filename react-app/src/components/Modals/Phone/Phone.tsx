@@ -137,7 +137,6 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             <Button key="back" onClick={handleCancel}>
               {t("phone.cancel")}
             </Button>
-            ,
             <Button
               disabled={!phoneRegexp.test(state.phone)}
               key="submit"

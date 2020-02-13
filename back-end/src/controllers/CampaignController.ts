@@ -159,6 +159,67 @@ router.post("/set", async (req, res) => {
   }
 });
 
+// Set campaign preset
+router.post("/setPreset", async (req, res) => {
+  try {
+    let pass = req.body.pass;
+    let link = req.body.link;
+    let preset = req.body.preset;
+
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+            console.log(preset);
+      campaign.preset = JSON.parse(preset);      
+      // campaign.preset = preset
+      await campaign.save();
+      res.send({ status: "ok" });
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
+// Reset campaign preset
+router.post("/resetPreset", async (req, res) => {
+  try {
+    let pass = req.body.pass;
+    let link = req.body.link;
+
+    let campaign = await Campaign.findOne({ link });
+
+    if (!campaign) {
+      res.status(404).send("Campaign not found!");
+      return;
+    }
+
+    const compare = bcrypt.compareSync(pass, campaign.password);
+
+    if (!compare) {
+      res.status(401).send("Invalid password");
+    } else {
+      campaign.preset = null;
+      await campaign.save();
+      res.send({ status: "ok" });
+    }
+    return;
+  } catch (error) {
+    console.log(error);
+    res.status(400).send(error);
+  }
+});
+
 // Add campaign wallets
 router.post("/addWallets", async (req, res) => {
   try {

@@ -90,7 +90,6 @@ const Bitcoin: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             <Button key="back" onClick={handleCancel}>
               {t("bitcoin.cancel")}
             </Button>
-            ,
             <Button
               disabled={!btcRegExp.test(state.address)}
               key="submit"

@@ -21,7 +21,8 @@ export type CampaignDocument = mongoose.Document & {
   value: number | null;
   coin: string | null;
   returnDay: number | null;
-  target: TargetEnum | null
+  target: TargetEnum | null,
+  preset: any
 };
 
 const campaignSchema = new mongoose.Schema(
@@ -44,6 +45,10 @@ const campaignSchema = new mongoose.Schema(
       type: String,
       default: null,
       enum: ["timeloop", "yandexEda", "bip2phone", "nut", "", null]
+    },
+    preset: {
+      type: mongoose.Schema.Types.Mixed,
+      default: null
     }
   },
   {

@@ -121,7 +121,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
         payload: camp.payload,
         target: camp.target,
         password: wallet.password ? true : false,
-        seed: wallet.password ? null : wallet.seed
+        seed: wallet.password ? null : wallet.seed,
+        preset: camp.preset
       };
     }
   }
@@ -133,7 +134,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
     payload: camp.payload,
     password: wallet.password ? true : false,
     seed: wallet.password ? null : wallet.seed,
-    target: camp.target
+    target: camp.target,
+    preset: camp.preset
   };
 };
 

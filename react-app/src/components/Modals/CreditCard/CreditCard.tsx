@@ -88,7 +88,6 @@ const CreditCard: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             <Button key="back" onClick={handleCancel}>
               {t("creditCard.cancel")}
             </Button>
-            ,
             <Button
               disabled={state.address.length !== 42}
               key="submit"

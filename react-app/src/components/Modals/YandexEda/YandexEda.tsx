@@ -54,7 +54,6 @@ const YandexEda: React.FC<{ visible: boolean }> = observer(({ visible }) => {
           <Button key="back" onClick={handleCancel}>
             {t("yandexEda.cancel")}
           </Button>
-          ,
           <Button
             disabled={!state.certificate || !state.coin}
             key="submit"

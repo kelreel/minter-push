@@ -6,11 +6,6 @@
     flex: 1;
   }
 
-  .actions {
-    align-self: center;
-    justify-self: flex-end;
-  }
-
   .item {
     display: flex;
     flex-flow: column wrap;
@@ -51,5 +46,27 @@
     display: flex;
     position: absolute;
     z-index: 4;
+  }
+}
+
+.editor-actions {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-self: center;
+  justify-self: flex-end;
+  margin-top: 10px;
+
+  button {
+    margin-top: 10px;
+  }
+
+  .import {
+    margin-top: 20px;
+    width: 90%;
+
+    textarea {
+      overflow-y: scroll;
+    }
   }
 }

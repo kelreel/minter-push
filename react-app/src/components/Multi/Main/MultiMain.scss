@@ -18,6 +18,28 @@
     }
   }
 
+  .preset-content {
+    .row {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .actions {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 10px;
+
+      button {
+        margin-right: 10px;
+      }
+    }
+  }
+
   .stat {
     .ant-card-body {
       width: 100%;

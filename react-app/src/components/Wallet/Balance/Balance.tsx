@@ -75,7 +75,7 @@ const Balance: React.FC = observer(() => {
           />
         </div>
       )}
-      {pStore.showPaylaod && store.payload && (
+      {pStore.showPayload && store.payload && (
         <Alert closable message={store.payload} type="success" />
       )}
       {/* <Icon className="down" style={{ marginTop: "20px" }} type="down" /> */}

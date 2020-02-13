@@ -6,8 +6,6 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { ResponsiveLine } from "@nivo/line";
-
 import {
   addWallets,
   getWalletsTxt,
@@ -22,6 +20,7 @@ import WalletTable from "./WalletTable";
 import { Parser } from "json2csv";
 import config from "../../../config";
 import copy from "copy-to-clipboard";
+import PresetSettings from "./PresetSettings";
 
 export enum TargetEnum {
   timeloop = "timeloop",
@@ -119,9 +118,14 @@ const MultiMain: React.FC = observer(() => {
         message={t("multi.alert")}
       />
       <div className="row">
-        <Card style={{ flex: "1" }}>
-          <MultiInfo />
-        </Card>
+        <div className="main" style={{ display: 'flex', flexFlow: 'column wrap', flex: "1" }}>
+          <Card style={{flex: 1}}>
+            <MultiInfo />
+          </Card>
+          <Card>
+            <PresetSettings />
+          </Card>
+        </div>
         <Card style={{ flex: "1" }}>
           <MultiWallet />
         </Card>

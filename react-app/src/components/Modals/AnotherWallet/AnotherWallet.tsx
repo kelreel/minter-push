@@ -151,7 +151,6 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
               <Button key="back" onClick={handleCancel}>
                 {t("anotherWallet.cancel")}
               </Button>
-              ,
               <Button
                 disabled={!mxRegExp.test(state.address) || state.loadProfile}
                 key="submit"

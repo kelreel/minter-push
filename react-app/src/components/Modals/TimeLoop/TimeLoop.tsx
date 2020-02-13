@@ -103,7 +103,6 @@ const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             <Button key="back" onClick={handleCancel}>
               {t("timeloop.cancel")}
             </Button>
-            ,
             <Button
               disabled={state.amount === 0}
               key="submit"
