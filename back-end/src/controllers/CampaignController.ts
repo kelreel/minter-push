@@ -178,7 +178,6 @@ router.post("/setPreset", async (req, res) => {
     if (!compare) {
       res.status(401).send("Invalid password");
     } else {
-            console.log(preset);
       campaign.preset = JSON.parse(preset);      
       // campaign.preset = preset
       await campaign.save();
@@ -221,7 +220,7 @@ router.post("/resetPreset", async (req, res) => {
 });
 
 // Add campaign wallets
-router.post("/addWallets", async (req, res) => {
+router.put("/addWallets", async (req, res) => {
   try {
     let pass = req.body.pass;
     let link = req.body.link;

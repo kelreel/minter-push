@@ -119,7 +119,7 @@ export const addWallets = async (link: string, pass: string, number: number = 10
         pass,
         number
     };
-    return await HTTP.post(
+    return await HTTP.put(
         `${config.apiURL}/campaign/addWallets`,
         qs.stringify(data),
         {
