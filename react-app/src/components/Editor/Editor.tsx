@@ -3,13 +3,19 @@ import React, {useContext, useState, useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import {AppStoreContext} from "../../stores/appStore";
 import "./Editor.scss";
-import {Card, Collapse, Input, Switch, Select, Button, message} from "antd";
+import {Card, Collapse, Input, Switch, Select, Button, message, Upload} from "antd";
 import {PresetStoreContext} from "../../stores/presetStore";
 import {SketchPicker, AlphaPicker} from "react-color";
 import {savePreset} from "../../services/presetsHistory";
 import copy from "copy-to-clipboard";
 import {setCampaignPreset} from "../../services/campaignApi";
 import {MultiStoreContext} from "../../stores/multiStore";
+import {Parser} from "json2csv";
+import config from "../../config";
+import {saveAs} from "file-saver";
+import {log} from "util";
+import {UploadFile} from "antd/es/upload/interface";
+import {UploadChangeParam} from "antd/lib/upload";
 
 const Editor: React.FC = observer(() => {
     const store = useContext(AppStoreContext);
@@ -35,11 +41,6 @@ const Editor: React.FC = observer(() => {
     useEffect(() => {
 
     }, [pStore.currentPresetString])
-
-    const exportPreset = () => {
-        copy(JSON.stringify(pStore.currentPreset));
-        message.success('Preset config copied')
-    }
 
     const savePreset = async () => {
         try {
@@ -70,6 +71,29 @@ const Editor: React.FC = observer(() => {
         });
 
     const {t, i18n} = useTranslation();
+
+    const exportJSON = () => {
+        const json = JSON.stringify(pStore.currentPreset, null, 2)
+        saveAs(new Blob([json]), `${mStore.name} Preset.json`);
+    };
+
+    const importJSON = (info: UploadChangeParam<UploadFile<any>>) => {
+        if (info.file.status === 'error') {
+            try {
+                let reader = new FileReader()
+                //@ts-ignore
+                reader.readAsText(info.file.originFileObj, 'utf8')
+                reader.onload = () => {
+                    let preset = JSON.parse(reader.result as string);
+                    pStore.setPreset(preset)
+                    message.success('Preset imported')
+                }
+            } catch (error) {
+                message.error('Import error')
+            }
+        }
+
+    }
 
     return (
         <>
@@ -111,17 +135,24 @@ const Editor: React.FC = observer(() => {
                             <p>Title</p>
                             <Input
                                 placeholder="Nut Loyalty"
+                                value={pStore.title}
                                 onChange={e => (pStore.title = e.target.value)}
                             />
                         </div>
                     )}
-                    <div className="item">
+                    {pStore.showLogo && <div className="item">
                         <p>Image</p>
-                        <Input
-                            placeholder="https://..."
-                            onChange={e => (pStore.logoImg = e.target.value)}
-                        />
-                    </div>
+                        <div className="img-input">
+                            <Input
+                                placeholder="https://..."
+                                onChange={e => (pStore.logoImg = e.target.value)}
+                            />
+                            {/*<Upload>*/}
+                            {/*    <Button>Upload</Button>*/}
+                            {/*</Upload>*/}
+                        </div>
+
+                    </div>}
                     <div className="item">
                         <div className="switch">
                             <p>Background</p>
@@ -272,7 +303,7 @@ const Editor: React.FC = observer(() => {
                             onChange={e => (pStore.showCategoryTitle = e)}
                         />
                     </div>
-                    {pStore.showCategoryTitle &&<div className="switch">
+                    {pStore.showCategoryTitle && <div className="switch">
                         <p>Category Title Color</p>
                         <div
                             style={{
@@ -401,8 +432,12 @@ const Editor: React.FC = observer(() => {
             <div className="editor-actions">
                 <Button icon="save" type={"primary"} onClick={savePreset} style={{marginRight: '10px'}}>Save</Button>
                 <div className="row" style={{marginTop: '15px'}}>
-                    <Button icon="export" size="small" style={{marginRight: '10px'}} onClick={exportPreset}>Export</Button>
-                    <Button icon="import" size="small" style={{marginRight: '10px'}}>Import</Button>
+                    <Button icon="export" size="small" style={{marginRight: '10px'}}
+                            onClick={exportJSON}>Export</Button>
+                    <Upload accept={'.json'} onChange={importJSON} multiple={false}>
+                        <Button icon="upload" size="small" style={{marginRight: '10px'}}
+                        >Import</Button>
+                    </Upload>
                 </div>
 
                 {/*<div className="import">*/}

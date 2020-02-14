@@ -88,6 +88,7 @@ const PresetView: React.FC = observer(() => {
                                 title={mStore.name ? `${mStore.name} Editor` : `Preset Editor`}
                                 placement="right"
                                 closable
+                                keyboard
                                 visible={state.editor}
                                 onClose={() => setState({...state, editor: false})}
                                 mask={false}

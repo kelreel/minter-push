@@ -198,6 +198,10 @@
     "coin": "Coin",
     "amount": "Amount",
     "target": "Target",
-    "save": "Save"
+    "save": "Save",
+    "preset": "Preset",
+    "presetContent": "Customize the look of your Push Pages",
+    "reset": "Reset",
+    "edit": "Editor"
   }
 }

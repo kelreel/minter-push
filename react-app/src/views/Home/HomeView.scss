@@ -48,8 +48,15 @@
 
   .multi-btn {
     margin-top: 15px;
-    background: #db682f;
-    color: #ffffff;
+    border: 1px solid #db682f;
+    background: none !important;
+    color: #db682f;
+    margin-bottom: 5px;
+
+    &:hover {
+      background: rgba(227, 116, 62, 0.9) !important;
+      color: #fff;
+    }
   }
 
   img {

@@ -26,11 +26,11 @@ const PresetSettings: React.FC = observer(() => {
     return (
         <div className="preset-content">
             <div className="row">
-                <h3>Preset</h3>
+                <h3>{t('multi.preset')}</h3>
                 {mStore.preset ? <Tag color="green">Custom</Tag> : <Tag color="blue">Default</Tag>}
             </div>
 
-            <p>Настройте внешний вид Пуш-страниц</p>
+            <p>{t('multi.presetContent')}</p>
 
             <div className="actions">
                 <Popconfirm
@@ -39,9 +39,9 @@ const PresetSettings: React.FC = observer(() => {
                     okText="Yes"
                     cancelText="No"
                 >
-                    <Button>Reset</Button>
+                    <Button>{t('multi.reset')}</Button>
                 </Popconfirm>
-                <a href="/preset/" className={"ant-btn ant-btn-primary"} target="_blank">Edit</a>
+                <a href="/preset/" className={"ant-btn ant-btn-primary"} target="_blank">{t('multi.edit')}</a>
             </div>
         </div>
     );
