@@ -125,9 +125,9 @@ const Editor: React.FC = observer(() => {
                 )}
 
                 {/* HEADER */}
-                <Panel showArrow header="Header" key="1">
+                <Panel showArrow header={t('editor.header.header')} key="1">
                     <div className="switch">
-                        <p>Logo</p>
+                        <p>{t('editor.header.showLogo')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showLogo}
@@ -135,7 +135,7 @@ const Editor: React.FC = observer(() => {
                         />
                     </div>
                     <div className="switch">
-                        <p>Show Title</p>
+                        <p>{t('editor.header.showTitle')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showTitle}
@@ -144,7 +144,7 @@ const Editor: React.FC = observer(() => {
                     </div>
                     {pStore.showTitle && (
                         <div className="switch">
-                            <p>Greeting</p>
+                            <p>{t('editor.header.greeting')}</p>
                             <Switch
                                 size="small"
                                 defaultChecked={pStore.greeting}
@@ -154,7 +154,7 @@ const Editor: React.FC = observer(() => {
                     )}
                     {pStore.showTitle && (
                         <div className="item">
-                            <p>Title</p>
+                            <p>{t('editor.header.title')}</p>
                             <Input
                                 placeholder="Nut Loyalty"
                                 value={pStore.title}
@@ -165,7 +165,7 @@ const Editor: React.FC = observer(() => {
 
                     {pStore.showTitle && <><div className="item">
                         <div className="switch">
-                            <p>Title Color</p>
+                            <p>{t('editor.header.titleColor')}</p>
                             <div
                                 style={{
                                     width: "20px",
@@ -196,7 +196,7 @@ const Editor: React.FC = observer(() => {
                     </div></>}
 
                     {pStore.showLogo && <div className="item">
-                        <p>Logo Image</p>
+                        <p>{t('editor.header.logoImg')}</p>
                         <div className="img-input">
                             <Input
                                 placeholder="https://..."
@@ -204,14 +204,14 @@ const Editor: React.FC = observer(() => {
                                 onChange={e => (pStore.logoImg = e.target.value)}
                             />
                             <Upload onChange={uploadLogo} action={`${config.apiURL}/upload`}>
-                                <Button>Upload</Button>
+                                <Button>{t('editor.upload')}</Button>
                             </Upload>
                         </div>
 
                     </div>}
                     <div className="item">
                         <div className="switch">
-                            <p>Background</p>
+                            <p>{t('editor.header.bg')}</p>
                             <div
                                 style={{
                                     width: "20px",
@@ -243,9 +243,9 @@ const Editor: React.FC = observer(() => {
                 </Panel>
 
                 {/* BACKGROUND */}
-                <Panel showArrow header="Background" key="2">
+                <Panel showArrow header={t('editor.bg.bg')} key="2">
                     <div className="switch">
-                        <p>Background Color</p>
+                        <p>{t('editor.bg.bgColor')}</p>
                         <div
                             style={{
                                 width: "20px",
@@ -273,7 +273,7 @@ const Editor: React.FC = observer(() => {
                         )}
                     </div>
                     <div className="item">
-                        <p>Image</p>
+                        <p>{t('editor.bg.img')}</p>
                         <div className="img-input">
                             <Input
                                 value={pStore.background!}
@@ -281,7 +281,7 @@ const Editor: React.FC = observer(() => {
                                 onChange={e => (pStore.background = e.target.value)}
                             />
                             <Upload onChange={uploadBackground} action={`${config.apiURL}/upload`}>
-                                <Button>Upload</Button>
+                                <Button>{t('editor.upload')}</Button>
                             </Upload>
                         </div>
 
@@ -309,9 +309,9 @@ const Editor: React.FC = observer(() => {
                 </Panel>
 
                 {/* BALANCE CARD */}
-                <Panel showArrow header="Balance Card" key="3">
+                <Panel showArrow header={t('editor.balance.balance')} key="3">
                     <div className="switch">
-                        <p>Payload Message</p>
+                        <p>{t('editor.balance.payload')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showPayload}
@@ -319,7 +319,7 @@ const Editor: React.FC = observer(() => {
                         />
                     </div>
                     <div className="switch">
-                        <p>Local Currency Balance</p>
+                        <p>{t('editor.balance.local')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showLocalBalance}
@@ -327,7 +327,7 @@ const Editor: React.FC = observer(() => {
                         />
                     </div>
                     <div className="switch">
-                        <p>Background Color</p>
+                        <p>{t('editor.balance.bg')}</p>
                         <div
                             style={{
                                 width: "20px",
@@ -357,9 +357,9 @@ const Editor: React.FC = observer(() => {
                 </Panel>
 
                 {/* CARD STYLES */}
-                <Panel showArrow header="Cards Style" key="4">
+                <Panel showArrow header={t('editor.cards.cards')} key="4">
                     <div className="switch">
-                        <p>Show categories name</p>
+                        <p>{t('editor.cards.showCategory')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showCategoryTitle}
@@ -367,7 +367,7 @@ const Editor: React.FC = observer(() => {
                         />
                     </div>
                     {pStore.showCategoryTitle && <div className="switch">
-                        <p>Category Title Color</p>
+                        <p>{t('editor.cards.titleColor')}</p>
                         <div
                             style={{
                                 width: "20px",
@@ -395,7 +395,7 @@ const Editor: React.FC = observer(() => {
                         )}
                     </div>}
                     <div className="switch">
-                        <p>Card Background Color</p>
+                        <p>{t('editor.cards.cardBg')}</p>
                         <div
                             style={{
                                 width: "20px",
@@ -423,7 +423,7 @@ const Editor: React.FC = observer(() => {
                         )}
                     </div>
                     <div className="switch">
-                        <p>Card Title Color</p>
+                        <p>{t('editor.cards.cardTitleColor')}</p>
                         <div
                             style={{
                                 width: "20px",
@@ -453,9 +453,9 @@ const Editor: React.FC = observer(() => {
                 </Panel>
 
                 {/* TARGETS */}
-                <Panel showArrow header="Targets" key="5">
+                <Panel showArrow header={t('editor.targets.targets')} key="5">
                     <div className="switch">
-                        <p>Transfers</p>
+                        <p>{t('editor.targets.transfers')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showTransfers}
@@ -463,7 +463,7 @@ const Editor: React.FC = observer(() => {
                         />
                     </div>
                     <div className="switch">
-                        <p>Services & Games</p>
+                        <p>{t('editor.targets.services')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showLoyalty}
@@ -471,7 +471,7 @@ const Editor: React.FC = observer(() => {
                         />
                     </div>
                     <div className="switch">
-                        <p>Shops</p>
+                        <p>{t('editor.targets.shops')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showShops}
@@ -481,9 +481,9 @@ const Editor: React.FC = observer(() => {
                 </Panel>
 
                 {/* FOOTER */}
-                <Panel showArrow header="Footer" key="6">
+                <Panel showArrow header={t('editor.footer.footer')} key="6">
                     <div className="switch">
-                        <p>Show Footer</p>
+                        <p>{t('editor.footer.show')}</p>
                         <Switch
                             size="small"
                             defaultChecked={pStore.showFooter}
@@ -493,13 +493,13 @@ const Editor: React.FC = observer(() => {
                 </Panel>
             </Collapse>
             <div className="editor-actions">
-                <Button icon="save" type={"primary"} onClick={savePreset} style={{marginRight: '10px'}}>Save</Button>
+                <Button icon="save" type={"primary"} onClick={savePreset} style={{marginRight: '10px'}}>{t('editor.save')}</Button>
                 <div className="row" style={{marginTop: '15px'}}>
                     <Button icon="export" size="small" style={{marginRight: '10px'}}
-                            onClick={exportJSON}>Export</Button>
+                            onClick={exportJSON}>{t('editor.export')}</Button>
                     <Upload accept={'.json'} onChange={importJSON} multiple={false}>
                         <Button icon="upload" size="small" style={{marginRight: '10px'}}
-                        >Import</Button>
+                        >{t('editor.import')}</Button>
                     </Upload>
                 </div>
 

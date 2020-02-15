@@ -203,5 +203,51 @@
     "presetContent": "Customize the look of your Push Pages",
     "reset": "Reset",
     "edit": "Editor"
+  },
+  "editor": {
+    "editor": "Editor",
+    "openEditor": "Open Editor",
+    "upload": "Upload",
+    "header": {
+      "header": "Header",
+      "showLogo": "Show logo",
+      "showTitle": "Show title",
+      "greeting": "Greeting",
+      "title": "Title",
+      "titleColor": "Title Color",
+      "logoImg": "Logo Image",
+      "bg": "Background color"
+    },
+    "bg": {
+      "bg": "Background",
+      "bgColor": "Background Color",
+      "img": "image"
+    },
+    "balance": {
+      "balance": "Balance Card",
+      "payload": "Payload Message",
+      "local": "Local Currency balance",
+      "bg": "Background Color"
+    },
+    "cards": {
+      "cards": "Cards Style",
+      "showCategory": "Show categories name",
+      "titleColor": "Category Title color",
+      "cardBg": "Card Background color",
+      "cardTitleColor": "Card Title color"
+    },
+    "targets": {
+      "targets": "Targets",
+      "transfers": "Transfers",
+      "services": "Services & Games",
+      "shops": "Shops"
+    },
+    "footer": {
+      "footer": "Footer",
+      "show": "Show Footer"
+    },
+    "save": "Save",
+    "import": "Import",
+    "export": "Export"
   }
 }

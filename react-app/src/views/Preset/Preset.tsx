@@ -80,12 +80,12 @@ const PresetView: React.FC = observer(() => {
                                         onClick={() => setState({...state, editor: true})}
                                         z-index={4}
                                     >
-                                        Open Editor
+                                        {t('editor.openEditor')}
                                     </Button>
                                 </Affix>
                             )}
                             <Drawer
-                                title={mStore.name ? `${mStore.name} Editor` : `Preset Editor`}
+                                title={mStore.name ? `${mStore.name} ${t('editor.editor')}` : `${t('editor.editor')}`}
                                 placement="right"
                                 closable
                                 keyboard
