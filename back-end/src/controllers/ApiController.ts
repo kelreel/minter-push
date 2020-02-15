@@ -7,6 +7,7 @@ import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
 import { getWalletFromCampaign } from "../utils/campaign";
 import { sendEmail } from "../utils/email";
+import multer from "multer";
 
 const router = express.Router();
 
@@ -199,5 +200,32 @@ router.post("/email", async (req, res) => {
     console.log(error);
   }
 });
+
+export const storage = multer.diskStorage({
+  destination: function(req, file, cb) {
+    console.log(__dirname + "/uploads");
+
+    cb(null, __dirname + "/uploads");
+  },
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + "-" + Date.now() + ".png");
+  }
+});
+
+var upload = multer({ storage: storage });
+
+router.post("/upload", upload.single('file'), (req, res) => {
+  const file = req.file;
+  console.log(file.originalname);
+  
+  if (!file) {
+    res.status(400).send('Please upload a file')
+  }
+  res.send(file.filename);
+});
+
+router.get("/img/:id", function(req,res) {
+  res.sendFile(__dirname + `/uploads/${req.params.id}`);
+})
 
 export default router;

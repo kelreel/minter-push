@@ -24,6 +24,7 @@ export type Preset = {
     showTransfers: boolean;
     showShops: boolean;
     showLoyalty: boolean;
+    titleColor: string;
 }
 
 class PresetStore {
@@ -41,6 +42,7 @@ class PresetStore {
     @observable greeting: boolean = true;
     @observable logoImg: string | null = logo;
     @observable showTitle: boolean = true;
+    @observable titleColor: string = "#000000";
     @observable title: string = "Push";
 
     // Balance Card
@@ -86,7 +88,8 @@ class PresetStore {
             showShops: this.showShops,
             showTitle: this.showTitle,
             showTransfers: this.showTransfers,
-            title: this.title
+            title: this.title,
+            titleColor: this.titleColor
         }
     }
 
@@ -116,6 +119,7 @@ class PresetStore {
         this.showTitle = preset.showTitle;
         this.showTransfers = preset.showTransfers;
         this.title = preset.title
+        this.titleColor = preset.titleColor;
     }
 }
 

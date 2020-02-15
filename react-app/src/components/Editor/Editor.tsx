@@ -30,6 +30,7 @@ const Editor: React.FC = observer(() => {
         headerColor: false,
         backgroundColor: false,
         titlesColor: false,
+        titleColor: false,
         cardsColor: false,
         cardsTextColor: false,
         balanceColor: false,
@@ -64,6 +65,7 @@ const Editor: React.FC = observer(() => {
             titlesColor: false,
             cardsColor: false,
             cardsTextColor: false,
+            titleColor: false,
             headerColor: false,
             balanceColor: false,
             categoryTitleColor: false,
@@ -92,7 +94,27 @@ const Editor: React.FC = observer(() => {
                 message.error('Import error')
             }
         }
+    }
 
+    const uploadLogo = (info: UploadChangeParam<UploadFile<any>>) => {
+        if (info.file.status === 'done') {
+            message.success('Logo uploaded')
+            pStore.logoImg = `${config.apiURL}/img/${info.file.response}`
+        }
+        if (info.file.status === 'error') {
+            message.error('Error while upload image')
+        }
+    }
+
+    const uploadBackground = (info: UploadChangeParam<UploadFile<any>>) => {
+        if (info.file.status === 'done') {
+            message.success('Background uploaded')
+            pStore.background = `${config.apiURL}/img/${info.file.response}`
+            console.log(`${config.apiURL}/img/${info.file.response}`)
+        }
+        if (info.file.status === 'error') {
+            message.error('Error while upload image')
+        }
     }
 
     return (
@@ -140,16 +162,50 @@ const Editor: React.FC = observer(() => {
                             />
                         </div>
                     )}
+
+                    {pStore.showTitle && <><div className="item">
+                        <div className="switch">
+                            <p>Title Color</p>
+                            <div
+                                style={{
+                                    width: "20px",
+                                    height: "20px",
+                                    outline: "1px solid black",
+                                    background: pStore.titleColor
+                                }}
+                                onClick={() =>
+                                    setState({
+                                        ...state,
+                                        titleColor: !state.titleColor,
+                                        cover: true
+                                    })
+                                }
+                            ></div>
+                        </div>
+
+                        {state.titleColor && (
+                            <div className="picker">
+                                <SketchPicker
+                                    color={pStore.titleColor}
+                                    onChangeComplete={color =>
+                                        (pStore.titleColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`)
+                                    }
+                                />
+                            </div>
+                        )}
+                    </div></>}
+
                     {pStore.showLogo && <div className="item">
-                        <p>Image</p>
+                        <p>Logo Image</p>
                         <div className="img-input">
                             <Input
                                 placeholder="https://..."
+                                value={pStore.logoImg!}
                                 onChange={e => (pStore.logoImg = e.target.value)}
                             />
-                            {/*<Upload>*/}
-                            {/*    <Button>Upload</Button>*/}
-                            {/*</Upload>*/}
+                            <Upload onChange={uploadLogo} action={`${config.apiURL}/upload`}>
+                                <Button>Upload</Button>
+                            </Upload>
                         </div>
 
                     </div>}
@@ -218,10 +274,17 @@ const Editor: React.FC = observer(() => {
                     </div>
                     <div className="item">
                         <p>Image</p>
-                        <Input
-                            placeholder="https://..."
-                            onChange={e => (pStore.background = e.target.value)}
-                        />
+                        <div className="img-input">
+                            <Input
+                                value={pStore.background!}
+                                placeholder="https://..."
+                                onChange={e => (pStore.background = e.target.value)}
+                            />
+                            <Upload onChange={uploadBackground} action={`${config.apiURL}/upload`}>
+                                <Button>Upload</Button>
+                            </Upload>
+                        </div>
+
                     </div>
                     {pStore.background && (
                         <div className="item">

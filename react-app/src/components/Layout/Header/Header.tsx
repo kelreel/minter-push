@@ -56,9 +56,9 @@ const Header: React.FC = observer(() => {
                     />
                 )}
                 {pStore.showTitle && pStore.greeting && store.name && store.seed ? (
-                    <h2>Hi, {store.name}</h2>
+                    <h2 style={{color: pStore.titleColor}}>Hi, {store.name}</h2>
                 ) : (
-                    <>{pStore.showTitle && <h2>{headerLabel}</h2>}</>
+                    <>{pStore.showTitle && <h2 style={{color: pStore.titleColor}}>{headerLabel}</h2>}</>
                 )}
             </div>
             <div className="language" style={headerStyle}>
