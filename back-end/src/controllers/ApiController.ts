@@ -212,15 +212,18 @@ export const storage = multer.diskStorage({
   }
 });
 
-var upload = multer({ storage: storage });
+var upload = multer({ storage: storage, limits: {
+  fileSize: 5 * 1024 * 1024
+} });
 
 router.post("/upload", upload.single('file'), (req, res) => {
   const file = req.file;
-  console.log(file.originalname);
+  // console.log(file.originalname);
   
   if (!file) {
     res.status(400).send('Please upload a file')
   }
+
   res.send(file.filename);
 });
 

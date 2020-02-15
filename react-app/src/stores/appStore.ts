@@ -139,7 +139,7 @@ class AppStore {
       let res = await HTTP.get(`https://www.cbr-xml-daily.ru/daily_json.js`);
       this.rubCourse = res.data.Valute.USD.Value;
     } catch (error) {
-      message.error("Error getting RUB Exchange Rate");
+      message.error("Error getting Exchanges Rate");
     }
   }
 
