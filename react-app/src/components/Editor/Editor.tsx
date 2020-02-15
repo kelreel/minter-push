@@ -79,7 +79,7 @@ const Editor: React.FC = observer(() => {
     };
 
     const importJSON = (info: UploadChangeParam<UploadFile<any>>) => {
-        if (info.file.status === 'error') {
+        if (info.file.status === 'error' || info.file.status === 'done') {
             try {
                 let reader = new FileReader()
                 //@ts-ignore

@@ -201,34 +201,32 @@ router.post("/email", async (req, res) => {
   }
 });
 
-export const storage = multer.diskStorage({
-  destination: function(req, file, cb) {
-    console.log(__dirname + "/uploads");
+// export const storage = multer.diskStorage({
+//   destination: function(req, file, cb) {
+//     cb(null, __dirname + "/uploads");
+//   },
+//   filename: function(req, file, cb) {
+//     cb(null, file.fieldname + "-" + Date.now() + ".png");
+//   }
+// });
 
-    cb(null, __dirname + "/uploads");
-  },
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now() + ".png");
-  }
-});
+// var upload = multer({ storage: storage});
 
-var upload = multer({ storage: storage, limits: {
-  fileSize: 5 * 1024 * 1024
-} });
-
-router.post("/upload", upload.single('file'), (req, res) => {
-  const file = req.file;
-  // console.log(file.originalname);
+// router.post("/upload", upload.single('file'), (req, res) => {
+//   const file = req.file;
+//   console.log(file.path);
   
-  if (!file) {
-    res.status(400).send('Please upload a file')
-  }
+  
+//   if (!file) {
+//     res.status(400).send('Please upload a file')
+//   }
 
-  res.send(file.filename);
-});
+//   res.send(file.filename);
+// });
 
-router.get("/img/:id", function(req,res) {
-  res.sendFile(__dirname + `/uploads/${req.params.id}`);
-})
+// router.get("/img/:id", function(req,res) {
+//   res.set({ "Content-Type": "image/png" });
+//   res.sendFile(__dirname + `/uploads/${req.params.id}`);
+// })
 
 export default router;
