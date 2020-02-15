@@ -13,7 +13,6 @@ import {MultiStoreContext} from "../../stores/multiStore";
 import {Parser} from "json2csv";
 import config from "../../config";
 import {saveAs} from "file-saver";
-import {log} from "util";
 import {UploadFile} from "antd/es/upload/interface";
 import {UploadChangeParam} from "antd/lib/upload";
 
@@ -99,7 +98,7 @@ const Editor: React.FC = observer(() => {
     const uploadLogo = (info: UploadChangeParam<UploadFile<any>>) => {
         if (info.file.status === 'done') {
             message.success('Logo uploaded')
-            pStore.logoImg = `${config.apiURL}/img/${info.file.response}`
+            pStore.logoImg = `${info.file.response.data.url}`
         }
         if (info.file.status === 'error') {
             message.error('Error while upload image')
@@ -109,8 +108,7 @@ const Editor: React.FC = observer(() => {
     const uploadBackground = (info: UploadChangeParam<UploadFile<any>>) => {
         if (info.file.status === 'done') {
             message.success('Background uploaded')
-            pStore.background = `${config.apiURL}/img/${info.file.response}`
-            console.log(`${config.apiURL}/img/${info.file.response}`)
+            pStore.background = `${info.file.response.data.url}`
         }
         if (info.file.status === 'error') {
             message.error('Error while upload image')
@@ -203,7 +201,7 @@ const Editor: React.FC = observer(() => {
                                 value={pStore.logoImg!}
                                 onChange={e => (pStore.logoImg = e.target.value)}
                             />
-                            <Upload onChange={uploadLogo} action={`${config.apiURL}/upload`}>
+                            <Upload name="image" onChange={uploadLogo} action={`https://api.imgbb.com/1/upload?key=d853263f608f429eaff002053a42952c`}>
                                 <Button>{t('editor.upload')}</Button>
                             </Upload>
                         </div>
@@ -280,7 +278,7 @@ const Editor: React.FC = observer(() => {
                                 placeholder="https://..."
                                 onChange={e => (pStore.background = e.target.value)}
                             />
-                            <Upload onChange={uploadBackground} action={`${config.apiURL}/upload`}>
+                            <Upload name="image" onChange={uploadBackground} action={`https://api.imgbb.com/1/upload?key=d853263f608f429eaff002053a42952c`}>
                                 <Button>{t('editor.upload')}</Button>
                             </Upload>
                         </div>
@@ -288,7 +286,7 @@ const Editor: React.FC = observer(() => {
                     </div>
                     {pStore.background && (
                         <div className="item">
-                            <p>Background repeat</p>
+                            <p>{t('editor.bg.repeat')}</p>
                             <Select
                                 value={pStore.backgroundRepeat!}
                                 disabled={!pStore.background}
@@ -493,7 +491,7 @@ const Editor: React.FC = observer(() => {
                 </Panel>
             </Collapse>
             <div className="editor-actions">
-                <Button icon="save" type={"primary"} onClick={savePreset} style={{marginRight: '10px'}}>{t('editor.save')}</Button>
+                {mStore.link && <Button icon="save" type={"primary"} onClick={savePreset} style={{marginRight: '10px'}}>{t('editor.save')}</Button>}
                 <div className="row" style={{marginTop: '15px'}}>
                     <Button icon="export" size="small" style={{marginRight: '10px'}}
                             onClick={exportJSON}>{t('editor.export')}</Button>

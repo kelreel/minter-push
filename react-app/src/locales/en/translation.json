@@ -221,7 +221,8 @@
     "bg": {
       "bg": "Background",
       "bgColor": "Background Color",
-      "img": "image"
+      "img": "image",
+      "repeat": "Repeat"
     },
     "balance": {
       "balance": "Balance Card",
