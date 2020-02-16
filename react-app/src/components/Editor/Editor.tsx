@@ -15,6 +15,7 @@ import config from "../../config";
 import {saveAs} from "file-saver";
 import {UploadFile} from "antd/es/upload/interface";
 import {UploadChangeParam} from "antd/lib/upload";
+import {log} from "util";
 
 const Editor: React.FC = observer(() => {
     const store = useContext(AppStoreContext);
@@ -32,6 +33,7 @@ const Editor: React.FC = observer(() => {
         titleColor: false,
         cardsColor: false,
         cardsTextColor: false,
+        cardsBorderColor: false,
         balanceColor: false,
         categoryTitleColor: false,
         presetInput: pStore.currentPresetString,
@@ -68,6 +70,7 @@ const Editor: React.FC = observer(() => {
             headerColor: false,
             balanceColor: false,
             categoryTitleColor: false,
+            cardsBorderColor: false,
             cover: false
         });
 
@@ -161,37 +164,39 @@ const Editor: React.FC = observer(() => {
                         </div>
                     )}
 
-                    {pStore.showTitle && <><div className="item">
-                        <div className="switch">
-                            <p>{t('editor.header.titleColor')}</p>
-                            <div
-                                style={{
-                                    width: "20px",
-                                    height: "20px",
-                                    outline: "1px solid black",
-                                    background: pStore.titleColor
-                                }}
-                                onClick={() =>
-                                    setState({
-                                        ...state,
-                                        titleColor: !state.titleColor,
-                                        cover: true
-                                    })
-                                }
-                            ></div>
-                        </div>
-
-                        {state.titleColor && (
-                            <div className="picker">
-                                <SketchPicker
-                                    color={pStore.titleColor}
-                                    onChangeComplete={color =>
-                                        (pStore.titleColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`)
+                    {pStore.showTitle && <>
+                        <div className="item">
+                            <div className="switch">
+                                <p>{t('editor.header.titleColor')}</p>
+                                <div
+                                    style={{
+                                        width: "20px",
+                                        height: "20px",
+                                        outline: "1px solid black",
+                                        background: pStore.titleColor
+                                    }}
+                                    onClick={() =>
+                                        setState({
+                                            ...state,
+                                            titleColor: !state.titleColor,
+                                            cover: true
+                                        })
                                     }
-                                />
+                                ></div>
                             </div>
-                        )}
-                    </div></>}
+
+                            {state.titleColor && (
+                                <div className="picker">
+                                    <SketchPicker
+                                        color={pStore.titleColor}
+                                        onChangeComplete={color =>
+                                            (pStore.titleColor = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`)
+                                        }
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </>}
 
                     {pStore.showLogo && <div className="item">
                         <p>{t('editor.header.logoImg')}</p>
@@ -201,7 +206,8 @@ const Editor: React.FC = observer(() => {
                                 value={pStore.logoImg!}
                                 onChange={e => (pStore.logoImg = e.target.value)}
                             />
-                            <Upload name="image" onChange={uploadLogo} action={`https://api.imgbb.com/1/upload?key=d853263f608f429eaff002053a42952c`}>
+                            <Upload name="image" onChange={uploadLogo}
+                                    action={`https://api.imgbb.com/1/upload?key=d853263f608f429eaff002053a42952c`}>
                                 <Button>{t('editor.upload')}</Button>
                             </Upload>
                         </div>
@@ -278,7 +284,8 @@ const Editor: React.FC = observer(() => {
                                 placeholder="https://..."
                                 onChange={e => (pStore.background = e.target.value)}
                             />
-                            <Upload name="image" onChange={uploadBackground} action={`https://api.imgbb.com/1/upload?key=d853263f608f429eaff002053a42952c`}>
+                            <Upload name="image" onChange={uploadBackground}
+                                    action={`https://api.imgbb.com/1/upload?key=d853263f608f429eaff002053a42952c`}>
                                 <Button>{t('editor.upload')}</Button>
                             </Upload>
                         </div>
@@ -421,6 +428,34 @@ const Editor: React.FC = observer(() => {
                         )}
                     </div>
                     <div className="switch">
+                        <p>{t('editor.cards.borderColor')}</p>
+                        <div
+                            style={{
+                                width: "20px",
+                                height: "20px",
+                                outline: "1px solid black",
+                                background: pStore.cardsBorder
+                            }}
+                            onClick={() =>
+                                setState({
+                                    ...state,
+                                    cardsBorderColor: !state.cardsBorderColor,
+                                    cover: true
+                                })
+                            }
+                        ></div>
+                        {state.cardsBorderColor && (
+                            <div className="picker">
+                                <SketchPicker
+                                    color={pStore.cardsBorder}
+                                    onChangeComplete={color =>
+                                        pStore.cardsBorder = `rgba(${color.rgb.r}, ${color.rgb.g}, ${color.rgb.b}, ${color.rgb.a})`
+                                    }
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <div className="switch">
                         <p>{t('editor.cards.cardTitleColor')}</p>
                         <div
                             style={{
@@ -491,7 +526,8 @@ const Editor: React.FC = observer(() => {
                 </Panel>
             </Collapse>
             <div className="editor-actions">
-                {mStore.link && <Button icon="save" type={"primary"} onClick={savePreset} style={{marginRight: '10px'}}>{t('editor.save')}</Button>}
+                {mStore.link && <Button icon="save" type={"primary"} onClick={savePreset}
+                                        style={{marginRight: '10px'}}>{t('editor.save')}</Button>}
                 <div className="row" style={{marginTop: '15px'}}>
                     <Button icon="export" size="small" style={{marginRight: '10px'}}
                             onClick={exportJSON}>{t('editor.export')}</Button>

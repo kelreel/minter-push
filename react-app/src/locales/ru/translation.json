@@ -234,7 +234,8 @@
       "showCategory": "Имя категорий",
       "titleColor": "Цвет названий категорий",
       "cardBg": "Фон карточки",
-      "cardTitleColor": "Цвет текста карточки"
+      "cardTitleColor": "Цвет текста карточки",
+      "borderColor": "Цвет границы"
     },
     "targets": {
       "targets": "Целевые траты",

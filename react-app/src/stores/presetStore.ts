@@ -25,6 +25,7 @@ export type Preset = {
     showShops: boolean;
     showLoyalty: boolean;
     titleColor: string;
+    cardsBorder: string;
 }
 
 class PresetStore {
@@ -57,6 +58,7 @@ class PresetStore {
     // Cards Style
     @observable cardsBgc: string = "rgba(255, 255, 255, 1)";
     @observable cardsTextColor: string = "rgba(0, 0, 0, 0.85)";
+    @observable cardsBorder: string = "#e8e8e8";
 
     // Footer
     @observable showFooter: boolean = true;
@@ -89,7 +91,8 @@ class PresetStore {
             showTitle: this.showTitle,
             showTransfers: this.showTransfers,
             title: this.title,
-            titleColor: this.titleColor
+            titleColor: this.titleColor,
+            cardsBorder: this.cardsBorder
         }
     }
 
@@ -120,6 +123,7 @@ class PresetStore {
         this.showTransfers = preset.showTransfers;
         this.title = preset.title
         this.titleColor = preset.titleColor;
+        this.cardsBorder = preset.cardsBorder;
     }
 }
 

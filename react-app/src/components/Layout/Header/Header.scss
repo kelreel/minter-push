@@ -3,6 +3,10 @@
   flex-flow: row nowrap;
   justify-content: space-between;
 
+  .ant-select-selection--single {
+    background-color: unset;
+  }
+
   .logo {
     display: flex;
     flex-flow: row nowrap;

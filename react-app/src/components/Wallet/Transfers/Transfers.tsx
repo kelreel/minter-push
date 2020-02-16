@@ -23,9 +23,10 @@ const Transfers: React.FC = observer(() => {
   const pStore = useContext(PresetStoreContext);
   const { t, i18n } = useTranslation();
 
-  const cardPreset = {
-    background: pStore.cardsBgc
-  };
+    const cardPreset = {
+        background: pStore.cardsBgc,
+        border: `2px solid ${pStore.cardsBorder}`
+    };
 
   const cardTextPreset = {
     color: pStore.cardsTextColor
@@ -36,6 +37,7 @@ const Transfers: React.FC = observer(() => {
       {/* CARDS */}
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
           setState({ ...state, anotherPerson: false });
           setTimeout(() => {
@@ -53,6 +55,7 @@ const Transfers: React.FC = observer(() => {
       </Card>
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
           setState({ ...state, anotherWallet: false });
           setTimeout(() => {
@@ -70,6 +73,7 @@ const Transfers: React.FC = observer(() => {
       </Card>
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
           setState({ ...state, creditCard: false });
           setTimeout(() => {

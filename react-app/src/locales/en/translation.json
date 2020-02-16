@@ -235,7 +235,8 @@
       "showCategory": "Show categories name",
       "titleColor": "Category Title color",
       "cardBg": "Card Background color",
-      "cardTitleColor": "Card Title color"
+      "cardTitleColor": "Card Title color",
+      "borderColor": "Border"
     },
     "targets": {
       "targets": "Targets",

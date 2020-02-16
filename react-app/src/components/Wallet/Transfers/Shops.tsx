@@ -30,9 +30,10 @@ const Shops: React.FC = observer(() => {
     ds: false
   });
 
-  const cardPreset = {
-    background: pStore.cardsBgc
-  };
+    const cardPreset = {
+        background: pStore.cardsBgc,
+        border: `2px solid ${pStore.cardsBorder}`
+    };
 
   const cardTextPreset = {
     color: pStore.cardsTextColor
@@ -42,6 +43,7 @@ const Shops: React.FC = observer(() => {
     <>
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
           setState({ ...state, ozon: false });
           setTimeout(() => {
@@ -60,6 +62,7 @@ const Shops: React.FC = observer(() => {
       </Card>
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
           setState({ ...state, yandex: false });
           setTimeout(() => {
@@ -78,6 +81,7 @@ const Shops: React.FC = observer(() => {
       </Card>
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
           setState({ ...state, perekrestok: false });
           setTimeout(() => {
