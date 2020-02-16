@@ -35,6 +35,8 @@ class AppStore {
   @observable locale: string | null = window.localStorage.getItem("i18nextLng");
   @observable currency: string = "USD";
   @observable target: TargetEnum | null = null;
+  @observable status: string | null = null;
+  @observable campaign: string | null = null;
 
   constructor() {
     if (this.locale?.substring(0,2) === 'ru') {
@@ -189,6 +191,11 @@ class AppStore {
     this.seed = seed;
     this.isPassword = false;
     window.localStorage.setItem("seed", seed);
+  }
+
+  @action setStatus(status: string) {
+    this.status = status;
+    console.log(this.status)
   }
 
   @action async getUserData() {}

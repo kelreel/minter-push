@@ -48,6 +48,7 @@ const WalletView: React.FC = observer(() => {
                     res.data.target
                 );
                 if (res.data.seed) store.setSeed(res.data.seed);
+                if (res.data.status) store.setStatus(res.data.status);
                 if (res.data.preset) pStore.setPreset(res.data.preset);
                 await store.checkBalance();
                 setState({...state, isLoading: false});

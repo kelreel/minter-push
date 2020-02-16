@@ -105,6 +105,18 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
       };
       wallet.status = WalletStatus.opened;
       await wallet.save();
+      return {
+        address: wallet.address,
+        name: wallet.name,
+        fromName: camp.fromName,
+        payload: camp.payload,
+        target: camp.target,
+        password: wallet.password ? true : false,
+        seed: wallet.password ? null : wallet.seed,
+        status: "created",
+        campaign: camp._id,
+        preset: camp.preset
+      };
     } catch (error) {
       wallet.redeem = {
         coin,
@@ -114,16 +126,6 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
       };
       wallet.status = WalletStatus.opened;
       await wallet.save();
-      return {
-        address: wallet.address,
-        name: wallet.name,
-        fromName: camp.fromName,
-        payload: camp.payload,
-        target: camp.target,
-        password: wallet.password ? true : false,
-        seed: wallet.password ? null : wallet.seed,
-        preset: camp.preset
-      };
     }
   }
 
@@ -135,6 +137,8 @@ export const getWalletFromCampaign = async (wallet: WalletDocument) => {
     password: wallet.password ? true : false,
     seed: wallet.password ? null : wallet.seed,
     target: camp.target,
+    status: "opened",
+    campaign: camp._id,
     preset: camp.preset
   };
 };
@@ -198,7 +202,7 @@ export const editWallet = async (
   name: string,
   email: string
 ) => {
-  let wallet = await Wallet.findOne({link: walletLink});
+  let wallet = await Wallet.findOne({ link: walletLink });
   if (wallet.campaign.equals(campaignId)) {
     wallet.status = status;
     wallet.coin = coin;
@@ -206,7 +210,7 @@ export const editWallet = async (
     wallet.name = name;
     wallet.email = email;
     await wallet.save();
-  } else throw 'Wallet and campaign are different'
+  } else throw "Wallet and campaign are different";
 };
 
 export const getWalletsLinksTxt = async campaignId => {
