@@ -5,7 +5,7 @@ import {createContext} from "react";
 
 import config from "../config";
 import HTTP from "../services/http";
-import {getBalanceFromExplorer, getPrice} from "../services/walletApi";
+import {getBalanceFromExplorer} from "../services/walletApi";
 import {getCampaign, setCampaign, getWallets} from "../services/campaignApi";
 import {getBalance} from "../services/createWaleltApi";
 import {Preset} from "./presetStore";

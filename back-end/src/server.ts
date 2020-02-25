@@ -7,7 +7,6 @@ require("dotenv").config();
 const db = require("./db");
 import app from './app'
 import config from './config';
-import multer from 'multer'
 
 const httpServer = http.createServer(app);
 

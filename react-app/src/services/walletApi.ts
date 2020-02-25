@@ -3,6 +3,10 @@ import HTTP from "./http";
 import config from "../config";
 import { detect } from "detect-browser";
 
+export const postConfig = {
+  headers: { "content-type": "application/x-www-form-urlencoded" }
+};
+
 export const getWallet = async (address: string) => {
   return await HTTP.get(`${config.apiURL}/wallet/${address}`);
 };
@@ -16,18 +20,14 @@ export const getSeed = async (pass: string, link: string) => {
     pass,
     link
   };
-  return await HTTP.post(`${config.apiURL}/getSeed`, qs.stringify(data), {
-    headers: { "content-type": "application/x-www-form-urlencoded" }
-  });
+  return await HTTP.post(`${config.apiURL}/getSeed`, qs.stringify(data), postConfig);
 };
 
 export const setTouched = async (link: string) => {
   const data = {
     link
   };
-  return await HTTP.post(`${config.apiURL}/touched`, qs.stringify(data), {
-    headers: { "content-type": "application/x-www-form-urlencoded" }
-  });
+  return await HTTP.post(`${config.apiURL}/touched`, qs.stringify(data), postConfig);
 };
 
 export const sendBrowserInfo = async (link: string) => {
@@ -36,18 +36,16 @@ export const sendBrowserInfo = async (link: string) => {
     link,
     browser: JSON.stringify(info)
   };
-  return await HTTP.post(`${config.apiURL}/detect`, qs.stringify(data), {
-    headers: { "content-type": "application/x-www-form-urlencoded" }
-  });
+  return await HTTP.post(`${config.apiURL}/detect`, qs.stringify(data), postConfig);
 };
 
 export const getBalanceFromExplorer = async (address: string) => {
   return await HTTP.get(`${config.explorerURL}/addresses/${address}`);
 };
 
-export const getPrice = async () => {
-  return await HTTP.get(`${config.mbankAPI}/price`);
-};
+export const getRates = async () => {
+  return await HTTP.get(`${config.apiURL}/rates`)
+}
 
 export const getProfile = async (address: string) => {
   return await HTTP.get(`https://minter-scoring.space/api/profile/${address}`);
@@ -58,16 +56,12 @@ export const repackWallet = async (seed: string, name?: string) => {
     seed,
     name
   };
-  return await HTTP.post(`${config.apiURL}/repack`, qs.stringify(data), {
-    headers: { "content-type": "application/x-www-form-urlencoded" }
-  });
+  return await HTTP.post(`${config.apiURL}/repack`, qs.stringify(data), postConfig);
 };
 
 export const sendEmail = async (email: string, link: string, fromName?: string | null) => {
   const data = {
     email, link, fromName
   };
-  return await HTTP.post(`${config.apiURL}/email`, qs.stringify(data), {
-    headers: { "content-type": "application/x-www-form-urlencoded" }
-  });
+  return await HTTP.post(`${config.apiURL}/email`, qs.stringify(data), postConfig);
 };

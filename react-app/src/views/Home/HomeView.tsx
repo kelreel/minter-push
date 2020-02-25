@@ -38,19 +38,20 @@ const Home: React.FC = observer(() => {
     count: 0
   });
 
-  useEffect(() => {
-    const r = async () => {
-      try {
-        let res = await getWalletCount();
-        setState({ ...state, count: res.data.count, countLoading: false });
-      } catch (error) {
-        setState({ ...state, countLoading: false });
-      }
-    };
-    if (state.count === 0) {
-      r();
-    }
-  }, [state]);
+  // Get wallets count
+  // useEffect(() => {
+  //   const r = async () => {
+  //     try {
+  //       let res = await getWalletCount();
+  //       setState({ ...state, count: res.data.count, countLoading: false });
+  //     } catch (error) {
+  //       setState({ ...state, countLoading: false });
+  //     }
+  //   };
+  //   if (state.count === 0) {
+  //     r();
+  //   }
+  // }, [state]);
 
   const created = (
     address: string,

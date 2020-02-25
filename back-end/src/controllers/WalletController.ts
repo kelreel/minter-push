@@ -2,12 +2,12 @@ import bcrypt from "bcryptjs";
 import bodyParser from "body-parser";
 import express from "express";
 import short from "short-uuid";
+import storage from "node-persist";
 
 import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { createWallet } from "../utils/wallet";
 import { getWalletFromCampaign } from "../utils/campaign";
 import { sendEmail } from "../utils/email";
-import multer from "multer";
 
 const router = express.Router();
 
@@ -29,6 +29,15 @@ router.get("/count", async (req, res) => {
   let r = await Wallet.estimatedDocumentCount();
   res.send({ count: r });
 });
+
+router.get("/rates", async (req, res) => {
+  let result = {
+    priceMBank: await storage.getItem("priceMBank"),
+    price1001: await storage.getItem("price1001"),
+    currencyRates: await storage.getItem("rates")
+  };
+  res.send(result)
+})
 
 // Create new wallet
 router.post("/new", async (req, res) => {
@@ -200,33 +209,5 @@ router.post("/email", async (req, res) => {
     console.log(error);
   }
 });
-
-// export const storage = multer.diskStorage({
-//   destination: function(req, file, cb) {
-//     cb(null, __dirname + "/uploads");
-//   },
-//   filename: function(req, file, cb) {
-//     cb(null, file.fieldname + "-" + Date.now() + ".png");
-//   }
-// });
-
-// var upload = multer({ storage: storage});
-
-// router.post("/upload", upload.single('file'), (req, res) => {
-//   const file = req.file;
-//   console.log(file.path);
-  
-  
-//   if (!file) {
-//     res.status(400).send('Please upload a file')
-//   }
-
-//   res.send(file.filename);
-// });
-
-// router.get("/img/:id", function(req,res) {
-//   res.set({ "Content-Type": "image/png" });
-//   res.sendFile(__dirname + `/uploads/${req.params.id}`);
-// })
 
 export default router;

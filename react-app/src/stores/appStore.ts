@@ -5,12 +5,12 @@ import { createContext } from 'react';
 
 import config from '../config';
 import HTTP from '../services/http';
-import { getBalanceFromExplorer, getPrice } from '../services/walletApi';
+import {getBalanceFromExplorer, getRates} from '../services/walletApi';
 import { TargetEnum } from '../components/Multi/Main/MultiMain';
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
-const { walletFromMnemonic, isValidMnemonic } = require("minterjs-wallet");
+const { walletFromMnemonic } = require("minterjs-wallet");
 
 export type Balance = {
   coin: string;
@@ -30,6 +30,7 @@ class AppStore {
   @observable totalBipBalance: number = 0;
   @observable totalPrice: number = 0;
   @observable bipPrice: number = 0;
+  @observable bipPrice1001: number = 0;
   @observable isLoading: boolean = false;
   @observable rubCourse: number = 0;
   @observable locale: string | null = window.localStorage.getItem("i18nextLng");
@@ -37,6 +38,7 @@ class AppStore {
   @observable target: TargetEnum | null = null;
   @observable status: string | null = null;
   @observable campaign: string | null = null;
+  @observable rates: any = {};
 
   constructor() {
     if (this.locale?.substring(0,2) === 'ru') {
@@ -44,19 +46,22 @@ class AppStore {
     } else this.currency = "USD"
   }
 
-  @computed get exchRate() {
-    switch (this.currency) {
-      case "USD":
-        return 1
-      case "RUB":
-        return this.rubCourse
-      default: return 1
+  @action async setRates() {
+    try {
+      let res = await getRates();
+      this.rates = res.data.currencyRates;
+      this.bipPrice = res.data.priceMBank;
+      this.bipPrice1001 = res.data.price1001;
+      this.rubCourse = this.rates.RUB;
+    } catch (error) {
+      console.log(error)
+      message.error('Error while setting currency rates and BIP price')
     }
   }
 
 
   @computed get totalInLocalCurrency() {
-    return Math.round(this.totalPrice * this.exchRate * 100) / 100;
+    return Math.round(this.totalPrice * this.rates[this.currency] * 100) / 100;
   }
 
   @action changeLocale = (language: string) => {
@@ -136,19 +141,18 @@ class AppStore {
     }, timeout);
   }
 
-  @action async getRubCourse() {
-    try {
-      let res = await HTTP.get(`https://www.cbr-xml-daily.ru/daily_json.js`);
-      this.rubCourse = res.data.Valute.USD.Value;
-    } catch (error) {
-      message.error("Error getting Exchanges Rate");
-    }
-  }
+  // @action async getRubCourse() {
+  //   try {
+  //     let res = await HTTP.get(`https://www.cbr-xml-daily.ru/daily_json.js`);
+  //     this.rubCourse = res.data.Valute.USD.Value;
+  //   } catch (error) {
+  //     message.error("Error getting Exchanges Rate");
+  //   }
+  // }
 
   @action async getTotalPrice() {
     try {
-      let res = await getPrice();
-      this.bipPrice = res.data.data.price / 10000;
+      let res = await this.setRates();
       this.totalPrice = this.totalBipBalance * this.bipPrice;
     } catch (error) {}
   }
@@ -197,14 +201,6 @@ class AppStore {
     this.status = status;
     console.log(this.status)
   }
-
-  @action async getUserData() {}
-
-  @action async checkAuth() {}
-
-  @action logout() {}
-
-  @action async login(seed: string) {}
 }
 
 export const AppStoreContext = createContext(new AppStore());
