@@ -36,6 +36,7 @@ export const updateStorage = async () => {
   await storage.setItem("price1001", await get1001());
   await storage.setItem("priceMBank", await getMBankPrice());
   await storage.setItem('rates', await getCurrencyRates())
+  console.log(`${(new Date())} Storage updated`);
 }
 
 export const initStorage = async () => {

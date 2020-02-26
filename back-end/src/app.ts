@@ -2,18 +2,16 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import cron from "node-cron";
-import storage from "node-persist";
+import tasks from "./tasks";
 
 import WalletController from "./controllers/WalletController";
 import BipToPhone from "./controllers/BipToPhone";
 import CampaignController from "./controllers/CampaignController";
-import { saveGifteryProducts } from "./utils/giftery";
-import { initStorage, updateStorage } from "./utils/storage";
+import GifteryController from "./controllers/GifteryController";
+
+tasks();
 
 const app = express();
-
-initStorage();
 
 app.set("trust proxy", 1);
 app.use(cors());
@@ -23,11 +21,6 @@ app.use(morgan("combined"));
 app.use("/api", WalletController);
 app.use("/api/phone", BipToPhone);
 app.use("/api/campaign", CampaignController);
-
-const getProductTask = cron.schedule("15 * * * *", saveGifteryProducts);
-getProductTask.start();
-
-const updateStorageTask = cron.schedule("15 * * * *", updateStorage);
-updateStorageTask.start();
+app.use("/api/giftery", GifteryController)
 
 export default app;
