@@ -11,13 +11,18 @@ import AnotherWallet from "../../Modals/AnotherWallet/AnotherWallet";
 import Bitcoin from "../../Modals/Bitcoin/Bitcoin";
 import CreditCard from "../../Modals/CreditCard/CreditCard";
 import { PresetStoreContext } from "../../../stores/presetStore";
+import {TargetEnum} from "../../Multi/Main/MultiMain";
+import {targetClass} from "./Loyality";
+import Phone from "../../Modals/Phone/Phone";
+import timeLogo from "../../../assets/timeloop.png";
+import TimeLoop from "../../Modals/TimeLoop/TimeLoop";
 
-const Transfers: React.FC = observer(() => {
+const Popular: React.FC = observer(() => {
   const [state, setState] = useState({
     anotherPerson: false,
     anotherWallet: false,
-    creditCard: false,
-    bitcoin: false
+    phone: false,
+    timeloop: false
   });
   const store = useContext(AppStoreContext);
   const pStore = useContext(PresetStoreContext);
@@ -35,24 +40,7 @@ const Transfers: React.FC = observer(() => {
   return (
     <>
       {/* CARDS */}
-      <Card
-        style={cardPreset}
-        bordered={false}
-        onClick={() => {
-          setState({ ...state, anotherPerson: false });
-          setTimeout(() => {
-            setState({ ...state, anotherPerson: true });
-          }, 0);
-        }}
-        className="transfer-card"
-      >
-        <Avatar
-          style={{ backgroundColor: "rgb(245, 106, 0)" }}
-          size={64}
-          icon="user"
-        />
-        <h3 style={cardTextPreset}>{t("transfersList.anotherPerson")}</h3>
-      </Card>
+
       <Card
         style={cardPreset}
         bordered={false}
@@ -75,45 +63,61 @@ const Transfers: React.FC = observer(() => {
         style={cardPreset}
         bordered={false}
         onClick={() => {
-          setState({ ...state, creditCard: false });
+          setState({...state, phone: false});
           setTimeout(() => {
-            setState({ ...state, creditCard: true });
+            setState({...state, phone: true});
           }, 0);
         }}
-        className="transfer-card"
+        className={`transfer-card ${store.target === TargetEnum.bip2phone &&
+        targetClass}`}
       >
-        <Avatar
-          style={{ backgroundColor: "#0dc367" }}
-          size={64}
-          icon="credit-card"
-        />
-        <h3 style={cardTextPreset}>{t("transfersList.creditCard")}</h3>
+        <Avatar style={{backgroundColor: "#de16c5"}} size={64} icon="phone"/>
+        <h3 style={cardTextPreset}>{t("loyalityList.phone")}</h3>
       </Card>
       <Card
         style={cardPreset}
+        bordered={false}
         onClick={() => {
-          setState({ ...state, bitcoin: false });
+          setState({...state, timeloop: false});
           setTimeout(() => {
-            setState({ ...state, bitcoin: true });
+            setState({...state, timeloop: true});
+          }, 0);
+        }}
+        className={`transfer-card ${store.target === TargetEnum.timeloop &&
+        targetClass}`}
+      >
+        <Avatar
+          style={{backgroundColor: "#0dc367"}}
+          size={64}
+          src={timeLogo}
+        />
+        <h3 style={cardTextPreset}>{t("loyalityList.timeloop")}</h3>
+      </Card>
+      <Card
+        style={cardPreset}
+        bordered={false}
+        onClick={() => {
+          setState({ ...state, anotherPerson: false });
+          setTimeout(() => {
+            setState({ ...state, anotherPerson: true });
           }, 0);
         }}
         className="transfer-card"
       >
         <Avatar
-          style={{ backgroundColor: "#f7931a" }}
+          style={{ backgroundColor: "rgb(245, 106, 0)" }}
           size={64}
-          icon="money-collect"
+          icon="user"
         />
-        <h3 style={cardTextPreset}>{t("transfersList.bitcoin")}</h3>
+        <h3 style={cardTextPreset}>{t("transfersList.anotherPerson")}</h3>
       </Card>
 
       {/* MODALS */}
       <AnotherPerson visible={state.anotherPerson} />
       <AnotherWallet visible={state.anotherWallet} />
-      <CreditCard visible={state.creditCard} />
-      <Bitcoin visible={state.bitcoin} />
+      <Phone visible={state.phone}/>
     </>
   );
 });
 
-export default Transfers;
+export default Popular;

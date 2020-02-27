@@ -21,8 +21,8 @@
     color: rgba(78, 78, 78, 0.767);
     font-weight: 600;
     letter-spacing: 2px;
-    margin-top: 40px;
-    margin-bottom: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
   }
 
   .transfers {
@@ -31,6 +31,14 @@
     justify-content: space-between;
     width: 100%;
     max-width: 800px;
+  }
+
+  @media screen and (max-width: 600px) {
+    .transfers {
+      flex-flow: row nowrap;
+      overflow-x: scroll;
+      justify-content: flex-start;
+    }
   }
 
   .target {
@@ -48,21 +56,6 @@
     &:hover {
       background: rgb(59, 7, 155);
       border: 2px solid black;
-    }
-  }
-
-  @media screen and (max-width: 600px) {
-    .transfers {
-      flex-flow: row nowrap;
-      overflow-x: scroll;
-      justify-content: flex-start;
-
-      .ant-card {
-        display: flex;
-        margin-right: 20px;
-        max-width: 150px;
-        flex: 1;
-      }
     }
   }
 }

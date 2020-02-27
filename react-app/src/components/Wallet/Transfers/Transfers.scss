@@ -1,8 +1,39 @@
+.shops {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+
+  .transfer-card {
+    margin: 15px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .shops {
+    flex-flow: row nowrap;
+    overflow-x: scroll;
+    justify-content: flex-start;
+  }
+
+  .transfer-card {
+    display: flex;
+    flex: 1;
+    min-width: 140px;
+    max-width: 140px !important;
+    margin: 10px !important;
+  }
+}
+
 .transfer-card {
+  display: flex;
+  flex-flow: column wrap;
   border-radius: 10px;
   max-width: 170px;
-  flex: 1;
+  flex: 1 0 21%;
   transition: 0.5s;
+  margin: 15px;
 
   &:hover {
     background-color: #F8F8F8;
@@ -20,6 +51,8 @@
     h3 {
       line-height: 1.3rem;
       margin-top: 20px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 
@@ -35,11 +68,5 @@
 
   .ant-modal-mask {
     background-color: rgba(0, 0, 0, 0.65);
-  }
-}
-
-.ozon-logo {
-  img {
-    object-fit: contain;
   }
 }

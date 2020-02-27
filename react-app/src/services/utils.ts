@@ -13,14 +13,35 @@ export const getLocale = () => {
   return i18n.language.substring(0, 2);
 };
 
-export const getDeepLink = (address: string) => {
+export const getDeepLink = (address: string, value: number = 100, coin: string = "BIP") => {
   const txParams = {
     type: TX_TYPE.SEND,
     data: {
       to: address,
-      value: 100,
-      coin: "BIP"
+      value,
+      coin
     }
   };
   return 'minter:' + prepareLink(txParams, "").substring(6)
 };
+
+export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
+  const byteCharacters = atob(b64Data);
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+    const byteNumbers = new Array(slice.length);
+    for (let i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
+
+    const byteArray = new Uint8Array(byteNumbers);
+
+    byteArrays.push(byteArray);
+  }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}

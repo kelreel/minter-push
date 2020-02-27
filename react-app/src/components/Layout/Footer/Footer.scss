@@ -3,6 +3,13 @@
   flex-flow: column wrap;
   background: rgb(245, 245, 245);
 
+  .content {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
   .actions {
     display: flex;
     flex-flow: row nowrap;

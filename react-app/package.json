@@ -24,6 +24,7 @@
     "file-saver": "^2.0.2",
     "fingerprintjs2": "^2.1.0",
     "history": "^4.10.1",
+    "html-react-parser": "^0.10.1",
     "i18next": "^19.0.3",
     "i18next-browser-languagedetector": "^4.0.1",
     "i18next-xhr-backend": "^3.2.2",

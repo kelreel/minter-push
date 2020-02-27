@@ -44,7 +44,7 @@
     "sentYou": "sent you",
     "youReceive": "You received"
   },
-  "transfersTitle": "You can transfer your coins to",
+  "transfersTitle": "Most Popular",
   "transfersList": {
     "anotherPerson": "Another Person",
     "anotherWallet": "Minter Wallet",
@@ -58,7 +58,7 @@
     "perekrestok": "Перекресток",
     "ds": "Дочки Сыночки"
   },
-  "loyalityTitle": "Services & Games",
+  "loyalityTitle": "Minter Services",
   "loyalityList": {
     "nut": "NUT Loyalty",
     "phone": "Phone",
@@ -104,40 +104,10 @@
     "send": "Send",
     "cancel": "Cancel"
   },
-  "ozon": {
-    "title": "Ozon",
-    "content1": "Это Mock! Ожидаем публичного API GIFT",
-    "content2": "Сертификаты Ozon.ru",
-    "select": "Choose Certificate",
-    "coin": "Coin for pay",
-    "send": "Next",
-    "cancel": "Cancel",
-    "price": "To pay"
-  },
   "yandexEda": {
     "title": "Яндекс.Еда",
     "content1": "Это Mock! Ожидаем публичного API GIFT",
     "content2": "Сертификаты Яндекс.Еда",
-    "select": "Выберите сертификат",
-    "coin": "Монета для оплаты",
-    "send": "Далее",
-    "cancel": "Отмена",
-    "price": "To pay"
-  },
-  "perekrestok": {
-    "title": "Перекресток",
-    "content1": "Это Mock! Ожидаем публичного API GIFT",
-    "content2": "Сертификаты Перекресток",
-    "select": "Выберите сертификат",
-    "coin": "Монета для оплаты",
-    "send": "Далее",
-    "cancel": "Отмена",
-    "price": "To pay"
-  },
-  "ds": {
-    "title": "Дочки Сыночки",
-    "content1": "Это Mock! Ожидаем публичного API GIFT",
-    "content2": "Сертификаты Дочки Сыночки",
     "select": "Выберите сертификат",
     "coin": "Монета для оплаты",
     "send": "Далее",
@@ -164,7 +134,7 @@
     "value": "Value",
     "phoneNumber": "Phone Number",
     "max": "Max amount:",
-    "total": "will be credited:",
+    "total": "To pay",
     "send": "Next",
     "cancel": "Cancel",
     "success": "Success",
@@ -180,6 +150,24 @@
     "send": "Send",
     "cancel": "Cancel",
     "success": "Transaction ok! Go the link to get TIME."
+  },
+  "giftery": {
+    "games": "Games Certificates",
+    "internet": "Online Services",
+    "food": "Food",
+    "shops": "Shops",
+    "modal": {
+      "certificate": "Choose certificate",
+      "email": "E-Mail",
+      "coin": "Coin",
+      "price": "To pay",
+      "cancel": "Cancel",
+      "next": "Get it",
+      "success": "Successfully. Certificate sent to the specified E-mail.",
+      "successBtn": "Get PDF",
+      "error": "Something wen't wrong..",
+      "errorMessage": "If you have any problems or funds were incorrectly debited, write to hello@tap.mn"
+    }
   },
   "newCampaign": {
     "title": "Multipush in a few clicks!",

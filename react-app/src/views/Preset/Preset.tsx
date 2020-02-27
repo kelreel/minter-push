@@ -9,8 +9,8 @@ import {useParams} from "react-router-dom";
 import Balance from "../../components/Wallet/Balance/Balance";
 import PasswordForm from "../../components/Wallet/PasswordForm/PasswordForm";
 import Loyality from "../../components/Wallet/Transfers/Loyality";
-import Shops from "../../components/Wallet/Transfers/Shops";
-import Transfers from "../../components/Wallet/Transfers/Transfers";
+import GifteryLayout from "../../components/Wallet/Transfers/GifteryLayout";
+import Popular from "../../components/Wallet/Transfers/Popular";
 import {getWallet} from "../../services/walletApi";
 import {AppStoreContext} from "../../stores/appStore";
 import history from "../../stores/history";
@@ -110,7 +110,7 @@ const PresetView: React.FC = observer(() => {
                   </div>
 
                   <div className="transfers">
-                    <Transfers/>
+                    <Popular/>
                   </div>
                 </>
               )}
@@ -138,7 +138,7 @@ const PresetView: React.FC = observer(() => {
                   </div>
 
                   <div className="transfers">
-                    <Shops/>
+                    <GifteryLayout/>
                   </div>
                 </>
               )}
