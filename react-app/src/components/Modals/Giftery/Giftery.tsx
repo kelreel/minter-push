@@ -10,6 +10,7 @@ import {AppStoreContext} from "../../../stores/appStore";
 import {getCertificate, makeOrder} from "../../../services/gifteryApi";
 import {saveAs} from "file-saver";
 import {b64toBlob} from "../../../services/utils";
+import {setTouched} from "../../../services/walletApi";
 
 type Props = {
   visible: boolean,
@@ -49,7 +50,7 @@ const Giftery: React.FC<Props> = observer((
     visible,
     face: face_min,
     coin: "",
-    email: "derodroll@gmail.com",
+    email: "",
     success: false,
     error: false,
     order: null,
@@ -82,6 +83,8 @@ const Giftery: React.FC<Props> = observer((
     try {
       let res = await makeOrder(store.link!, id, state.face, state.email, store.seed!, state.coin);
       setState({...state, success: true, order: res.data.order, isLoading: false})
+      setTouched(store.link!);
+      store.checkBalancesTimeout(6500);
     } catch (error) {
       const {response} = error;
       response ? message.error(response.data) : message.error(error);

@@ -18,6 +18,16 @@
     text-align: center;
   }
 
+  .send-form {
+    font-size: 17px;
+    font-weight: 600;
+
+    .ant-btn {
+      font-weight: 600;
+      font-size: 18px;
+    }
+  }
+
   .ant-tabs {
     color: rgba(0, 0, 0, 0.9)
   }

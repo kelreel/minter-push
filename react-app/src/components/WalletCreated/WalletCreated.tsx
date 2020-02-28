@@ -238,8 +238,8 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
               key="submit"
               type="primary"
               onClick={() => {
-                window.open(getDeepLink(address, deepBip, 'BIP'), '_blank');
                 setState({...state, deepModal: false})
+                window.open(getDeepLink(address, deepBip, 'BIP'), '_blank');
               }}
             >
               {t("walletCreated.pay")}

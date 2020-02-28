@@ -5,11 +5,12 @@ import { initStorage, updateStorage } from "./utils/storage";
 
 const tasks = () => {
   initStorage();
+  saveGifteryProducts();
 
   const getProductTask = cron.schedule("*/15 * * * *", saveGifteryProducts);
-  getProductTask.start();
-
   const updateStorageTask = cron.schedule("*/15 * * * *", updateStorage);
+
+  getProductTask.start();
   updateStorageTask.start();
 };
 
