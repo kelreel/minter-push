@@ -231,17 +231,17 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   }
                 />
               </div>
-              <div className="field">
-                <label>{t("anotherWallet.payload")}</label>
-                <Input
-                  placeholder="You message here"
-                  value={state.payload}
-                  maxLength={120}
-                  onChange={e =>
-                    setState({ ...state, payload: e.target.value })
-                  }
-                />
-              </div>
+              {/*<div className="field">*/}
+              {/*  <label>{t("anotherWallet.payload")}</label>*/}
+              {/*  <Input*/}
+              {/*    placeholder="You message here"*/}
+              {/*    value={state.payload}*/}
+              {/*    maxLength={120}*/}
+              {/*    onChange={e =>*/}
+              {/*      setState({ ...state, payload: e.target.value })*/}
+              {/*    }*/}
+              {/*  />*/}
+              {/*</div>*/}
             </div>
           </>
         )}

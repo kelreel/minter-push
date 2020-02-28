@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { newWallet } from '../../services/createWaleltApi';
+import {addToHistory, historyEntryType} from "../../services/walletsHistory";
 
 const SendForm: React.FC<{created: Function}> = ({created}) => {
   const { t, i18n } = useTranslation();
@@ -13,7 +14,11 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
     to: "",
     message: "",
     password: "",
-    loading: false
+    loading: false,
+    showName: false,
+    showFrom: false,
+    showPassword: false,
+    showPayload: false
   });
 
   const { TextArea } = Input;
@@ -22,7 +27,8 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
     setState({...state, loading: true})
     try {
       let res = await newWallet(state.password, state.to, state.message, state.from)
-      created(res.data.address, res.data.seed, res.data.link, state.password)
+      addToHistory(historyEntryType.push, res.data.address, res.data.link, res.data.seed, res.data.password);
+      setTimeout(() => created(res.data.link), 500)
       console.log(res.data);
     } catch (error) {
       message.warning(error.message)
@@ -34,47 +40,63 @@ const SendForm: React.FC<{created: Function}> = ({created}) => {
   return (
     <div className="send-form">
       <div className="field">
-        <label>{t("sendForm.recipient")}</label>
-        <Input
+        <div className="switch">
+          <label>{t("sendForm.recipient")}</label>
+          {!state.showName && <Switch size="small" onChange={(val) => setState({...state, showName: val})} />}
+        </div>
+
+        {state.showName && <Input
           prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-          size="large"
           maxLength={40}
+          autoFocus
           placeholder={t("sendForm.toPlaceholder")}
           onChange={e => setState({ ...state, to: e.target.value })}
-        />
+        />}
       </div>
       <div className="field">
-        <label>{t("sendForm.sender")}</label>
-        <Input
+        <div className="switch">
+          <label>{t("sendForm.sender")}</label>
+          {!state.showFrom && <Switch size="small" onChange={(val) => setState({...state, showFrom: val})} />}
+        </div>
+
+        {state.showFrom && <Input
           prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
-          size="large"
           maxLength={40}
+          autoFocus
           placeholder={t("sendForm.fromPlaceholder")}
           onChange={e => setState({ ...state, from: e.target.value })}
-        />
+        />}
       </div>
       <div className="field">
-        <label>{t("sendForm.password")}</label>
-        <Input.Password
+        <div className="switch">
+          <label>{t("sendForm.password")}</label>
+          {!state.showPassword && <Switch size="small" onChange={(val) => setState({...state, showPassword: val})} />}
+        </div>
+
+        {state.showPassword && <Input.Password
           prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
-          size="large"
           maxLength={30}
+          autoFocus
           placeholder="Password"
           onChange={e => setState({ ...state, password: e.target.value })}
-        />
+        />}
       </div>
       <div className="field">
-        <label>
-          {t("sendForm.message")}
-        </label>
-        <TextArea
+        <div className="switch">
+          <label>{t("sendForm.message")}</label>
+          {!state.showPayload && <Switch size="small" onChange={(val) => setState({...state, showPayload: val})} />}
+        </div>
+
+        {state.showPayload && <TextArea
           rows={2}
           maxLength={1200}
+          autoFocus
           placeholder={t("sendForm.payloadPlaceholder")}
           onChange={e => setState({ ...state, message: e.target.value })}
-        />
+        />}
       </div>
       <Button
+        className="action-btn"
         loading={state.loading}
         onClick={send}
         type="primary"

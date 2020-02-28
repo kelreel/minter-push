@@ -1,6 +1,7 @@
 import i18n from "../i18n";
 
 import { prepareLink, TX_TYPE } from "minter-js-sdk";
+import {IParticlesParams, ParticlesProps} from "react-particles-js";
 
 
 export const shortAddress = (address: string): string => {
@@ -22,7 +23,7 @@ export const getDeepLink = (address: string, value: number = 100, coin: string =
       coin
     }
   };
-  return 'minter:' + prepareLink(txParams, "").substring(6)
+  return 'https://bip.to/' + prepareLink(txParams, "").substring(9)
 };
 
 export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
@@ -44,4 +45,29 @@ export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512)
 
   const blob = new Blob(byteArrays, {type: contentType});
   return blob;
+}
+
+export const particlesParams: IParticlesParams = {
+  particles: {
+    number: {
+      value: 7
+    },
+    size: {
+      value: 3
+    },
+    color: {
+      value: "#de3838"
+    },
+    line_linked: {
+      enable: false
+    }
+  },
+  interactivity: {
+    events: {
+      onhover: {
+        enable: true,
+          mode: "repulse"
+      }
+    }
+  }
 }

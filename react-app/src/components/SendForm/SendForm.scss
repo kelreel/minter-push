@@ -2,6 +2,14 @@
   display: flex;
   flex-flow: column wrap;
   justify-content: flex-start;
+  min-width: 210px;
+  font-size: 17px;
+  font-weight: 600;
+
+  .ant-btn {
+    font-weight: 600;
+    font-size: 18px;
+  }
 
   .field {
     display: flex;
@@ -15,6 +23,30 @@
       // align-items: center;
       margin-bottom: 5px;
     }
+
+    .switch {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  @keyframes btnScale {
+    from {
+      transform: scale(1);
+    }
+
+    to {
+      transform: scale(1.05);
+    }
+  }
+
+  .action-btn {
+    animation-name: btnScale;
+    animation-duration: .8s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
   }
 
   textarea {

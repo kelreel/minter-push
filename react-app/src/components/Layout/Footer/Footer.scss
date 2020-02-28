@@ -21,3 +21,20 @@
     }
   }
 }
+
+.history {
+  display: flex;
+  flex-flow: column wrap;
+
+  .actions {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    button {
+      &+button {
+        margin-left: 10px;
+      }
+    }
+  }
+}

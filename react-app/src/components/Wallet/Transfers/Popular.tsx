@@ -116,6 +116,7 @@ const Popular: React.FC = observer(() => {
       <AnotherPerson visible={state.anotherPerson} />
       <AnotherWallet visible={state.anotherWallet} />
       <Phone visible={state.phone}/>
+      <TimeLoop visible={state.timeloop}/>
     </>
   );
 });

@@ -12,9 +12,9 @@
     "sender": "Sender",
     "message": "Message",
     "password": "Password",
-    "send": "Continue"
+    "send": "Push!"
   },
-  "createNewWallet": "Do you want to create new wallet?",
+  "createNewWallet": "Do you want to create new Push?",
   "walletCreated": {
     "pay": "Send coins",
     "payDesription": "",
@@ -33,6 +33,9 @@
     "waitingPayment": "Waiting for payment...",
     "clickLink": "Click on Link to copy",
     "password": "Password",
+    "pay": "Pay via Wallet",
+    "exact": "Exact amount",
+    "deepContent": "Payment for the exact amount in the specified currency",
     "next": "Next",
     "back": "Back"
   },
@@ -134,7 +137,7 @@
     "value": "Value",
     "phoneNumber": "Phone Number",
     "max": "Max amount:",
-    "total": "To pay",
+    "total": "You will get",
     "send": "Next",
     "cancel": "Cancel",
     "success": "Success",

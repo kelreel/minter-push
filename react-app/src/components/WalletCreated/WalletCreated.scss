@@ -160,3 +160,30 @@
   border-color: rgb(230, 230, 230);
   background: #fff;
 }
+
+.deep-modal {
+  display: flex;
+  flex-flow: column wrap;
+
+  .value {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .deep-value {
+    display: flex;
+    flex-flow: row nowrap;
+
+    .num {
+      flex: 3
+    }
+
+    .cur {
+      flex: 1
+    }
+  }
+}

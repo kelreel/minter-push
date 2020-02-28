@@ -52,11 +52,13 @@ router.get("/products", async (req, res) => {
   const food = [13900, 11610, 13984, 800];
   try {
     let result = {
-      games: await Product.find({id: {$in: games}}),
-      food: await Product.find({id: {$in: food}}),
-      internet: await Product.find({id: {$in: internet}}),
-      shops: await Product.find({id: {$in: shops}}),
-    }
+      games: await Product.find({ id: { $in: games } }).sort({title: 1}),
+      food: await Product.find({ id: { $in: food } }).sort({ title: 1 }),
+      internet: await Product.find({ id: { $in: internet } }).sort({
+        title: 1
+      }),
+      shops: await Product.find({ id: { $in: shops } }).sort({ title: 1 })
+    };
     res.send(result);
   } catch (error) {
     console.log(error.message);

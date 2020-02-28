@@ -25,11 +25,11 @@ const Header: React.FC = observer(() => {
     };
 
     const showConfirm = () => {
-        if (window.location.pathname === "/")
+        if (window.location.pathname === "/" || window.location.pathname.includes('create'))
             Modal.confirm({
                 title: t("createNewWallet"),
                 onOk() {
-                    window.location.reload();
+                  history.push("/")
                 },
                 onCancel() {
                 }

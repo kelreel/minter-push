@@ -17,6 +17,7 @@ import PresetView from '../views/Preset/Preset';
 import { PresetStoreContext } from '../stores/presetStore';
 import NewMultiView from '../views/NewMulti/NewMulti';
 import MultiView from '../views/Multi/Multi';
+import CreatedView from "../views/CreatePush/CreatedView";
 
 const { Content } = Layout;
 
@@ -42,6 +43,9 @@ const App: React.FC = observer(() => {
         <Switch>
           <Route exact path="/">
             <HomeView />
+          </Route>
+          <Route exact path="/create/:link">
+            <CreatedView />
           </Route>
           <Route exact path="/multi">
             <NewMultiView />

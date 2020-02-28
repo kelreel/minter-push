@@ -4,6 +4,7 @@ import "./Footer.scss";
 import copy from "copy-to-clipboard";
 import {getWalletsHistory} from "../../../services/walletsHistory";
 import config from "../../../config";
+import History from "./History";
 
 const Footer: React.FC = () => {
   const {Footer} = Layout;
@@ -26,7 +27,7 @@ const Footer: React.FC = () => {
 
   return (
     <Footer style={{textAlign: "center"}}>
-      {(window.location.pathname === "/" || window.location.pathname === "/multi") && (
+      {(window.location.pathname === "/" || window.location.pathname === "/multi" || window.location.pathname.includes('create')) && (
         <div className="actions">
           <Button
             onClick={() => setState({...state, history: true})}
@@ -60,9 +61,23 @@ const Footer: React.FC = () => {
           </a>
         </p>
 
-        {window.location.pathname !== "/" && !window.location.pathname.includes('multi') && <Button size="small" onClick={copySeed}>Mnemonic</Button>}
+        {window.location.pathname !== "/" && !window.location.pathname.includes('create') && !window.location.pathname.includes('multi') &&
+        <Button size="small" onClick={copySeed}>Mnemonic</Button>}
       </div>
 
+      {/* HISTORY */}
+      <Modal
+        title="История"
+        visible={state.history}
+        onCancel={handleCancel}
+        footer={
+          <Button key="back" onClick={handleCancel}>
+            Закрыть
+          </Button>
+        }
+      >
+        <History />
+      </Modal>
 
       {/* FAQ */}
       <Modal
@@ -128,80 +143,6 @@ const Footer: React.FC = () => {
         <a href="https://app.swaggerhub.com/apis-docs/kanitelk/tap/" target="_blank">
           Документация API на Swagger
         </a>
-      </Modal>
-
-
-      {/* HISTORY */}
-      <Modal
-        title="История"
-        visible={state.history}
-        onCancel={handleCancel}
-        footer={
-          <Button key="back" onClick={handleCancel}>
-            Закрыть
-          </Button>
-        }
-      >
-        {getWalletsHistory() ? (
-          <Collapse accordion>
-            {getWalletsHistory()?.map(item => (
-              <Panel
-                header={
-                  item.type == "multi"
-                    ? `Campaign: ${item.link} (${new Date(
-                    item.date
-                    ).toLocaleDateString()})`
-                    : `${item.link} (${new Date(
-                    item.date
-                    ).toLocaleDateString()})`
-                }
-                key={item.date}
-              >
-                {item.address && (
-                  <p>
-                    <strong>Address: </strong>
-                    {item.address}
-                  </p>
-                )}
-                <p>
-                  <strong>Link: </strong>
-                  <a
-                    href={
-                      item.type == "multi"
-                        ? `${config.domain}multi/${item.link}`
-                        : `${config.domain}${item.link}`
-                    }
-                    target="_blank"
-                  >
-                    {item.link}
-                  </a>
-                  <Icon
-                    style={{marginLeft: "3px", cursor: "pointer"}}
-                    onClick={() => {
-                      copy(`${config.domain}${item.link}`);
-                      message.success("Link copied");
-                    }}
-                    type="copy"
-                  />
-                </p>
-                {item.seed && (
-                  <p>
-                    <strong>Seed: </strong>
-                    {item.seed}
-                  </p>
-                )}
-                {item.password && (
-                  <p>
-                    <strong>Password: </strong>
-                    {item.password}
-                  </p>
-                )}
-              </Panel>
-            ))}
-          </Collapse>
-        ) : (
-          <p>Вы еще не отправляли переводов с этого устройства.</p>
-        )}
       </Modal>
     </Footer>
   );
