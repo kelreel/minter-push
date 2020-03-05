@@ -25,33 +25,6 @@ const NewMultiView: React.FC = observer(() => {
 
   return (
     <Content className="new-multi-view">
-      <Particles
-        className="particles"
-        params={{
-          particles: {
-            number: {
-              value: 7
-            },
-            size: {
-              value: 3
-            },
-            color: {
-              value: "#de3838"
-            },
-            line_linked: {
-              enable: false
-            }
-          },
-          interactivity: {
-            events: {
-              onhover: {
-                enable: true,
-                mode: "repulse"
-              }
-            }
-          }
-        }}
-      />
       <Title level={3} style={{ marginBottom: "20px" }}>
         {t("newCampaign.title")}
       </Title>

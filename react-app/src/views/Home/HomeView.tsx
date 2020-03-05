@@ -27,7 +27,6 @@ const Home: React.FC = observer(() => {
 
   return (
     <Content className="home-view">
-      <Particles className="particles" params={particlesParams}/>
       <Title level={3} style={{marginBottom: "35px"}}>
         {t("home.title")}
       </Title>

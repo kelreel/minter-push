@@ -13,7 +13,6 @@ import Loading from "../Layout/Loading";
 import * as Share from "react-share";
 import qrlogo from "../../assets/qr.png";
 import {AppStoreContext} from "../../stores/appStore";
-import {log} from "util";
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -55,6 +54,16 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
     deepCurrency: store.currency
   });
   const {TabPane} = Tabs;
+
+  const nativeShare = () => {
+    // @ts-ignore
+    navigator.share({
+      text: 'Tap to get coins!',
+      url: `${config.domain}${link}`
+    })
+  }
+
+  const navShare = navigator.share;
 
   const checkBalance = async () => {
     try {
@@ -171,9 +180,6 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
               </>
             )}
           </div>
-          {/* <Button size="small" onClick={copySeed}>
-            {t("walletCreated.copySeedBtn")}
-          </Button> */}
         </TabPane>
 
         {/* Sharing Tab */}
@@ -206,23 +212,25 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
             <div onClick={copyLink} className="link">
               <Alert message={`${config.domain}${link}`} type="success"/>
             </div>
-            <div className="share-buttons">
-              <Share.VKShareButton url={`${config.domain}${link}`}>
-                <Share.VKIcon size={32} round={true}/>
-              </Share.VKShareButton>
-              <Share.TelegramShareButton url={`${config.domain}${link}`}>
-                <Share.TelegramIcon size={32} round={true}/>
-              </Share.TelegramShareButton>
-              <Share.ViberShareButton url={`${config.domain}${link}`}>
-                <Share.ViberIcon size={32} round={true}/>
-              </Share.ViberShareButton>
-              <Share.WhatsappShareButton url={`${config.domain}${link}`}>
-                <Share.WhatsappIcon size={32} round={true}/>
-              </Share.WhatsappShareButton>
-              <Share.EmailShareButton url={`${config.domain}${link}`}>
-                <Share.EmailIcon size={32} round={true}/>
-              </Share.EmailShareButton>
-            </div>
+            {navShare ?
+              <Button onClick={nativeShare} type="primary" block icon="share-alt">{t("walletCreated.share")}</Button> :
+              <div className="share-buttons">
+                <Share.VKShareButton url={`${config.domain}${link}`}>
+                  <Share.VKIcon size={32} round={true}/>
+                </Share.VKShareButton>
+                <Share.TelegramShareButton url={`${config.domain}${link}`}>
+                  <Share.TelegramIcon size={32} round={true}/>
+                </Share.TelegramShareButton>
+                <Share.ViberShareButton url={`${config.domain}${link}`}>
+                  <Share.ViberIcon size={32} round={true}/>
+                </Share.ViberShareButton>
+                <Share.WhatsappShareButton url={`${config.domain}${link}`}>
+                  <Share.WhatsappIcon size={32} round={true}/>
+                </Share.WhatsappShareButton>
+                <Share.EmailShareButton url={`${config.domain}${link}`}>
+                  <Share.EmailIcon size={32} round={true}/>
+                </Share.EmailShareButton>
+              </div>}
           </div>
         </TabPane>
       </Tabs>

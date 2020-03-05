@@ -37,7 +37,8 @@
     "exact": "Exact amount",
     "deepContent": "Payment for the exact amount in the specified currency",
     "next": "Next",
-    "back": "Back"
+    "back": "Back",
+    "share": "Share"
   },
   "password": {
     "title": "Protected wallet",

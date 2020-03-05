@@ -56,10 +56,6 @@ const CreatedView: React.FC = observer(() => {
 
   return (
     <Content className="home-view">
-      <Particles
-        className="particles"
-        params={particlesParams}>
-      </Particles>
       {!state.isLoading ? <WalletCreated
         address={state.address}
         link={link!}

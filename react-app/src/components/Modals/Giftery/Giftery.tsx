@@ -5,6 +5,7 @@ import {observer} from "mobx-react-lite";
 import React, {useContext, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import parse from 'html-react-parser';
+import {isMobile} from "react-device-detect";
 
 import {AppStoreContext} from "../../../stores/appStore";
 import {getCertificate, makeOrder} from "../../../services/gifteryApi";
@@ -105,21 +106,22 @@ const Giftery: React.FC<Props> = observer((
       title={title}
       onOk={handleOk}
       onCancel={handleCancel}
+      centered={isMobile}
       bodyStyle={{backgroundImage: `linear-gradient(rgba(255,255,255,.97), rgba(255,255,255,.97)), url(https://${image_url})`}}
       footer={
         !state.error && !state.success && <>
-          <Button key="back" onClick={handleCancel}>
-            {t("giftery.modal.cancel")}
-          </Button>
-              <Button
-                  disabled={!state.face || !state.coin || !mailRegExp.test(state.email)}
-                  key="submit"
-                  type="primary"
-                  loading={state.isLoading}
-                  onClick={handleOk}
-              >
-                {t("giftery.modal.next")}
-              </Button>
+            <Button key="back" onClick={handleCancel}>
+              {t("giftery.modal.cancel")}
+            </Button>
+            <Button
+                disabled={!state.face || !state.coin || !mailRegExp.test(state.email)}
+                key="submit"
+                type="primary"
+                loading={state.isLoading}
+                onClick={handleOk}
+            >
+              {t("giftery.modal.next")}
+            </Button>
         </>
       }
     >

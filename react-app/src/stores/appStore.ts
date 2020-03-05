@@ -119,7 +119,6 @@ class AppStore {
         else return 1
       })
       this.balance = r;
-      console.log(r);
     } catch (error) {
       console.log(error);
       message.error("Error while getting balance");
