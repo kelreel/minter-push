@@ -35,6 +35,7 @@
     "password": "Password",
     "pay": "Pay via Wallet",
     "exact": "Exact amount",
+    "bitcoinBtn": "Bitcoin",
     "deepContent": "Payment for the exact amount in the specified currency",
     "next": "Next",
     "back": "Back",

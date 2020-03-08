@@ -1,6 +1,6 @@
 import "./WalletCreated.scss";
 
-import {Alert, Button, Icon, InputNumber, List, message, Modal, Select, Tabs} from "antd";
+import {Alert, Button, Icon, Input, List, message, Modal, Select, Tabs} from "antd";
 import copy from "copy-to-clipboard";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {useTranslation} from "react-i18next";
@@ -46,12 +46,22 @@ function useInterval(callback: Function, delay: number) {
 const WalletCreated: React.FC<props> = ({address, link}) => {
   const {t, i18n} = useTranslation();
   const store = useContext(AppStoreContext)
-  const [state, setState] = useState<{ tab: string; balance: any, deepModal: boolean, deepValue: number, deepCurrency: string }>({
+  const [state, setState] = useState<{
+    tab: string;
+    balance: any,
+    deepModal: boolean,
+    deepValue: number,
+    deepCurrency: string,
+    bitcoinModal: boolean,
+    qrModal: boolean
+  }>({
     balance: null,
     tab: "1",
     deepModal: false,
     deepValue: 10,
-    deepCurrency: store.currency
+    deepCurrency: 'BIP',
+    bitcoinModal: false,
+    qrModal: false
   });
   const {TabPane} = Tabs;
 
@@ -115,10 +125,23 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
     return res;
   };
 
-  const deepBip = Math.round((1 / store.bipPrice) / store.rates[state.deepCurrency] * state.deepValue * 100) / 100;
+  const deepBip = () => {
+    if (state.deepCurrency === 'BIP') {
+      return state.deepValue;
+    } else {
+      return Math.round((1 / store.bipPrice) / store.rates[state.deepCurrency] * state.deepValue * 100) / 100;
+    }
+  }
+
+  const selectCurrency = () => <Select className="cur" value={state.deepCurrency}
+                                       onChange={(val: string) => setState({...state, deepCurrency: val})}>
+    <Select.Option value="USD">USD</Select.Option>
+    <Select.Option value="RUB">RUB</Select.Option>
+    <Select.Option value="BIP">BIP</Select.Option>
+  </Select>
 
   return (
-    <div className="card-container">
+    <div className="card-container wallet-created">
       <Tabs
         activeKey={state.tab}
         type="card"
@@ -135,10 +158,25 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
           }
           key="1"
         >
-          <QRCodeCanvas value={address} onClick={copyAddress} size={200}/>
-          <div className="address" onClick={copyAddress}>
-            {shortAddress(address)}
-            <Icon type="copy"/>
+          <div className="address">
+            <p onClick={copyAddress}>{shortAddress(address)}</p>
+            <Icon onClick={copyAddress} type="copy"/>
+            <Icon type="qrcode" onClick={() => setState({...state, qrModal: true})}/>
+          </div>
+          <div className="deeplink">
+            <div className="deep-value">
+              <Input addonAfter={selectCurrency()} className="num" value={state.deepValue}
+                     onChange={(e) => {
+                       if (isNaN(parseFloat(e.target.value))) {
+                         setState({...state, deepValue: 0});
+                         return;
+                       }
+                       setState({...state, deepValue: parseFloat(e.target.value)})
+                     }}/>
+            </div>
+            <Button style={{marginTop: '15px'}} type="primary"
+                    onClick={() => window.open(getDeepLink(address, deepBip(), 'BIP'), '_blank')}>DeepLink
+              ({deepBip().toLocaleString()} BIP)</Button>
           </div>
           <div className="balance">
             {state.balance &&
@@ -168,13 +206,6 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
             {(!state.balance ||
               (+state?.balance?.BIP === 0 && getBalances().length === 1)) && (
               <>
-                <Button
-                  type="primary"
-                  onClick={() => setState({...state, deepModal: true})}
-                  style={{marginBottom: "15px"}}
-                >
-                  {t("walletCreated.exact")}
-                </Button>
                 <h4>{t("walletCreated.waitingPayment")}</h4>
                 <Loading size="50px"/>
               </>
@@ -235,38 +266,9 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
         </TabPane>
       </Tabs>
 
-      <Modal
-        title="Deep Link"
-        wrapClassName="deep-modal"
-        visible={state.deepModal}
-        onCancel={() => setState({...state, deepModal: false})}
-        footer={
-          <>
-            <Button
-              key="submit"
-              type="primary"
-              onClick={() => {
-                setState({...state, deepModal: false})
-                window.open(getDeepLink(address, deepBip, 'BIP'), '_blank');
-              }}
-            >
-              {t("walletCreated.pay")}
-            </Button>
-          </>
-        }
-      >
-        <p>{t("walletCreated.deepContent")}</p>
-        <div className="deep-value">
-          <InputNumber className="num" min={0} value={state.deepValue}
-                       onChange={(val) => setState({...state, deepValue: val!})}/>
-          <Select className="cur" value={state.deepCurrency}
-                  onChange={(val: string) => setState({...state, deepCurrency: val})}>
-            <Select.Option value="USD">USD</Select.Option>
-            <Select.Option value="RUB">RUB</Select.Option>
-          </Select>
-        </div>
-        <div className="value">
-          {deepBip.toLocaleString()} BIP
+      <Modal title={address} footer={null} visible={state.qrModal} onCancel={() => setState({...state, qrModal: false})}>
+        <div className="qr-modal">
+          <QRCodeCanvas value={address} onClick={copyAddress} size={200}/>
         </div>
       </Modal>
 
