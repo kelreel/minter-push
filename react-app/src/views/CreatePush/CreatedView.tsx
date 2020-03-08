@@ -6,10 +6,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import WalletCreated from "../../components/WalletCreated/WalletCreated";
 import {AppStoreContext} from "../../stores/appStore";
-
-import Particles from "react-particles-js";
 import {useParams} from "react-router-dom";
-import {particlesParams} from "../../services/utils";
 import {getWallet} from "../../services/walletApi";
 import Loading from "../../components/Layout/Loading";
 
@@ -51,7 +48,9 @@ const CreatedView: React.FC = observer(() => {
       }
     }
     r()
-    return function cleanTitle () { document.title = 'Push' }
+    return function cleanTitle() {
+      document.title = 'Push'
+    }
   }, [])
 
   return (
@@ -59,7 +58,7 @@ const CreatedView: React.FC = observer(() => {
       {!state.isLoading ? <WalletCreated
         address={state.address}
         link={link!}
-      /> : <Loading size="64px" />}
+      /> : <Loading size="64px"/>}
     </Content>
   );
 });

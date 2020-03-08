@@ -46,28 +46,3 @@ export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512)
   const blob = new Blob(byteArrays, {type: contentType});
   return blob;
 }
-
-export const particlesParams: IParticlesParams = {
-  particles: {
-    number: {
-      value: 7
-    },
-    size: {
-      value: 3
-    },
-    color: {
-      value: "#de3838"
-    },
-    line_linked: {
-      enable: false
-    }
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: true,
-          mode: "repulse"
-      }
-    }
-  }
-}

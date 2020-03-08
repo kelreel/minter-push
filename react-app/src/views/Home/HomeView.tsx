@@ -10,9 +10,6 @@ import SendForm from "../../components/SendForm/SendForm";
 import {AppStoreContext} from "../../stores/appStore";
 import history from "../../stores/history";
 
-import Particles from "react-particles-js";
-import {particlesParams} from "../../services/utils";
-
 const {Content} = Layout;
 
 const Home: React.FC = observer(() => {

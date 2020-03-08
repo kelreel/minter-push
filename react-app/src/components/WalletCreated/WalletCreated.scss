@@ -189,3 +189,21 @@
   justify-content: center;
   align-items: center;
 }
+
+.bitcoin-refill {
+  .field {
+    display: flex;
+    flex-flow: column wrap;
+
+    label {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.bitcoin-refill-success {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}

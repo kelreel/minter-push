@@ -13,6 +13,7 @@ import Loading from "../Layout/Loading";
 import * as Share from "react-share";
 import qrlogo from "../../assets/qr.png";
 import {AppStoreContext} from "../../stores/appStore";
+import BitcoinModal from "./BitcoinModal";
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -133,11 +134,12 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
     }
   }
 
-  const selectCurrency = () => <Select className="cur" value={state.deepCurrency}
+  const selectCurrency = () => <Select style={{ width: 80 }} className="cur" value={state.deepCurrency}
                                        onChange={(val: string) => setState({...state, deepCurrency: val})}>
     <Select.Option value="USD">USD</Select.Option>
     <Select.Option value="RUB">RUB</Select.Option>
     <Select.Option value="BIP">BIP</Select.Option>
+    <Select.Option value="Bitcoin">Bitcoin</Select.Option>
   </Select>
 
   return (
@@ -174,9 +176,13 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
                        setState({...state, deepValue: parseFloat(e.target.value)})
                      }}/>
             </div>
-            <Button style={{marginTop: '15px'}} type="primary"
+            {state.deepCurrency !== 'Bitcoin' ? <Button style={{marginTop: '15px'}} type="primary"
                     onClick={() => window.open(getDeepLink(address, deepBip(), 'BIP'), '_blank')}>DeepLink
-              ({deepBip().toLocaleString()} BIP)</Button>
+              ({deepBip().toLocaleString()} BIP)</Button> :
+                <Button style={{marginTop: '15px'}} type="primary" onClick={() => {
+                  setState({...state, bitcoinModal: false})
+                  setTimeout(() => setState({...state, bitcoinModal: true}), 0)
+                }}>Get BTC Address</Button>}
           </div>
           <div className="balance">
             {state.balance &&
@@ -271,6 +277,8 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
           <QRCodeCanvas value={address} onClick={copyAddress} size={200}/>
         </div>
       </Modal>
+
+      <BitcoinModal visible={state.bitcoinModal} address={address}/>
 
       {/* Next, back buttons */}
       <div className="nav">

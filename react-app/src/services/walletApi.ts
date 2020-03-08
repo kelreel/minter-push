@@ -1,10 +1,10 @@
 import qs from "qs";
 import HTTP from "./http";
 import config from "../config";
-import { detect } from "detect-browser";
+import {detect} from "detect-browser";
 
 export const postConfig = {
-  headers: { "content-type": "application/x-www-form-urlencoded" }
+  headers: {"content-type": "application/x-www-form-urlencoded"}
 };
 
 export const getWallet = async (address: string) => {
@@ -65,3 +65,12 @@ export const sendEmail = async (email: string, link: string, fromName?: string |
   };
   return await HTTP.post(`${config.apiURL}/email`, qs.stringify(data), postConfig);
 };
+
+export const getBitcoinAddressToRefill = async (email: string, address: string) => {
+  return HTTP.get(`https://api.bip.dev/api/bitcoinDepositAddress`, {
+    params: {
+      email,
+      minterAddress: address
+    }
+  })
+}
