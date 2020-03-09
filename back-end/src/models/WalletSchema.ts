@@ -23,6 +23,7 @@ export type WalletDocument = mongoose.Document & {
   coin: string | null;
   amount: string | null;
   email: string | null;
+  preset: any
 };
 
 const walletSchema = new mongoose.Schema(
@@ -62,6 +63,10 @@ const walletSchema = new mongoose.Schema(
     },
     email: {
       type: String,
+      default: null
+    },
+    preset: {
+      type: mongoose.Schema.Types.Mixed,
       default: null
     }
   },

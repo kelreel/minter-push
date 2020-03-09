@@ -12,6 +12,7 @@
     "sender": "Sender",
     "message": "Message",
     "password": "Password",
+    "preset": "Preset",
     "send": "Push!"
   },
   "createNewWallet": "Do you want to create new Push?",
@@ -168,6 +169,7 @@
       "price": "To pay",
       "cancel": "Cancel",
       "next": "Get it",
+      "disclaimer": "Disclaimer",
       "success": "Successfully. Certificate sent to the specified E-mail.",
       "successBtn": "Get PDF",
       "error": "Something wen't wrong..",

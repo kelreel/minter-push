@@ -90,13 +90,13 @@ const GifteryLayout: React.FC = observer(() => {
       {/* FOOD */}
       {state.products?.food && <>
           <div
-              className="title"
+              className="title animated fadeInUp"
               style={{color: pStore.categoryTitleColor}}
           >
             {pStore.showCategoryTitle && <>{t('giftery.food')}</>}
           </div>
 
-          <div className="shops">
+          <div className="shops animated fadeInUp">
             {getCards("food")}
           </div>
       </>}

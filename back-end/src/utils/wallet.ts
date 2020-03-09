@@ -24,7 +24,8 @@ export const createWallet = async (
   password: string | null = null,
   name: string | null = null,
   payload: string | null = null,
-  fromName: string | null = null
+  fromName: string | null = null,
+  preset: any
 ) => {
   const seed = generateSeed();
   const address = getAddressFromSeed(seed);
@@ -37,6 +38,12 @@ export const createWallet = async (
 
   const link = short.generate().substring(0, 6);
 
+  try {
+    preset = JSON.parse(preset)
+  } catch (error) {
+    preset = null
+  }
+
   const wallet = new Wallet({
     address,
     seed,
@@ -45,7 +52,8 @@ export const createWallet = async (
     status: WalletStatus.created,
     password: hash,
     fromName,
-    link
+    link,
+    preset
   });
 
   await wallet.save();

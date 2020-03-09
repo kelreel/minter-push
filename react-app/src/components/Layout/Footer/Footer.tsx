@@ -26,7 +26,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <Footer style={{textAlign: "center"}}>
+    <Footer style={{textAlign: "center"}} className="animated fadeIn delay-2s">
       {(window.location.pathname === "/" || window.location.pathname === "/multi" || window.location.pathname.includes('create')) && (
         <div className="actions">
           <Button

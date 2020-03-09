@@ -1,6 +1,6 @@
 import "./Giftery.scss";
 
-import {Button, Input, message, Modal, Result, Select} from "antd";
+import {Button, Collapse, Input, message, Modal, Result, Select} from "antd";
 import {observer} from "mobx-react-lite";
 import React, {useContext, useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
@@ -46,6 +46,8 @@ const Giftery: React.FC<Props> = observer((
 
   const store = useContext(AppStoreContext);
   const {t, i18n} = useTranslation();
+
+  const {Panel} = Collapse;
 
   const initialState = {
     visible,
@@ -127,6 +129,7 @@ const Giftery: React.FC<Props> = observer((
     >
       <>
         {!state.error && !state.success && <div className="send-form">
+            <p>{brief}</p>
             <div className="field">
                 <label>{t("giftery.modal.certificate")}</label>
                 <Select
@@ -162,6 +165,13 @@ const Giftery: React.FC<Props> = observer((
                 }
                 }/>
             </div>
+            <Collapse bordered={false} accordion>
+                <Panel header={t("giftery.modal.disclaimer")} key="2">
+                    <div className="disclaimer">
+                      {parse(disclaimer)}
+                    </div>
+                </Panel>
+            </Collapse>
           {state.coin && state.face !== 0 && (
             <div className="price">
               {state.coin === "BIP" ? (
@@ -199,9 +209,6 @@ const Giftery: React.FC<Props> = observer((
               )}
             </div>
           )}
-            <div className="disclaimer">
-              {parse(disclaimer)}
-            </div>
         </div>}
 
         {state.error && (

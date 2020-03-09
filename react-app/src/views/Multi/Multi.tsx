@@ -31,6 +31,7 @@ const MultiView: React.FC = observer(() => {
           link!,
           window.localStorage.getItem("mpass")!
         );
+        document.title = `${mStore.name} | Push Campaign`
       } catch (error) {
         console.log(error);
         // history.push("/multi");
@@ -38,6 +39,9 @@ const MultiView: React.FC = observer(() => {
       setState({...state, isLoading: false})
     };
     init();
+    return function cleanTitle() {
+      document.title = 'Push'
+    }
   }, []);
 
   return (

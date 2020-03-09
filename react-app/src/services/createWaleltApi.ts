@@ -3,13 +3,15 @@ import HTTP from "./http";
 import config from '../config'
 import {postConfig} from "./walletApi";
 
-export const newWallet = async (pass: string, name: string, payload: string, fromName: string) => {
+export const newWallet = async (pass: string, name: string, payload: string, fromName: string, preset: any) => {
   const data = {
     pass,
     name,
     payload,
-    fromName
+    fromName,
+    preset: JSON.stringify(preset)
   };
+  console.log(preset)
   return await HTTP.post(`${config.apiURL}/new`, qs.stringify(data), postConfig);
 };
 

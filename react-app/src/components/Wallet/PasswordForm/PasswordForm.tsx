@@ -30,7 +30,7 @@ const PasswordForm: React.FC = observer(() => {
   }
 
   return (
-    <div className="wallet-password">
+    <div className="wallet-password animated fadeIn">
       <Card title={t("password.title")}>
         <Input.Password onPressEnter={login} onChange={(e) => setState({...state, password: e.target.value})} placeholder="Password..." />
         <div className="actions">

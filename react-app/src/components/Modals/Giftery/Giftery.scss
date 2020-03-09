@@ -2,6 +2,10 @@
   display: flex;
   flex-flow: column wrap;
 
+  .ant-modal-body {
+    padding: 18px !important;
+  }
+
   .disclaimer {
     flex-flow: column wrap;
     max-height: 200px;
@@ -39,6 +43,7 @@
       display: flex;
       flex-flow: row nowrap;
       justify-content: flex-end;
+      margin-top: 10px;
 
       p {
         &:first-of-type {

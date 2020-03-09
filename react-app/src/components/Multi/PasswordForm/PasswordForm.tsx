@@ -35,7 +35,7 @@ const MultiPasswordForm: React.FC<{ link: string }> = observer(({ link }) => {
   };
 
   return (
-    <div className="wallet-password">
+    <div className="wallet-password animated fadeIn">
       <Card title="Protected">
         <Input.Password
           onPressEnter={login}

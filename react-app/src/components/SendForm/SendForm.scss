@@ -24,24 +24,41 @@
       justify-content: space-between;
       align-items: center;
     }
-  }
 
-  @keyframes btnScale {
-    from {
-      transform: scale(1);
+    .preset {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 400;
+
+      .ant-upload-list {
+        display: none;
+      }
+
+      .ant-btn {
+        font-size: 14px;
+        font-weight: 400;
+      }
     }
-
-    to {
-      transform: scale(1.05);
-    }
   }
-
-  .action-btn {
-    animation-name: btnScale;
-    animation-duration: .8s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-  }
+  //
+  //@keyframes btnScale {
+  //  from {
+  //    transform: scale(1);
+  //  }
+  //
+  //  to {
+  //    transform: scale(1.05);
+  //  }
+  //}
+  //
+  //.action-btn {
+  //  animation-name: btnScale;
+  //  animation-duration: .8s;
+  //  animation-iteration-count: infinite;
+  //  animation-direction: alternate;
+  //}
 
   textarea {
     resize: none;

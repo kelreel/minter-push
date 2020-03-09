@@ -128,7 +128,7 @@ const WalletTable: React.FC = observer(() => {
 
   return (
     <>
-      {state.hideSwitches ? <div className="table-switches">
+      {state.hideSwitches ? <div className="table-switches animated fadeIn">
         <div className="item">
           <p style={{marginRight: '5px'}}>Show Table Settings</p>
           <Switch
@@ -213,7 +213,7 @@ const WalletTable: React.FC = observer(() => {
           </Button>
         </div>
       </div>}
-      <div className="wallet-table">
+      <div className="wallet-table animated fadeIn">
         <Table
           size="small"
           bordered

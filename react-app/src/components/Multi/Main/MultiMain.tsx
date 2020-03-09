@@ -3,7 +3,7 @@ import "./MultiMain.scss";
 import { Alert, Button, Card, message, Modal, Input } from "antd";
 import { saveAs } from "file-saver";
 import { observer } from "mobx-react-lite";
-import React, { useContext, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { useTranslation } from "react-i18next";
 
 import {
@@ -113,27 +113,28 @@ const MultiMain: React.FC = observer(() => {
     <div className="multi-main">
       <Alert
         closable
+        className="animated fadeIn"
         style={{ margin: "10px" }}
         type="info"
         message={t("multi.alert")}
       />
       <div className="row">
         <div className="main" style={{ display: 'flex', flexFlow: 'column wrap', flex: "1" }}>
-          <Card style={{flex: 1}}>
+          <Card className="animated fadeInLeft" style={{flex: 1}}>
             <MultiInfo />
           </Card>
-          <Card>
+          <Card className="animated fadeInLeft">
             <PresetSettings />
           </Card>
         </div>
-        <Card style={{ flex: "1" }}>
+        <Card className="animated fadeIn slow" style={{ flex: "1" }}>
           <MultiWallet />
         </Card>
-        <Card style={{ flex: "1" }}>
+        <Card className="animated fadeInRight" style={{ flex: "1" }}>
           <ParamsForm />
         </Card>
       </div>
-      <div className="actions">
+      <div className="actions animated fadeInUp slow">
         <Button type="primary" onClick={addWalletsAction}>
           Add 10 wallets
         </Button>

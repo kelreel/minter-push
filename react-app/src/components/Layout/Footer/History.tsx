@@ -43,6 +43,9 @@ const History: React.FC = () => {
               {item.seed}
             </p>
           )}
+          {item.type === historyEntryType.multi && <p>
+            <a href={`${config.domain}multi/${item.link}`} target="_blank">Open Link</a>
+          </p>}
           {item.password && (
             <p>
               <strong>Password: </strong>

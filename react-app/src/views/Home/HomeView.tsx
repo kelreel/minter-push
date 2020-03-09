@@ -24,13 +24,13 @@ const Home: React.FC = observer(() => {
 
   return (
     <Content className="home-view">
-      <Title level={3} style={{marginBottom: "35px"}}>
+      <Title level={3} style={{marginBottom: "35px"}} className="animated bounceInRight">
         {t("home.title")}
       </Title>
-      <Card className="send-card-home">
+      <Card className="send-card-home animated bounceInLeft">
         <SendForm created={created}/>
       </Card>
-      <Button className="multi-btn" onClick={() => history.push("/multi")}>
+      <Button className="multi-btn animated bounceInUp" onClick={() => history.push("/multi")}>
         {t('multibtn')}
       </Button>
     </Content>

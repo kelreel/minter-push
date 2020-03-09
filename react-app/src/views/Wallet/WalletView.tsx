@@ -72,7 +72,7 @@ const WalletView: React.FC = observer(() => {
           {store.seed && !store.isPassword && (
             <>
 
-              <Card style={{background: pStore.balanceBgc}} className="balance">
+              <Card style={{background: pStore.balanceBgc}} className="balance animated fadeInDown">
                 <Balance/>
               </Card>
 
@@ -91,12 +91,12 @@ const WalletView: React.FC = observer(() => {
               {pStore.showTransfers && (
                 <>
                   <div
-                    className="title"
+                    className="title animated fadeInUp"
                     style={{color: pStore.categoryTitleColor, marginBottom: '30px', marginTop: '30px'}}
                   >
                     {pStore.showCategoryTitle && <>{t("transfersTitle")}</>}
                   </div>
-                  <div className="transfers">
+                  <div className="transfers animated fadeInUp">
                     <Popular/>
                   </div>
                 </>)}

@@ -54,7 +54,7 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
     deepValue: number,
     deepCurrency: string,
     bitcoinModal: boolean,
-    qrModal: boolean
+    qrModal: boolean,
   }>({
     balance: null,
     tab: "1",
@@ -143,7 +143,7 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
   </Select>
 
   return (
-    <div className="card-container wallet-created">
+    <div className="card-container wallet-created animated fadeIn">
       <Tabs
         activeKey={state.tab}
         type="card"

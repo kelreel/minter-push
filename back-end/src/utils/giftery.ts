@@ -24,8 +24,6 @@ export const saveGifteryProducts = async () => {
       }
     });
 
-   
-  
     console.log(`Get Products Count: ${res.data.data.length}`);
 
     await Product.remove({});
@@ -34,7 +32,6 @@ export const saveGifteryProducts = async () => {
     console.log(error);
   }
 };
-
 
 export const getGifteryBalance = async (): Promise<number> => {
   const cmd = "getBalance";
