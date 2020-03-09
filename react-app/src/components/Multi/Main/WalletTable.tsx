@@ -32,7 +32,7 @@ import Search from "antd/lib/input/Search";
 import { sendEmail } from "../../../services/walletApi";
 var QRCodeCanvas = require("qrcode.react");
 
-const statusColor = (status: string) => {
+export const statusColor = (status: string) => {
   switch (status) {
     case "created":
       return "blue";

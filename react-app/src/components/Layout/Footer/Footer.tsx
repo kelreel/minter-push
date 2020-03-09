@@ -1,9 +1,7 @@
-import {Button, Collapse, Icon, Layout, message, Modal} from "antd";
+import {Button, Collapse, Layout, message, Modal} from "antd";
 import React, {useState} from "react";
 import "./Footer.scss";
 import copy from "copy-to-clipboard";
-import {getWalletsHistory} from "../../../services/walletsHistory";
-import config from "../../../config";
 import History from "./History";
 
 const Footer: React.FC = () => {
@@ -26,11 +24,11 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <Footer style={{textAlign: "center"}} className="animated fadeIn delay-2s">
+    <Footer style={{textAlign: "center"}} className="animated fadeIn">
       {(window.location.pathname === "/" || window.location.pathname === "/multi" || window.location.pathname.includes('create')) && (
         <div className="actions">
           <Button
-            onClick={() => setState({...state, history: true})}
+            onClick={() => window.open('/history', '_blank')}
             icon="calendar"
             size="small"
           >
@@ -61,23 +59,11 @@ const Footer: React.FC = () => {
           </a>
         </p>
 
-        {window.location.pathname !== "/" && !window.location.pathname.includes('create') && !window.location.pathname.includes('multi') &&
+        {window.location.pathname !== "/" && !window.location.pathname.includes('create')
+        && !window.location.pathname.includes('history')
+        && !window.location.pathname.includes('multi') &&
         <Button size="small" onClick={copySeed}>Mnemonic</Button>}
       </div>
-
-      {/* HISTORY */}
-      <Modal
-        title="История"
-        visible={state.history}
-        onCancel={handleCancel}
-        footer={
-          <Button key="back" onClick={handleCancel}>
-            Закрыть
-          </Button>
-        }
-      >
-        <History />
-      </Modal>
 
       {/* FAQ */}
       <Modal

@@ -11,6 +11,10 @@ export const getWallet = async (address: string) => {
   return await HTTP.get(`${config.apiURL}/wallet/${address}`);
 };
 
+export const getStatus = async (link: string) => {
+  return await HTTP.get(`${config.apiURL}/status/${link}`);
+};
+
 export const getWalletCount = async () => {
   return await HTTP.get(`${config.apiURL}/count`);
 };
