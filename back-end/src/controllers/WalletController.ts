@@ -5,9 +5,9 @@ import storage from "node-persist";
 import short from "short-uuid";
 
 import { Wallet, WalletStatus } from "../models/WalletSchema";
-import { getWalletFromCampaign } from "../utils/campaign";
+import { getWalletFromCampaign } from "../actions/Campaign";
 import { sendEmail } from "../utils/email";
-import { createWallet } from "../utils/wallet";
+import { createWallet } from "../actions/Wallet";
 import { HttpException } from "../utils/errorHandler";
 
 const router = express.Router();

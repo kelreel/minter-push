@@ -1,6 +1,6 @@
 import cron from "node-cron";
 
-import { saveGifteryProducts } from "./utils/giftery";
+import { saveGifteryProducts } from "./actions/Giftery";
 import { initStorage, updateStorage } from "./utils/storage";
 
 const tasks = () => {

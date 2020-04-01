@@ -1,7 +1,6 @@
-import axios from "axios";
-import config from "../config";
-import FormData from "form-data";
 import request from "request-promise";
+
+import config from "../config";
 import { Phone } from "../models/PhoneSchema";
 
 export const getBiptoPhoneInfo = async () => {
@@ -11,12 +10,12 @@ export const getBiptoPhoneInfo = async () => {
       key1: config.b2phoneKEY
     }
   });
-    try {
-      r = JSON.parse(r);
-      return r;
-    } catch (error) {
-      throw error;
-    }
+  try {
+    r = JSON.parse(r);
+    return r;
+  } catch (error) {
+    throw error;
+  }
 };
 
 export const getKeywordByPhone = async (phone: string) => {
@@ -43,8 +42,8 @@ export const getStatusPhone = async (phone: string, keyword?: string) => {
   });
   try {
     r = JSON.parse(r);
-    return r
+    return r;
   } catch (error) {
-    throw error
+    throw error;
   }
 };

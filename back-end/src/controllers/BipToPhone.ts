@@ -5,7 +5,7 @@ import {
   getBiptoPhoneInfo,
   getKeywordByPhone,
   getStatusPhone
-} from "../utils/bipToPhone";
+} from "../actions/BipToPhone";
 
 const router = express.Router();
 

@@ -1,5 +1,6 @@
+import nodemailer from "nodemailer";
+
 import config from "../config";
-import nodemailer from 'nodemailer'
 
 export const sendEmail = async (
   email: string,
@@ -9,16 +10,16 @@ export const sendEmail = async (
   password?: string
 ) => {
   try {
-      let transporter = nodemailer.createTransport({
-        host: config.mailHOST,
-        // port: config.mailPORT,
-        secure: true, // true for 465, false for other ports
-        auth: {
-          user: config.mailUSER, // generated ethereal user
-          pass: config.mailPASS // generated ethereal password
-        }
-      });
-    
+    let transporter = nodemailer.createTransport({
+      host: config.mailHOST,
+      // port: config.mailPORT,
+      secure: true, // true for 465, false for other ports
+      auth: {
+        user: config.mailUSER, // generated ethereal user
+        pass: config.mailPASS // generated ethereal password
+      }
+    });
+
     let info = await transporter.sendMail({
       to: email,
       from: "hello@tap.mn",
@@ -27,8 +28,8 @@ export const sendEmail = async (
     });
 
     console.log(info.messageId);
-    
-    return info
+
+    return info;
   } catch (error) {
     console.log(error);
   }
@@ -412,7 +413,11 @@ const getHTML = (
                             </tr>
                           </tbody>
                         </table>
-                        ${password ? `<p>Password: <strong>${password}</strong></p>` : ''}
+                        ${
+                          password
+                            ? `<p>Password: <strong>${password}</strong></p>`
+                            : ""
+                        }
                         <p>Keep your wallet link private. Good luck!</p>
                       </td>
                     </tr>

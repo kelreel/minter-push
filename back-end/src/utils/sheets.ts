@@ -1,9 +1,10 @@
 // @ts-nocheck
 import { GoogleSpreadsheet } from "google-spreadsheet";
+import short from "short-uuid";
+
+import { generateSeed, getAddressFromSeed } from "../actions/Wallet";
 import config from "../config";
 import { Campaign } from "../models/CampaignSchema";
-import { generateSeed, getAddressFromSeed } from "./wallet";
-import short from "short-uuid";
 import { Wallet } from "../models/WalletSchema";
 
 export const getWalletsTable = async (link: string) => {
@@ -18,8 +19,7 @@ export const getWalletsTable = async (link: string) => {
 
   // console.log(name, email, coin, amount);
 
-  const rows = await sheet.getRows({
-  });
+  const rows = await sheet.getRows({});
   let res: any[] = [];
   rows.forEach((x: any) => {
     res.push({
@@ -36,7 +36,7 @@ export const addWalletsFromSheet = async (campaignId: any, wallets: any[]) => {
   try {
     // let campaign = await Campaign.findById(campaignId);
     if (wallets.length > 50) wallets = wallets.slice(0, 50);
-    let res: any[] = []
+    let res: any[] = [];
     wallets.forEach((item: any) => {
       let seed = generateSeed();
       let wallet = {

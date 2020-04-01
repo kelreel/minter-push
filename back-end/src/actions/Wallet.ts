@@ -1,9 +1,8 @@
-import bcrypt from 'bcryptjs';
-import { generateWallet, walletFromMnemonic } from 'minterjs-wallet';
-import short from 'short-uuid';
+import bcrypt from "bcryptjs";
+import { generateWallet, walletFromMnemonic } from "minterjs-wallet";
+import short from "short-uuid";
 
-import config from '../config';
-import { Wallet, WalletStatus } from '../models/WalletSchema';
+import { Wallet, WalletStatus } from "../models/WalletSchema";
 
 export const generateSeed = () => {
   const wallet = generateWallet();
@@ -39,9 +38,9 @@ export const createWallet = async (
   const link = short.generate().substring(0, 6);
 
   try {
-    preset = JSON.parse(preset)
+    preset = JSON.parse(preset);
   } catch (error) {
-    preset = null
+    preset = null;
   }
 
   const wallet = new Wallet({

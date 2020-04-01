@@ -6,7 +6,7 @@ import { sha256 } from "js-sha256";
 import config from "../config";
 import { GifteryOrder } from "../models/Giftery/GifteryOrderSchema";
 import { Product } from "../models/Giftery/ProductSchema";
-import { makeOrder } from "../utils/giftery";
+import { makeOrder } from "../actions/Giftery";
 import { HttpException } from "../utils/errorHandler";
 
 const router = express.Router();

@@ -11,7 +11,7 @@ import {
   getStats,
   getWallets,
   getWalletsLinksTxt
-} from "../utils/campaign";
+} from "../actions/Campaign";
 import { HttpException } from "../utils/errorHandler";
 import { addWalletsFromSheet, getWalletsTable } from "../utils/sheets";
 

@@ -4,9 +4,9 @@ import { Minter, TX_TYPE } from "minter-js-sdk";
 import { generateWallet, walletFromMnemonic } from "minterjs-wallet";
 import short from "short-uuid";
 
+import config from "../config";
 import { Campaign } from "../models/CampaignSchema";
 import { Wallet, WalletDocument, WalletStatus } from "../models/WalletSchema";
-import config from "../config";
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 

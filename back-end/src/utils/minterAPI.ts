@@ -1,20 +1,20 @@
 import axios from "axios";
-import config from "../config";
+import { Minter } from "minter-js-sdk";
 
-import { Minter, TX_TYPE } from "minter-js-sdk";
+import config from "../config";
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
 export const checkWalletBalance = async (address: string) => {
   try {
-    console.log('***');
-    
+    console.log("***");
+
     let total = 0;
     let res = await axios.get(`${config.nodeURL}/address?address=${address}`);
     let balance = res.data.result.balance;
     for (let coin in balance) {
       console.log(coin);
-      
+
       if (coin === "BIP") {
         total += parseFloat(balance[coin]) / 1000000000000000000;
         return;
@@ -28,7 +28,6 @@ export const checkWalletBalance = async (address: string) => {
       }
     }
     console.log(total);
-    
   } catch (error) {
     console.log(error);
   }

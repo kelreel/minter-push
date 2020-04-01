@@ -1,12 +1,13 @@
 import axios from "axios";
-import config from "../config";
 import { sha256 } from "js-sha256";
-import { Product } from "../models/Giftery/ProductSchema";
-import { GifteryOrder } from "../models/Giftery/GifteryOrderSchema";
 import { Minter, TX_TYPE } from "minter-js-sdk";
-import { generateWallet, walletFromMnemonic } from "minterjs-wallet";
+import { walletFromMnemonic } from "minterjs-wallet";
 import storage from "node-persist";
-import { getAddressFromSeed } from "./wallet";
+
+import config from "../config";
+import { GifteryOrder } from "../models/Giftery/GifteryOrderSchema";
+import { Product } from "../models/Giftery/ProductSchema";
+import { getAddressFromSeed } from "./Wallet";
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
@@ -176,17 +177,17 @@ export const makeOrder = async (
 
     let result = await makeGifteryOrder(product_id, face, email_to);
     console.log(result);
-    
+
     order.id = result.data.id;
     order.status = "success";
     await order.save();
     return {
-      status: 'ok',
+      status: "ok",
       order: order._id
-    }
+    };
   } catch (error) {
     order.status = "error";
-    order.error = error.toString()
+    order.error = error.toString();
     throw error;
   } finally {
     await order.save();
