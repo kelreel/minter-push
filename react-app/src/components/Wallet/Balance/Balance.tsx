@@ -1,28 +1,28 @@
 import "./Balance.scss";
 
-import {Alert, Layout, List, Icon, Button} from "antd";
-import {observer} from "mobx-react-lite";
-import React, {useContext} from "react";
-import {useTranslation} from "react-i18next";
+import { Alert, Layout, List } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
 
-import {AppStoreContext} from "../../../stores/appStore";
+import { AppStoreContext } from "../../../stores/appStore";
+import { PresetStoreContext } from "../../../stores/presetStore";
 import Loading from "../../Layout/Loading";
-import {PresetStoreContext} from "../../../stores/presetStore";
 
-const {Content} = Layout;
+const { Content } = Layout;
 
 const Balance: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
-  const pStore = useContext(PresetStoreContext)
-  const {t, i18n} = useTranslation();
+  const pStore = useContext(PresetStoreContext);
+  const { t, i18n } = useTranslation();
 
-  if (store.status === 'created' && store.totalBipBalance === 0) {
+  if (store.status === "created" && store.totalBipBalance === 0) {
     return (
       <div className="balance">
-        <Loading size="50px"/>
+        <Loading size="50px" />
         <h3>Activating wallet...</h3>
       </div>
-    )
+    );
   } else {
     return (
       <div className="balance">
@@ -47,18 +47,22 @@ const Balance: React.FC = observer(() => {
               {store.balance[0].value.toLocaleString("ru-RU")}{" "}
               <span className="coin">{store.balance[0].coin}</span>
             </div>
-            {pStore.showLocalBalance && <div className="price">
+            {pStore.showLocalBalance && (
+              <div className="price">
                 ~ {store.totalInLocalCurrency.toLocaleString("ru-RU")}{" "}
-              {store.currency}
-            </div>}
+                {store.currency}
+              </div>
+            )}
           </div>
         )}
         {store.balance.length > 1 && (
           <div className="coin-list">
-            {pStore.showLocalBalance && <div className="value">
+            {pStore.showLocalBalance && (
+              <div className="value">
                 ~ {store.totalInLocalCurrency.toLocaleString("ru-RU")}{" "}
-              {store.currency}
-            </div>}
+                {store.currency}
+              </div>
+            )}
             <List
               size="small"
               bordered
@@ -69,14 +73,17 @@ const Balance: React.FC = observer(() => {
                   <div className="right">
                     <span className="val">{item.value}</span>
                     <span className="price">
-                    (~
+                      (~
                       {(
                         Math.round(
-                          item.bip_value! * store.bipPrice * 100 * store.rates[store.currency]
+                          item.bip_value! *
+                            store.bipPrice *
+                            100 *
+                            store.rates[store.currency]
                         ) / 100
                       ).toLocaleString("ru-RU")}{" "}
                       {store.currency})
-                  </span>
+                    </span>
                   </div>
                 </List.Item>
               )}
@@ -84,7 +91,7 @@ const Balance: React.FC = observer(() => {
           </div>
         )}
         {pStore.showPayload && store.payload && (
-          <Alert closable message={store.payload} type="success"/>
+          <Alert closable message={store.payload} type="success" />
         )}
         {/* <Icon className="down" style={{ marginTop: "20px" }} type="down" /> */}
         {/* <Button

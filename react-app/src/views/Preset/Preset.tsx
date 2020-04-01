@@ -1,34 +1,30 @@
 import "./Preset.scss";
 
-import {Card, Layout, Affix, Button, Drawer, Collapse} from "antd";
-import {observer} from "mobx-react-lite";
-import React, {useContext, useEffect, useState} from "react";
-import {useTranslation} from "react-i18next";
-import {useParams} from "react-router-dom";
+import { Affix, Button, Card, Collapse, Drawer, Layout } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
+import Editor from "../../components/Editor/Editor";
+import Loading from "../../components/Layout/Loading";
 import Balance from "../../components/Wallet/Balance/Balance";
 import PasswordForm from "../../components/Wallet/PasswordForm/PasswordForm";
-import Loyality from "../../components/Wallet/Transfers/Loyality";
 import GifteryLayout from "../../components/Wallet/Transfers/GifteryLayout";
+import Loyality from "../../components/Wallet/Transfers/Loyality";
 import Popular from "../../components/Wallet/Transfers/Popular";
-import {getWallet} from "../../services/walletApi";
-import {AppStoreContext} from "../../stores/appStore";
-import history from "../../stores/history";
-import Loading from "../../components/Layout/Loading";
-import Editor from "../../components/Editor/Editor";
-import {PresetStoreContext} from "../../stores/presetStore";
-import {MultiStoreContext} from "../../stores/multiStore";
+import { getWallet } from "../../services/walletApi";
+import { AppStoreContext } from "../../stores/appStore";
+import { MultiStoreContext } from "../../stores/multiStore";
+import { PresetStoreContext } from "../../stores/presetStore";
 
-const {Content} = Layout;
+const { Content } = Layout;
 
 const PresetView: React.FC = observer(() => {
   const store = useContext(AppStoreContext);
   const pStore = useContext(PresetStoreContext);
   const mStore = useContext(MultiStoreContext);
-  const {t, i18n} = useTranslation();
+  const { t, i18n } = useTranslation();
   const link = "preset_wallet";
-
-  const {Panel} = Collapse;
 
   const [state, setState] = useState({
     password: false,
@@ -38,7 +34,7 @@ const PresetView: React.FC = observer(() => {
 
   useEffect(() => {
     const init = async () => {
-      setState({...state, isLoading: true});
+      setState({ ...state, isLoading: true });
       let res = await getWallet(link as string);
       store.setWalletWithoutSeed(
         res.data.address,
@@ -52,10 +48,10 @@ const PresetView: React.FC = observer(() => {
       );
       store.setSeed(res.data.seed);
       await store.checkBalance();
-      setState({...state, isLoading: false});
+      setState({ ...state, isLoading: false });
       await store.getTotalPrice();
       await mStore.initCampaign(mStore.link!, mStore.password!);
-      if (mStore.preset) pStore.setPreset(mStore.preset)
+      if (mStore.preset) pStore.setPreset(mStore.preset);
     };
     init();
   }, []);
@@ -63,54 +59,58 @@ const PresetView: React.FC = observer(() => {
   return (
     <Content className="preset-view">
       {state.isLoading ? (
-        <Loading/>
+        <Loading />
       ) : (
         <>
-          {store.isPassword && <PasswordForm/>}
+          {store.isPassword && <PasswordForm />}
           {store.seed && !store.isPassword && (
             <>
               {!state.editor && (
                 <Affix
-                  style={{position: "absolute", right: "20px", top: "80px"}}
+                  style={{ position: "absolute", right: "20px", top: "80px" }}
                 >
                   <Button
                     icon="edit"
                     size="large"
-                    onClick={() => setState({...state, editor: true})}
+                    onClick={() => setState({ ...state, editor: true })}
                     z-index={4}
                   >
-                    {t('editor.openEditor')}
+                    {t("editor.openEditor")}
                   </Button>
                 </Affix>
               )}
               <Drawer
-                title={mStore.name ? `${mStore.name} ${t('editor.editor')}` : `${t('editor.editor')}`}
+                title={
+                  mStore.name
+                    ? `${mStore.name} ${t("editor.editor")}`
+                    : `${t("editor.editor")}`
+                }
                 placement="right"
                 closable
                 keyboard
                 visible={state.editor}
-                onClose={() => setState({...state, editor: false})}
+                onClose={() => setState({ ...state, editor: false })}
                 mask={false}
               >
-                <Editor/>
+                <Editor />
               </Drawer>
               <Card
-                style={{background: pStore.balanceBgc}}
+                style={{ background: pStore.balanceBgc }}
                 className="balance"
               >
-                <Balance/>
+                <Balance />
               </Card>
               {pStore.showTransfers && (
                 <>
                   <div
                     className="title"
-                    style={{color: pStore.categoryTitleColor}}
+                    style={{ color: pStore.categoryTitleColor }}
                   >
                     {pStore.showCategoryTitle && <>{t("transfersTitle")}</>}
                   </div>
 
                   <div className="transfers">
-                    <Popular/>
+                    <Popular />
                   </div>
                 </>
               )}
@@ -118,13 +118,13 @@ const PresetView: React.FC = observer(() => {
                 <>
                   <div
                     className="title"
-                    style={{color: pStore.categoryTitleColor}}
+                    style={{ color: pStore.categoryTitleColor }}
                   >
                     {pStore.showCategoryTitle && <>{t("loyalityTitle")}</>}
                   </div>
 
                   <div className="transfers">
-                    <Loyality/>
+                    <Loyality />
                   </div>
                 </>
               )}
@@ -132,13 +132,13 @@ const PresetView: React.FC = observer(() => {
                 <>
                   <div
                     className="title"
-                    style={{color: pStore.categoryTitleColor}}
+                    style={{ color: pStore.categoryTitleColor }}
                   >
                     {pStore.showCategoryTitle && <>{t("shopListTitle")}</>}
                   </div>
 
                   <div className="transfers">
-                    <GifteryLayout/>
+                    <GifteryLayout />
                   </div>
                 </>
               )}

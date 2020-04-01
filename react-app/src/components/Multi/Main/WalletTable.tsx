@@ -1,35 +1,34 @@
 import {
-  Table,
-  Tag,
-  Icon,
-  message,
-  Popover,
-  Button,
   Alert,
+  Button,
+  Icon,
+  Input,
+  InputNumber,
+  message,
   Modal,
   Popconfirm,
-  Input,
+  Popover,
+  Select,
   Switch,
-  InputNumber,
-  Select
+  Table,
+  Tag
 } from "antd";
+import Column from "antd/lib/table/Column";
+import copy from "copy-to-clipboard";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
-import { MultiStoreContext } from "../../../stores/multiStore";
-import copy from "copy-to-clipboard";
-import config from "../../../config";
-
 import * as Share from "react-share";
-import Column from "antd/lib/table/Column";
+
+import qrlogo from "../../../assets/qr.png";
+import config from "../../../config";
 import {
   deleteWalletFromCampaign,
   editWallet
 } from "../../../services/campaignApi";
-import qrlogo from "../../../assets/qr.png";
-import Search from "antd/lib/input/Search";
 import { sendEmail } from "../../../services/walletApi";
+import { MultiStoreContext } from "../../../stores/multiStore";
+
 var QRCodeCanvas = require("qrcode.react");
 
 export const statusColor = (status: string) => {
@@ -128,91 +127,94 @@ const WalletTable: React.FC = observer(() => {
 
   return (
     <>
-      {state.hideSwitches ? <div className="table-switches animated fadeIn">
-        <div className="item">
-          <p style={{marginRight: '5px'}}>Show Table Settings</p>
-          <Switch
+      {state.hideSwitches ? (
+        <div className="table-switches animated fadeIn">
+          <div className="item">
+            <p style={{ marginRight: "5px" }}>Show Table Settings</p>
+            <Switch
               size="small"
               checked={!state.hideSwitches}
               onChange={val => setState({ ...state, hideSwitches: !val })}
-          />
+            />
+          </div>
         </div>
-      </div> :
-      <div className="table-switches">
-        <div className="item">
-          <p>Address</p>
-          <Switch
-            size="small"
-            checked={state.showAddress}
-            onChange={val => setState({ ...state, showAddress: val })}
-          />
+      ) : (
+        <div className="table-switches">
+          <div className="item">
+            <p>Address</p>
+            <Switch
+              size="small"
+              checked={state.showAddress}
+              onChange={val => setState({ ...state, showAddress: val })}
+            />
+          </div>
+          <div className="item">
+            <p>Redeem</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showRedeem: val })}
+              checked={state.showRedeem}
+            />
+          </div>
+          <div className="item">
+            <p>Last Visit</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showLastVisit: val })}
+              checked={state.showLastVisit}
+            />
+          </div>
+          <div className="item">
+            <p>Browser Info</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showBrowser: val })}
+              checked={state.showBrowser}
+            />
+          </div>
+          <div className="item">
+            <p>Name</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showName: val })}
+              checked={state.showName}
+            />
+          </div>
+          <div className="item">
+            <p>Email</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showEmail: val })}
+              checked={state.showEmail}
+            />
+          </div>
+          <div className="item">
+            <p>Coin</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showCoin: val })}
+              checked={state.showCoin}
+            />
+          </div>
+          <div className="item">
+            <p>Amount</p>
+            <Switch
+              size="small"
+              onChange={val => setState({ ...state, showAmount: val })}
+              checked={state.showAmount}
+            />
+          </div>
+          <div className="item">
+            <Button
+              shape="round"
+              type="primary"
+              onClick={() => mStore.getWalletsData()}
+            >
+              Refresh
+            </Button>
+          </div>
         </div>
-        <div className="item">
-          <p>Redeem</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showRedeem: val })}
-            checked={state.showRedeem}
-          />
-        </div>
-        <div className="item">
-          <p>Last Visit</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showLastVisit: val })}
-            checked={state.showLastVisit}
-          />
-        </div>
-        <div className="item">
-          <p>Browser Info</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showBrowser: val })}
-            checked={state.showBrowser}
-          />
-        </div>
-        <div className="item">
-          <p>Name</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showName: val })}
-            checked={state.showName}
-          />
-        </div>
-        <div className="item">
-          <p>Email</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showEmail: val })}
-            checked={state.showEmail}
-          />
-        </div>
-        <div className="item">
-          <p>Coin</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showCoin: val })}
-            checked={state.showCoin}
-          />
-        </div>
-        <div className="item">
-          <p>Amount</p>
-          <Switch
-            size="small"
-            onChange={val => setState({ ...state, showAmount: val })}
-            checked={state.showAmount}
-          />
-        </div>
-        <div className="item">
-          <Button
-            shape="round"
-            type="primary"
-            onClick={() => mStore.getWalletsData()}
-          >
-            Refresh
-          </Button>
-        </div>
-      </div>}
+      )}
       <div className="wallet-table animated fadeIn">
         <Table
           size="small"
@@ -372,7 +374,12 @@ const WalletTable: React.FC = observer(() => {
                         let wallet = mStore.walletsData.find(
                           x => x.link === item
                         );
-                        setState({ ...state, share: true, link: item, email: wallet.email });
+                        setState({
+                          ...state,
+                          share: true,
+                          link: item,
+                          email: wallet.email
+                        });
                       }}
                     />
                     <Button

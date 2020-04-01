@@ -1,8 +1,6 @@
-import i18n from "../i18n";
-
 import { prepareLink, TX_TYPE } from "minter-js-sdk";
-import {IParticlesParams, ParticlesProps} from "react-particles-js";
 
+import i18n from "../i18n";
 
 export const shortAddress = (address: string): string => {
   return (
@@ -14,7 +12,11 @@ export const getLocale = () => {
   return i18n.language.substring(0, 2);
 };
 
-export const getDeepLink = (address: string, value: number = 100, coin: string = "BIP") => {
+export const getDeepLink = (
+  address: string,
+  value: number = 100,
+  coin: string = "BIP"
+) => {
   const txParams = {
     type: TX_TYPE.SEND,
     data: {
@@ -23,10 +25,14 @@ export const getDeepLink = (address: string, value: number = 100, coin: string =
       coin
     }
   };
-  return 'https://bip.to/' + prepareLink(txParams, "").substring(9)
+  return "https://bip.to/" + prepareLink(txParams, "").substring(9);
 };
 
-export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512) => {
+export const b64toBlob = (
+  b64Data: string,
+  contentType: string,
+  sliceSize = 512
+) => {
   const byteCharacters = atob(b64Data);
   const byteArrays = [];
 
@@ -43,6 +49,6 @@ export const b64toBlob = (b64Data: string, contentType: string, sliceSize = 512)
     byteArrays.push(byteArray);
   }
 
-  const blob = new Blob(byteArrays, {type: contentType});
+  const blob = new Blob(byteArrays, { type: contentType });
   return blob;
-}
+};

@@ -1,10 +1,7 @@
 const env = process.env.NODE_ENV;
 
 const config = {
-  domain:
-    env === "production"
-      ? "https://tap.mn/"
-      : "http://localhost:3000/",
+  domain: env === "production" ? "https://tap.mn/" : "http://localhost:3000/",
   apiURL:
     env === "production"
       ? "https://push.minter-scoring.space/api"

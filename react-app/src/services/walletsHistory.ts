@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 import { message } from "antd";
 
 export enum historyEntryType {
@@ -27,7 +26,7 @@ export const addToHistory = (
   try {
     let history = getWalletsHistory();
     if (!history) history = [];
-    if (history.length > 9) history.splice(-1,1);
+    if (history.length > 9) history.splice(-1, 1);
     history.unshift({ type, address, link, seed, date: Date.now(), password });
     localStorage.setItem("history", JSON.stringify(history));
   } catch (error) {
@@ -36,5 +35,5 @@ export const addToHistory = (
 };
 
 export const clearHistory = () => {
-  localStorage.removeItem('history')
-}
+  localStorage.removeItem("history");
+};

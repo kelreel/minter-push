@@ -1,18 +1,12 @@
-import {message} from "antd";
-import {Minter} from "minter-js-sdk";
-import {action, computed, observable} from "mobx";
-import {createContext} from "react";
+import { message } from "antd";
+import { Minter } from "minter-js-sdk";
+import { action, observable } from "mobx";
+import { createContext } from "react";
 
 import config from "../config";
-import HTTP from "../services/http";
-import {getBalanceFromExplorer} from "../services/walletApi";
-import {getCampaign, setCampaign, getWallets} from "../services/campaignApi";
-import {getBalance} from "../services/createWaleltApi";
-import {Preset} from "./presetStore";
-
-const minter = new Minter({apiType: "node", baseURL: config.nodeURL});
-
-const {walletFromMnemonic, isValidMnemonic} = require("minterjs-wallet");
+import { getCampaign, getWallets, setCampaign } from "../services/campaignApi";
+import { getBalance } from "../services/createWaleltApi";
+import { Preset } from "./presetStore";
 
 export type Balance = {
   coin: string;
@@ -39,8 +33,7 @@ class MultiStore {
   @observable isLoadingWalletsData: boolean = false;
   @observable preset: Preset | null = null;
 
-  constructor() {
-  }
+  constructor() {}
 
   @action
   async initCampaign(
@@ -77,7 +70,7 @@ class MultiStore {
         Math.round(
           (parseFloat(res.data.result.balance[this.coin!]) /
             1000000000000000000) *
-          100
+            100
         ) / 100;
       if (isNaN(val)) val = 0;
       this.balance = val;

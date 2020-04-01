@@ -1,12 +1,12 @@
-import './Nut.scss';
+import "./Nut.scss";
 
-import { Alert, Button, Icon, message, Modal, Result, Tag, Upload } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Alert, Button, Icon, message, Modal, Result, Tag, Upload } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
-import { AppStoreContext } from '../../../stores/appStore';
-import Loading from '../../Layout/Loading';
+import { AppStoreContext } from "../../../stores/appStore";
+import Loading from "../../Layout/Loading";
 
 function getBase64(img: any, callback: any) {
   const reader = new FileReader();
@@ -45,13 +45,13 @@ const Nut: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   });
 
   useEffect(() => {
-    setState({ ...state, visible, coin: store.balance[0]?.coin, imgUrl: '' });
+    setState({ ...state, visible, coin: store.balance[0]?.coin, imgUrl: "" });
   }, [visible]);
 
   const { t, i18n } = useTranslation();
 
   const handleOk = async () => {
-    setState({...state, loading: true})
+    setState({ ...state, loading: true });
     setTimeout(() => {
       setState({ ...state, success: true, loading: false });
     }, 2500);
@@ -125,9 +125,7 @@ const Nut: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             {t("nut.yourLevel")} <Tag color="cyan">Начальный</Tag>
           </p>
 
-          <p style={{ textAlign: "center" }}>
-            {t("nut.loadCheck")}
-          </p>
+          <p style={{ textAlign: "center" }}>{t("nut.loadCheck")}</p>
 
           <div className="send-form">
             <Upload
@@ -153,7 +151,13 @@ const Nut: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         </>
       )}
       {!state.success && !store.balance && <Loading size="50px" />}
-      {state.success && <Result status="success" title={t("nut.success")} subTitle={t("nut.success2")} />}
+      {state.success && (
+        <Result
+          status="success"
+          title={t("nut.success")}
+          subTitle={t("nut.success2")}
+        />
+      )}
     </Modal>
   );
 });

@@ -6,12 +6,12 @@ import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { newCampaign } from "../../../services/campaignApi";
-import history from "../../../stores/history";
-import { MultiStoreContext } from "../../../stores/multiStore";
 import {
   addToHistory,
   historyEntryType
 } from "../../../services/walletsHistory";
+import history from "../../../stores/history";
+import { MultiStoreContext } from "../../../stores/multiStore";
 
 const NewMultiForm: React.FC = observer(() => {
   const mStore = useContext(MultiStoreContext);
@@ -27,7 +27,6 @@ const NewMultiForm: React.FC = observer(() => {
     setState({ ...state, loading: true });
     try {
       let res = await newCampaign(state.password, state.name, state.number);
-      //created(res.data.address, res.data.seed, res.data.link, state.password);
       window.localStorage.setItem("mpass", state.password);
       window.localStorage.setItem("mlink", res.data.link);
       history.push(`/multi/${res.data.link}`);
@@ -49,7 +48,6 @@ const NewMultiForm: React.FC = observer(() => {
   return (
     <div className="send-form">
       <div className="field">
-        {/* <label>{t("sendForm.recipient")}</label> */}
         <label>{t("newCampaign.name")}</label>
         <Input
           prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}

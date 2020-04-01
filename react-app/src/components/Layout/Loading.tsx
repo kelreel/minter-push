@@ -1,13 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import loader from '../../assets/loading.svg';
+import loader from "../../assets/loading.svg";
 
 type props = {
-  size?: string
-}
+  size?: string;
+};
 
-const Loading: React.FC<props> = ({size}) => {
-  return <img src={loader} alt="Loading..." style={{width: size, height: size}} />
-}
+const Loading: React.FC<props> = ({ size }) => {
+  return (
+    <img src={loader} alt="Loading..." style={{ width: size, height: size }} />
+  );
+};
 
-export default Loading
+export default Loading;

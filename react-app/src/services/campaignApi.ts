@@ -1,7 +1,8 @@
 import qs from "qs";
-import HTTP from "./http";
+
 import config from "../config";
-import {postConfig} from "./walletApi";
+import HTTP from "./http";
+import { postConfig } from "./walletApi";
 
 export const newCampaign = async (
   pass: string,
@@ -13,7 +14,11 @@ export const newCampaign = async (
     name,
     number
   };
-  return await HTTP.post(`${config.apiURL}/campaign/new`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/new`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const getCampaign = async (link: string, pass: string) => {
@@ -21,7 +26,11 @@ export const getCampaign = async (link: string, pass: string) => {
     link,
     pass
   };
-  return await HTTP.post(`${config.apiURL}/campaign/get`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/get`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const sheetAdd = async (link: string, pass: string, sheet: string) => {
@@ -30,25 +39,40 @@ export const sheetAdd = async (link: string, pass: string, sheet: string) => {
     pass,
     sheet
   };
-  return await HTTP.post(`${config.apiURL}/campaign/sheetAdd`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/sheetAdd`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
-export const deleteWalletFromCampaign = async (link: string, pass: string, walletLink: string) => {
+export const deleteWalletFromCampaign = async (
+  link: string,
+  pass: string,
+  walletLink: string
+) => {
   const data = {
     link,
     pass,
     walletLink
   };
-  return await HTTP.post(`${config.apiURL}/campaign/deleteWallet`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/deleteWallet`,
+    qs.stringify(data),
+    postConfig
+  );
 };
-
 
 export const getWallets = async (link: string, pass: string) => {
   const data = {
     link,
     pass
   };
-  return await HTTP.post(`${config.apiURL}/campaign/getWallets`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/getWallets`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const editWallet = async (
@@ -96,10 +120,18 @@ export const setCampaign = async (
     value,
     target
   };
-  return await HTTP.post(`${config.apiURL}/campaign/set`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/set`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
-export const addWallets = async (link: string, pass: string, number: number = 10) => {
+export const addWallets = async (
+  link: string,
+  pass: string,
+  number: number = 10
+) => {
   const data = {
     link,
     pass,
@@ -124,13 +156,21 @@ export const getWalletsTxt = async (link: string, pass: string) => {
   );
 };
 
-export const setCampaignPreset = async (link: string, pass: string, preset: string) => {
+export const setCampaignPreset = async (
+  link: string,
+  pass: string,
+  preset: string
+) => {
   const data = {
     link,
     pass,
     preset
   };
-  return await HTTP.post(`${config.apiURL}/campaign/setPreset`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/setPreset`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const resetCampaignPreset = async (link: string, pass: string) => {
@@ -138,5 +178,9 @@ export const resetCampaignPreset = async (link: string, pass: string) => {
     link,
     pass
   };
-  return await HTTP.post(`${config.apiURL}/campaign/resetPreset`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/campaign/resetPreset`,
+    qs.stringify(data),
+    postConfig
+  );
 };

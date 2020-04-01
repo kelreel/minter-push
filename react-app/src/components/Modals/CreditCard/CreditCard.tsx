@@ -1,21 +1,11 @@
-import "./CreditCard.scss";
-
-import {
-  Alert,
-  Button,
-  Input,
-  InputNumber,
-  message,
-  Modal,
-  Select
-} from "antd";
+import { Alert, Button, Input, InputNumber, Modal, Select } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-
+import { estimateCommission } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { estimateCommission } from "../../../services/tx";
+import "./CreditCard.scss";
 
 const CreditCard: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);

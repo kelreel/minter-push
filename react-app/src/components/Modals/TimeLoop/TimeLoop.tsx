@@ -1,14 +1,20 @@
-import './TimeLoop.scss';
-
-import { Button, InputNumber, message, Modal, Result, Select, Alert } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-
-import { estimateCommission, sendTimeTx } from '../../../services/tx';
-import { AppStoreContext } from '../../../stores/appStore';
-import Loading from '../../Layout/Loading';
-import { setTouched } from '../../../services/walletApi';
+import {
+  Alert,
+  Button,
+  InputNumber,
+  message,
+  Modal,
+  Result,
+  Select
+} from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { estimateCommission, sendTimeTx } from "../../../services/tx";
+import { setTouched } from "../../../services/walletApi";
+import { AppStoreContext } from "../../../stores/appStore";
+import Loading from "../../Layout/Loading";
+import "./TimeLoop.scss";
 
 const TimeLoop: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);

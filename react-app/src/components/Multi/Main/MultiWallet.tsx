@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
-import { observer } from "mobx-react-lite";
-import { MultiStoreContext } from "../../../stores/multiStore";
-import { useTranslation } from "react-i18next";
+import { Button, message } from "antd";
 import copy from "copy-to-clipboard";
-import { message, Button } from "antd";
+import { observer } from "mobx-react-lite";
+import React, { useContext } from "react";
+import { useTranslation } from "react-i18next";
+
 import { shortAddress } from "../../../services/utils";
-import { PresetStoreContext } from "../../../stores/presetStore";
+import { MultiStoreContext } from "../../../stores/multiStore";
+
 var QRCodeCanvas = require("qrcode.react");
 
 const MultiWallet: React.FC = observer(() => {
@@ -16,7 +17,7 @@ const MultiWallet: React.FC = observer(() => {
     copy(mStore.address!);
     message.success(t("walletCreated.copyAddressSuccess"));
   };
-  
+
   const copySeed = () => {
     copy(mStore.seed!);
     message.success(t("walletCreated.copySeedSuccess"));

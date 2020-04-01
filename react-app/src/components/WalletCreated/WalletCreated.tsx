@@ -74,7 +74,8 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
     })
   }
 
-  const navShare = navigator.share;
+  // @ts-ignore
+  const navShare = navigator.share!;
 
   const checkBalance = async () => {
     try {

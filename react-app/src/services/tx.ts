@@ -1,9 +1,8 @@
 import { message } from "antd";
-import { Minter, TX_TYPE, prepareSignedTx } from "minter-js-sdk";
 import { sha256 } from "js-sha256";
+import { Minter, prepareSignedTx, TX_TYPE } from "minter-js-sdk";
 
 import config from "../config";
-import { setTouched } from "./walletApi";
 
 const { walletFromMnemonic, isValidMnemonic } = require("minterjs-wallet");
 
@@ -35,9 +34,10 @@ export const estimateCommission = async (
   };
 
   let tx = prepareSignedTx(txParams);
-  let com = await minter.estimateTxCommission({
-    transaction: tx.serialize().toString("hex")
-  })/1000000000000000000;
+  let com =
+    (await minter.estimateTxCommission({
+      transaction: tx.serialize().toString("hex")
+    })) / 1000000000000000000;
   return com + 0.001;
 };
 

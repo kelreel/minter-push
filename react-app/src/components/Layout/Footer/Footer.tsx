@@ -1,12 +1,12 @@
-import {Button, Collapse, Layout, message, Modal} from "antd";
-import React, {useState} from "react";
 import "./Footer.scss";
+
+import { Button, Collapse, Layout, message, Modal } from "antd";
 import copy from "copy-to-clipboard";
-import History from "./History";
+import React, { useState } from "react";
 
 const Footer: React.FC = () => {
-  const {Footer} = Layout;
-  const {Panel} = Collapse;
+  const { Footer } = Layout;
+  const { Panel } = Collapse;
 
   const [state, setState] = useState({
     faq: false,
@@ -15,34 +15,36 @@ const Footer: React.FC = () => {
   });
 
   const copySeed = () => {
-    copy(localStorage.getItem('seed')!);
-    message.success('Wallet seed copied!')
-  }
+    copy(localStorage.getItem("seed")!);
+    message.success("Wallet seed copied!");
+  };
 
   const handleCancel = () => {
-    setState({faq: false, forDev: false, history: false});
+    setState({ faq: false, forDev: false, history: false });
   };
 
   return (
-    <Footer style={{textAlign: "center"}} className="animated fadeIn">
-      {(window.location.pathname === "/" || window.location.pathname === "/multi" || window.location.pathname.includes('create')) && (
+    <Footer style={{ textAlign: "center" }} className="animated fadeIn">
+      {(window.location.pathname === "/" ||
+        window.location.pathname === "/multi" ||
+        window.location.pathname.includes("create")) && (
         <div className="actions">
           <Button
-            onClick={() => window.open('/history', '_blank')}
+            onClick={() => window.open("/history", "_blank")}
             icon="calendar"
             size="small"
           >
             History
           </Button>
           <Button
-            onClick={() => setState({...state, faq: true})}
+            onClick={() => setState({ ...state, faq: true })}
             icon="question-circle"
             size="small"
           >
             FAQ
           </Button>
           <Button
-            onClick={() => setState({...state, forDev: true})}
+            onClick={() => setState({ ...state, forDev: true })}
             icon="setting"
             size="small"
           >
@@ -59,10 +61,14 @@ const Footer: React.FC = () => {
           </a>
         </p>
 
-        {window.location.pathname !== "/" && !window.location.pathname.includes('create')
-        && !window.location.pathname.includes('history')
-        && !window.location.pathname.includes('multi') &&
-        <Button size="small" onClick={copySeed}>Mnemonic</Button>}
+        {window.location.pathname !== "/" &&
+          !window.location.pathname.includes("create") &&
+          !window.location.pathname.includes("history") &&
+          !window.location.pathname.includes("multi") && (
+            <Button size="small" onClick={copySeed}>
+              Mnemonic
+            </Button>
+          )}
       </div>
 
       {/* FAQ */}
@@ -125,8 +131,11 @@ const Footer: React.FC = () => {
         <a href="https://github.com/kanitelk/minter-push" target="_blank">
           Документация на GitHub
         </a>
-        <br/>
-        <a href="https://app.swaggerhub.com/apis-docs/kanitelk/tap/" target="_blank">
+        <br />
+        <a
+          href="https://app.swaggerhub.com/apis-docs/kanitelk/tap/"
+          target="_blank"
+        >
           Документация API на Swagger
         </a>
       </Modal>

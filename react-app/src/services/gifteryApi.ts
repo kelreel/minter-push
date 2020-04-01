@@ -1,7 +1,8 @@
 import qs from "qs";
-import HTTP from "./http";
+
 import config from "../config";
-import {postConfig} from "./walletApi";
+import HTTP from "./http";
+import { postConfig } from "./walletApi";
 
 export const getGifteryProducts = async () => {
   return await HTTP.get(`${config.apiURL}/giftery/products`);
@@ -20,7 +21,16 @@ export const makeOrder = async (
   coin: string
 ) => {
   const data = {
-    link, product_id, face, email_to, seed, coin
+    link,
+    product_id,
+    face,
+    email_to,
+    seed,
+    coin
   };
-  return await HTTP.post(`${config.apiURL}/giftery/makeOrder`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/giftery/makeOrder`,
+    qs.stringify(data),
+    postConfig
+  );
 };

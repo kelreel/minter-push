@@ -1,7 +1,7 @@
 // @ts-nocheck
-
 import { message } from "antd";
-import {Preset} from "../stores/presetStore";
+
+import { Preset } from "../stores/presetStore";
 
 export const getSavedPresets = (): Array<Preset> | null => {
   try {
@@ -16,16 +16,16 @@ export const savePreset = (preset: Preset) => {
   try {
     let presets = getSavedPresets();
     if (!presets) presets = [];
-    if (presets.length > 9) presets.splice(-1,1);
+    if (presets.length > 9) presets.splice(-1, 1);
     presets.unshift(preset);
     localStorage.setItem("presets", JSON.stringify(presets));
-    message.success('Preset saved locally')
+    message.success("Preset saved locally");
   } catch (error) {
-    console.log(error)
+    console.log(error);
     message.error("Error while saving preset");
   }
 };
 
 export const clearPresets = () => {
-  localStorage.removeItem('presets')
-}
+  localStorage.removeItem("presets");
+};

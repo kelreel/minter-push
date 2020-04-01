@@ -1,12 +1,11 @@
-import { message } from 'antd';
-import { Minter } from 'minter-js-sdk';
-import { action, computed, observable } from 'mobx';
-import { createContext } from 'react';
+import { message } from "antd";
+import { Minter } from "minter-js-sdk";
+import { action, computed, observable } from "mobx";
+import { createContext } from "react";
 
-import config from '../config';
-import HTTP from '../services/http';
-import {getBalanceFromExplorer, getRates} from '../services/walletApi';
-import { TargetEnum } from '../components/Multi/Main/MultiMain';
+import { TargetEnum } from "../components/Multi/Main/MultiMain";
+import config from "../config";
+import { getBalanceFromExplorer, getRates } from "../services/walletApi";
 
 const minter = new Minter({ apiType: "node", baseURL: config.nodeURL });
 
@@ -41,9 +40,9 @@ class AppStore {
   @observable rates: any = {};
 
   constructor() {
-    if (this.locale?.substring(0,2) === 'ru') {
-      this.currency = "RUB"
-    } else this.currency = "USD"
+    if (this.locale?.substring(0, 2) === "ru") {
+      this.currency = "RUB";
+    } else this.currency = "USD";
   }
 
   @action async setRates() {
@@ -54,11 +53,10 @@ class AppStore {
       this.bipPrice1001 = res.data.price1001;
       this.rubCourse = this.rates.RUB;
     } catch (error) {
-      console.log(error)
-      message.error('Error while setting currency rates and BIP price')
+      console.log(error);
+      message.error("Error while setting currency rates and BIP price");
     }
   }
-
 
   @computed get totalInLocalCurrency() {
     return Math.round(this.totalPrice * this.rates[this.currency] * 100) / 100;
@@ -66,11 +64,10 @@ class AppStore {
 
   @action changeLocale = (language: string) => {
     this.locale = language;
-    if (language === 'ru') {
-      this.currency = "RUB"
+    if (language === "ru") {
+      this.currency = "RUB";
     } else this.currency = "USD";
-  }
-
+  };
 
   @action async checkBalance() {
     this.isLoading = true;
@@ -84,7 +81,7 @@ class AppStore {
       let balances = res?.data?.data?.balances;
 
       for (let item of balances) {
-      let bipVal = 0;
+        let bipVal = 0;
         if (item.coin === "BIP") {
           bipVal += parseFloat(item.amount as string);
           this.totalBipBalance += bipVal;
@@ -113,11 +110,14 @@ class AppStore {
         delete item["amount"];
       }
       let r = balances.filter((x: { value: number }) => x.value !== 0);
-      r = r.filter((x: { value: number, bip_value: number }) => (x.bip_value > 0.1 || r.length === 1));
-      r = r.sort((a: { bip_value: number; }, b: { bip_value: number; }) => {
-        if (a.bip_value > b.bip_value) return -1
-        else return 1
-      })
+      r = r.filter(
+        (x: { value: number; bip_value: number }) =>
+          x.bip_value > 0.1 || r.length === 1
+      );
+      r = r.sort((a: { bip_value: number }, b: { bip_value: number }) => {
+        if (a.bip_value > b.bip_value) return -1;
+        else return 1;
+      });
       this.balance = r;
     } catch (error) {
       console.log(error);
@@ -126,8 +126,8 @@ class AppStore {
       this.isLoading = false;
       if (this.totalBipBalance === 0) {
         setTimeout(() => {
-          this.checkBalance()
-          this.getTotalPrice()
+          this.checkBalance();
+          this.getTotalPrice();
         }, 5000);
       }
     }
@@ -198,7 +198,7 @@ class AppStore {
 
   @action setStatus(status: string) {
     this.status = status;
-    console.log(this.status)
+    console.log(this.status);
   }
 }
 

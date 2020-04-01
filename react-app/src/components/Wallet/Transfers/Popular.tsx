@@ -1,21 +1,17 @@
-import "./Transfers.scss";
-
 import { Avatar, Card } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
-
+import timeLogo from "../../../assets/timeloop.png";
 import { AppStoreContext } from "../../../stores/appStore";
+import { PresetStoreContext } from "../../../stores/presetStore";
 import AnotherPerson from "../../Modals/AnotherPerson/AnotherPerson";
 import AnotherWallet from "../../Modals/AnotherWallet/AnotherWallet";
-import Bitcoin from "../../Modals/Bitcoin/Bitcoin";
-import CreditCard from "../../Modals/CreditCard/CreditCard";
-import { PresetStoreContext } from "../../../stores/presetStore";
-import {TargetEnum} from "../../Multi/Main/MultiMain";
-import {targetClass} from "./Loyality";
 import Phone from "../../Modals/Phone/Phone";
-import timeLogo from "../../../assets/timeloop.png";
 import TimeLoop from "../../Modals/TimeLoop/TimeLoop";
+import { TargetEnum } from "../../Multi/Main/MultiMain";
+import { targetClass } from "./Loyality";
+import "./Transfers.scss";
 
 const Popular: React.FC = observer(() => {
   const [state, setState] = useState({
@@ -28,10 +24,10 @@ const Popular: React.FC = observer(() => {
   const pStore = useContext(PresetStoreContext);
   const { t, i18n } = useTranslation();
 
-    const cardPreset = {
-        background: pStore.cardsBgc,
-        border: `2px solid ${pStore.cardsBorder}`
-    };
+  const cardPreset = {
+    background: pStore.cardsBgc,
+    border: `2px solid ${pStore.cardsBorder}`
+  };
 
   const cardTextPreset = {
     color: pStore.cardsTextColor
@@ -63,31 +59,31 @@ const Popular: React.FC = observer(() => {
         style={cardPreset}
         bordered={false}
         onClick={() => {
-          setState({...state, phone: false});
+          setState({ ...state, phone: false });
           setTimeout(() => {
-            setState({...state, phone: true});
+            setState({ ...state, phone: true });
           }, 0);
         }}
         className={`transfer-card ${store.target === TargetEnum.bip2phone &&
-        targetClass}`}
+          targetClass}`}
       >
-        <Avatar style={{backgroundColor: "#de16c5"}} size={64} icon="phone"/>
+        <Avatar style={{ backgroundColor: "#de16c5" }} size={64} icon="phone" />
         <h3 style={cardTextPreset}>{t("loyalityList.phone")}</h3>
       </Card>
       <Card
         style={cardPreset}
         bordered={false}
         onClick={() => {
-          setState({...state, timeloop: false});
+          setState({ ...state, timeloop: false });
           setTimeout(() => {
-            setState({...state, timeloop: true});
+            setState({ ...state, timeloop: true });
           }, 0);
         }}
         className={`transfer-card ${store.target === TargetEnum.timeloop &&
-        targetClass}`}
+          targetClass}`}
       >
         <Avatar
-          style={{backgroundColor: "#0dc367"}}
+          style={{ backgroundColor: "#0dc367" }}
           size={64}
           src={timeLogo}
         />
@@ -115,8 +111,8 @@ const Popular: React.FC = observer(() => {
       {/* MODALS */}
       <AnotherPerson visible={state.anotherPerson} />
       <AnotherWallet visible={state.anotherWallet} />
-      <Phone visible={state.phone}/>
-      <TimeLoop visible={state.timeloop}/>
+      <Phone visible={state.phone} />
+      <TimeLoop visible={state.timeloop} />
     </>
   );
 });

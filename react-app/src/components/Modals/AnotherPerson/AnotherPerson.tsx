@@ -1,16 +1,16 @@
-import './AnotherPerson.scss';
+import "./AnotherPerson.scss";
 
-import { Alert, Button, Icon, Input, Modal, message } from 'antd';
-import { observer } from 'mobx-react-lite';
-import React, { useContext, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import * as Share from 'react-share';
+import { Alert, Button, Icon, Input, message, Modal } from "antd";
+import copy from "copy-to-clipboard";
+import { observer } from "mobx-react-lite";
+import React, { useContext, useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import * as Share from "react-share";
 
-import config from '../../../config';
-import { repackWallet } from '../../../services/walletApi';
-import { AppStoreContext } from '../../../stores/appStore';
-import copy from 'copy-to-clipboard';
-import qrlogo from '../../../assets/qr.png'
+import qrlogo from "../../../assets/qr.png";
+import config from "../../../config";
+import { repackWallet } from "../../../services/walletApi";
+import { AppStoreContext } from "../../../stores/appStore";
 
 var QRCodeCanvas = require("qrcode.react");
 
@@ -90,7 +90,7 @@ const AnotherPerson: React.FC<{ visible: boolean }> = observer(
                   placeholder={t("sendForm.toPlaceholder")}
                   onChange={e => setState({ ...state, name: e.target.value })}
                 />
-              </div> 
+              </div>
             </div>
           </>
         ) : (

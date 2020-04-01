@@ -5,10 +5,8 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { getSeed } from "../../../services/walletApi";
-import { AppStoreContext } from "../../../stores/appStore";
-import { MultiStoreContext } from "../../../stores/multiStore";
 import { getCampaign } from "../../../services/campaignApi";
+import { MultiStoreContext } from "../../../stores/multiStore";
 
 const MultiPasswordForm: React.FC<{ link: string }> = observer(({ link }) => {
   const mStore = useContext(MultiStoreContext);
@@ -23,10 +21,7 @@ const MultiPasswordForm: React.FC<{ link: string }> = observer(({ link }) => {
     setState({ ...state, loading: true });
     try {
       let res = await getCampaign(link, state.password);
-      await mStore.initCampaign(
-        link,
-        state.password,
-      );
+      await mStore.initCampaign(link, state.password);
     } catch (error) {
       const { response } = error;
       response ? message.error(response.data) : message.error(error);

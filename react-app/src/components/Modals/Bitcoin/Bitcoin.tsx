@@ -13,9 +13,9 @@ import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { estimateCommission } from "../../../services/tx";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { estimateCommission } from "../../../services/tx";
 
 const Bitcoin: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);

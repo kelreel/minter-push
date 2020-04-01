@@ -1,11 +1,14 @@
 import "./MultiMain.scss";
 
-import { Alert, Button, Card, message, Modal, Input } from "antd";
+import { Alert, Button, Card, Input, message, Modal } from "antd";
+import copy from "copy-to-clipboard";
 import { saveAs } from "file-saver";
+import { Parser } from "json2csv";
 import { observer } from "mobx-react-lite";
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import config from "../../../config";
 import {
   addWallets,
   getWalletsTxt,
@@ -15,12 +18,8 @@ import { MultiStoreContext } from "../../../stores/multiStore";
 import MultiInfo from "./MultiInfo";
 import MultiWallet from "./MultiWallet";
 import ParamsForm from "./ParamsForm";
-import WalletTable from "./WalletTable";
-
-import { Parser } from "json2csv";
-import config from "../../../config";
-import copy from "copy-to-clipboard";
 import PresetSettings from "./PresetSettings";
+import WalletTable from "./WalletTable";
 
 export enum TargetEnum {
   timeloop = "timeloop",
@@ -49,8 +48,13 @@ const MultiMain: React.FC = observer(() => {
       setState({ ...state, sheetsLoading: true });
       let r = await sheetAdd(mStore.link!, mStore.password!, state.sheetsLink);
       message.success(`Imported wallets: ${r.data.count}`);
-      setState({ ...state, sheetsLoading: false, sheetsModal: false, sheetsLink: '' });
-      mStore.getWalletsData()
+      setState({
+        ...state,
+        sheetsLoading: false,
+        sheetsModal: false,
+        sheetsLink: ""
+      });
+      mStore.getWalletsData();
     } catch (error) {
       message.error(error.message);
       setState({ ...state, sheetsLoading: false });
@@ -62,7 +66,7 @@ const MultiMain: React.FC = observer(() => {
       await addWallets(mStore.link!, mStore.password!);
       await mStore.getWalletsData();
       message.success("Wallets created");
-      mStore.getWalletsData()
+      mStore.getWalletsData();
     } catch (error) {
       message.error("Error while creating wallets");
     }
@@ -119,8 +123,11 @@ const MultiMain: React.FC = observer(() => {
         message={t("multi.alert")}
       />
       <div className="row">
-        <div className="main" style={{ display: 'flex', flexFlow: 'column wrap', flex: "1" }}>
-          <Card className="animated fadeInLeft" style={{flex: 1}}>
+        <div
+          className="main"
+          style={{ display: "flex", flexFlow: "column wrap", flex: "1" }}
+        >
+          <Card className="animated fadeInLeft" style={{ flex: 1 }}>
             <MultiInfo />
           </Card>
           <Card className="animated fadeInLeft">

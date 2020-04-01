@@ -1,10 +1,11 @@
+import { detect } from "detect-browser";
 import qs from "qs";
-import HTTP from "./http";
+
 import config from "../config";
-import {detect} from "detect-browser";
+import HTTP from "./http";
 
 export const postConfig = {
-  headers: {"content-type": "application/x-www-form-urlencoded"}
+  headers: { "content-type": "application/x-www-form-urlencoded" }
 };
 
 export const getWallet = async (address: string) => {
@@ -24,14 +25,22 @@ export const getSeed = async (pass: string, link: string) => {
     pass,
     link
   };
-  return await HTTP.post(`${config.apiURL}/getSeed`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/getSeed`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const setTouched = async (link: string) => {
   const data = {
     link
   };
-  return await HTTP.post(`${config.apiURL}/touched`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/touched`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const sendBrowserInfo = async (link: string) => {
@@ -40,7 +49,11 @@ export const sendBrowserInfo = async (link: string) => {
     link,
     browser: JSON.stringify(info)
   };
-  return await HTTP.post(`${config.apiURL}/detect`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/detect`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
 export const getBalanceFromExplorer = async (address: string) => {
@@ -48,8 +61,8 @@ export const getBalanceFromExplorer = async (address: string) => {
 };
 
 export const getRates = async () => {
-  return await HTTP.get(`${config.apiURL}/rates`)
-}
+  return await HTTP.get(`${config.apiURL}/rates`);
+};
 
 export const getProfile = async (address: string) => {
   return await HTTP.get(`https://minter-scoring.space/api/profile/${address}`);
@@ -60,21 +73,38 @@ export const repackWallet = async (seed: string, name?: string) => {
     seed,
     name
   };
-  return await HTTP.post(`${config.apiURL}/repack`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/repack`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
-export const sendEmail = async (email: string, link: string, fromName?: string | null) => {
+export const sendEmail = async (
+  email: string,
+  link: string,
+  fromName?: string | null
+) => {
   const data = {
-    email, link, fromName
+    email,
+    link,
+    fromName
   };
-  return await HTTP.post(`${config.apiURL}/email`, qs.stringify(data), postConfig);
+  return await HTTP.post(
+    `${config.apiURL}/email`,
+    qs.stringify(data),
+    postConfig
+  );
 };
 
-export const getBitcoinAddressToRefill = async (email: string, address: string) => {
+export const getBitcoinAddressToRefill = async (
+  email: string,
+  address: string
+) => {
   return HTTP.get(`https://api.bip.dev/api/bitcoinDepositAddress`, {
     params: {
       email,
       minterAddress: address
     }
-  })
-}
+  });
+};

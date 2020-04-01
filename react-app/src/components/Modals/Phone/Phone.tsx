@@ -1,14 +1,14 @@
 import "./Phone.scss";
 
 import {
+  Alert,
   Button,
   Input,
   InputNumber,
   message,
   Modal,
   Result,
-  Select,
-  Alert
+  Select
 } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
@@ -16,13 +16,13 @@ import { useTranslation } from "react-i18next";
 
 import { getInfo, getKeyword } from "../../../services/bipToPhoneApi";
 import { estimateCommission, sendMobileTx } from "../../../services/tx";
+import { setTouched } from "../../../services/walletApi";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { setTouched } from "../../../services/walletApi";
 
 const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
   const store = useContext(AppStoreContext);
-  
+
   const [state, setState] = useState({
     visible,
     loading: false,
@@ -46,7 +46,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
       amount: store.balance[0]?.value
     });
     const f = async () => {
-      setState({...state, loadInfo: true})
+      setState({ ...state, loadInfo: true });
       let r = await getInfo();
       setState({
         ...state,
@@ -57,7 +57,6 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         loadInfo: false
       });
       console.log(r.data.RUB);
-      
     };
     if (visible) {
       f();
@@ -108,7 +107,7 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
         keyword.data.keyword
       );
       setState({ ...state, success: true, hash: tx });
-      setTouched(store.link!)
+      setTouched(store.link!);
       store.checkBalancesTimeout(6500);
     } catch (error) {
       message.error(error.message);

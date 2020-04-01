@@ -1,10 +1,9 @@
+import { Button, Icon, Input, InputNumber, message, Select } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useState } from "react";
 import { useTranslation } from "react-i18next";
+
 import { MultiStoreContext } from "../../../stores/multiStore";
-import { Card, message, Button, Input, Icon, InputNumber, Select } from "antd";
-import { shortAddress } from "../../../services/utils";
-import copy from "copy-to-clipboard";
 import { TargetEnum } from "./MultiMain";
 
 const ParamsForm: React.FC = observer(() => {
@@ -13,18 +12,18 @@ const ParamsForm: React.FC = observer(() => {
 
   const { Option } = Select;
 
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const save = async () => {
     setLoading(true);
     try {
-      await mStore.setCampaign()
-      message.success('Settings saved')
+      await mStore.setCampaign();
+      message.success("Settings saved");
     } catch (error) {
       console.log(error);
-      message.error('Error while saving settings')
+      message.error("Error while saving settings");
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (

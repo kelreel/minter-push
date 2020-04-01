@@ -1,25 +1,25 @@
 import "./AnotherWallet.scss";
 
 import {
+  Alert,
   Button,
+  Icon,
   Input,
   InputNumber,
   message,
   Modal,
   Result,
-  Select,
-  Icon,
-  Alert
+  Select
 } from "antd";
 import { observer } from "mobx-react-lite";
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDebounce } from "use-debounce";
 
-import { sendTx, estimateCommission } from "../../../services/tx";
+import { estimateCommission, sendTx } from "../../../services/tx";
+import { getProfile, setTouched } from "../../../services/walletApi";
 import { AppStoreContext } from "../../../stores/appStore";
 import Loading from "../../Layout/Loading";
-import { getProfile, setTouched } from "../../../services/walletApi";
 
 const AnotherWallet: React.FC<{ visible: boolean }> = observer(
   ({ visible }) => {
@@ -45,7 +45,12 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
     const mxRegExp = /^Mx[a-km-zA-HJ-NP-Z0-9]{40}$/gim;
 
     useEffect(() => {
-      setState({ ...state, visible, coin: store.balance[0]?.coin, amount: store.balance[0]?.value });
+      setState({
+        ...state,
+        visible,
+        coin: store.balance[0]?.coin,
+        amount: store.balance[0]?.value
+      });
     }, [visible]);
 
     useEffect(() => {
@@ -62,7 +67,12 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
             });
           }
         } catch (error) {
-          setState({...state, profile: '', profileImg: '', loadProfile: false})
+          setState({
+            ...state,
+            profile: "",
+            profileImg: "",
+            loadProfile: false
+          });
         }
       };
       if (state.address.length === 42) {
@@ -166,7 +176,11 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
       >
         {store.balance && !state.success && (
           <>
-            <Alert type="success" style={{marginBottom: '20px'}} message={t("anotherWallet.content1")} />
+            <Alert
+              type="success"
+              style={{ marginBottom: "20px" }}
+              message={t("anotherWallet.content1")}
+            />
             <div className="send-form">
               <div className="coin-val">
                 <div className="coin">
@@ -231,17 +245,6 @@ const AnotherWallet: React.FC<{ visible: boolean }> = observer(
                   }
                 />
               </div>
-              {/*<div className="field">*/}
-              {/*  <label>{t("anotherWallet.payload")}</label>*/}
-              {/*  <Input*/}
-              {/*    placeholder="You message here"*/}
-              {/*    value={state.payload}*/}
-              {/*    maxLength={120}*/}
-              {/*    onChange={e =>*/}
-              {/*      setState({ ...state, payload: e.target.value })*/}
-              {/*    }*/}
-              {/*  />*/}
-              {/*</div>*/}
             </div>
           </>
         )}
