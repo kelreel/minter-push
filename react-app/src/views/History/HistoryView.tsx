@@ -22,12 +22,12 @@ const HistoryView: React.FC = observer(() => {
   const [state, setState] = useState({
     history: getWalletsHistory(),
     loading: false
-  })
+  });
 
   useEffect(() => {
     let r = async () => {
-      if (!getWalletsHistory()) return
-      setState({...state, loading: true})
+      if (!getWalletsHistory()) return;
+      setState({...state, loading: true});
       let res = [];
       for (let item of state.history!) {
         if (item.type === historyEntryType.multi) {
@@ -41,15 +41,15 @@ const HistoryView: React.FC = observer(() => {
           }
         }
       }
-      setState({...state, history: res, loading: false})
+      setState({...state, history: res, loading: false});
       document.title = `Push History`
-    }
-    r()
-    console.log(state)
+    };
+    r();
+    console.log(state);
     return function cleanTitle() {
       document.title = 'Push'
     }
-  }, [])
+  }, []);
 
   const getList = () => {
     return state.history?.map(item => {
@@ -81,7 +81,7 @@ const HistoryView: React.FC = observer(() => {
         </div>
       }
     })
-  }
+  };
 
   return (
     <Content className="history-view">
