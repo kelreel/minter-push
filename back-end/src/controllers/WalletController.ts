@@ -8,6 +8,7 @@ import { Wallet, WalletStatus } from "../models/WalletSchema";
 import { getWalletFromCampaign } from "../utils/campaign";
 import { sendEmail } from "../utils/email";
 import { createWallet } from "../utils/wallet";
+import { HttpException } from "../utils/errorHandler";
 
 const router = express.Router();
 
@@ -65,7 +66,6 @@ router.post("/new", async (req, res) => {
     res.send(result);
   } catch (error) {
     res.status(400).send(error);
-    console.log(error);
   }
 });
 
@@ -75,8 +75,7 @@ router.get("/wallet/:link", async (req, res) => {
     let wallet = await Wallet.findOne({ link: req.params.link });
 
     if (!wallet) {
-      res.status(404).send("Wallet not found!");
-      return;
+      throw new HttpException(404, 'Wallet not found')
     }
 
     if (wallet.campaign) {
@@ -84,11 +83,7 @@ router.get("/wallet/:link", async (req, res) => {
         let w = await getWalletFromCampaign(wallet);
         res.send(w);
       } catch (error) {
-        res
-          .status(400)
-          .send(
-            "Error while activating wallet. maybe the main wallet does not have enough funds"
-          );
+        throw new HttpException(400, error.toString())
       }
       return;
     }
@@ -117,7 +112,7 @@ router.get("/wallet/:link", async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -127,18 +122,17 @@ router.post("/getSeed", async (req, res) => {
 
   try {
     if (link == null || pass == null) {
-      res.status(400).send("Link and password not provided");
-      return;
+      throw new HttpException(400, "Link and password not provided");
     }
 
     let wallet = await Wallet.findOne({ link });
 
-    if (!wallet) res.status(404).send("Wallet not found");
+    if (!wallet) throw new HttpException(404, "Wallet not found");
 
     const compare = bcrypt.compareSync(pass, wallet.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       res.send({ seed: wallet.seed });
       wallet.status = WalletStatus.opened;
@@ -159,8 +153,7 @@ router.post("/touched", async (req, res) => {
     await wallet.save();
     res.send({ status: "ok" });
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -175,8 +168,7 @@ router.post("/detect", async (req, res) => {
     }
     res.send({ status: "ok" });
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    throw new HttpException(400, error);
   } finally {
     wallet.save();
   }
@@ -197,8 +189,7 @@ router.post("/repack", async (req, res) => {
 
     res.send({ link: wallet.link });
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -210,8 +201,7 @@ router.post("/email", async (req, res) => {
     let result = await sendEmail(email, link, name, fromName, pass);
     res.send(result);
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    throw new HttpException(400, error);
   }
 });
 

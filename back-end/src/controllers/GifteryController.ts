@@ -7,6 +7,7 @@ import config from "../config";
 import { GifteryOrder } from "../models/Giftery/GifteryOrderSchema";
 import { Product } from "../models/Giftery/ProductSchema";
 import { makeOrder } from "../utils/giftery";
+import { HttpException } from "../utils/errorHandler";
 
 const router = express.Router();
 
@@ -64,8 +65,7 @@ router.get("/products", async (req, res) => {
     };
     res.send(result);
   } catch (error) {
-    console.log(error.message);
-    res.status(400).send("Error while getting Giftery products list");
+    throw new HttpException(400, error);
   }
 });
 
@@ -75,9 +75,9 @@ router.get("/certificate/:id", async (req, res) => {
 
     try {
       order = await GifteryOrder.findOne({ _id: req.params.id });
-      if (!order) throw "Order not found";
+      if (!order) throw new HttpException(404, 'Order not found');
     } catch (error) {
-      throw "Order not found";
+      throw new HttpException(400, error);
     }
 
     const cmd = "getCertificate";
@@ -97,7 +97,7 @@ router.get("/certificate/:id", async (req, res) => {
     const cert = result.data.data.certificate;
     res.send(cert);
   } catch (error) {
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -107,7 +107,7 @@ router.post("/makeOrder", async (req, res) => {
     let result = await makeOrder(link, product_id, face, email_to, seed, coin);
     res.send(result);
   } catch (error) {
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 

@@ -8,6 +8,7 @@ import CampaignController from "./controllers/CampaignController";
 import GifteryController from "./controllers/GifteryController";
 import WalletController from "./controllers/WalletController";
 import tasks from "./tasks";
+import { errorMiddleware } from "./utils/errorHandler";
 
 tasks();
 
@@ -17,6 +18,7 @@ app.set("trust proxy", 1);
 app.use(cors());
 app.use(helmet());
 app.use(morgan("combined"));
+app.use(errorMiddleware)
 
 app.use("/api", WalletController);
 app.use("/api/phone", BipToPhone);

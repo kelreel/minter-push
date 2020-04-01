@@ -12,6 +12,7 @@ import {
   getWallets,
   getWalletsLinksTxt
 } from "../utils/campaign";
+import { HttpException } from "../utils/errorHandler";
 import { addWalletsFromSheet, getWalletsTable } from "../utils/sheets";
 
 const router = express.Router();
@@ -37,8 +38,7 @@ router.post("/sheetPreview", async (req, res) => {
     let r = await getWalletsTable(link);
     res.send(r);
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -68,8 +68,7 @@ router.post("/sheetAdd", async (req, res) => {
       res.send({ count });
     }
   } catch (error) {
-    console.log(error.message);
-    res.status(400).send(error.message);
+    throw new HttpException(400, error.message);
   }
 });
 
@@ -86,8 +85,7 @@ router.post("/new", async (req, res) => {
     await addWallets(result._id, walletsNumber);
     res.send(result);
   } catch (error) {
-    res.status(400).send(error);
-    console.log(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -98,21 +96,18 @@ router.post("/get", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       res.send(campaign);
     }
-    return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -124,14 +119,14 @@ router.post("/set", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
+      throw new HttpException(404, "Campaign not found");
       return;
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       campaign.fromName = fromName;
       campaign.payload = payload;
@@ -143,8 +138,7 @@ router.post("/set", async (req, res) => {
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -156,14 +150,13 @@ router.post("/setPreset", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       campaign.preset = JSON.parse(preset);
       // campaign.preset = preset
@@ -172,8 +165,7 @@ router.post("/setPreset", async (req, res) => {
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -185,14 +177,13 @@ router.post("/resetPreset", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       campaign.preset = null;
       await campaign.save();
@@ -200,8 +191,7 @@ router.post("/resetPreset", async (req, res) => {
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -213,22 +203,20 @@ router.put("/addWallets", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       await addWallets(campaign._id, number);
       res.send({ status: "ok" });
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -240,22 +228,20 @@ router.post("/getWallets", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       let wallets = await getWallets(campaign._id);
       res.send(wallets);
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -267,14 +253,13 @@ router.post("/getWalletsTxt.txt", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       let wallets = await getWalletsLinksTxt(campaign._id);
       res.setHeader("Content-type", "application/octet-stream");
@@ -284,27 +269,34 @@ router.post("/getWalletsTxt.txt", async (req, res) => {
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
 // Edit wallet
 router.post("/editWallet", async (req, res) => {
   try {
-    const { link, pass, walletLink, coin, amount, name, email, status } = req.body;
+    const {
+      link,
+      pass,
+      walletLink,
+      coin,
+      amount,
+      name,
+      email,
+      status
+    } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       let r = await editWallet(
         walletLink,
@@ -319,8 +311,7 @@ router.post("/editWallet", async (req, res) => {
     }
     return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -332,14 +323,13 @@ router.post("/deleteWallet", async (req, res) => {
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
-      res.status(404).send("Campaign not found!");
-      return;
+      throw new HttpException(404, "Campaign not found");
     }
 
     const compare = bcrypt.compareSync(pass, campaign.password);
 
     if (!compare) {
-      res.status(401).send("Invalid password");
+      throw new HttpException(401, "Invalid password");
     } else {
       let wallet = await Wallet.findOne({ link: walletLink });
       console.log(wallet.campaign, campaign._id);
@@ -348,12 +338,10 @@ router.post("/deleteWallet", async (req, res) => {
         res.send({ status: "ok" });
         return;
       }
-      res.status(400).send({ status: "false" });
+      throw new HttpException(400, "Error while deleting wallet");
     }
-    return;
   } catch (error) {
-    console.log(error);
-    res.status(400).send(error);
+    throw new HttpException(400, error);
   }
 });
 
@@ -364,7 +352,7 @@ router.get("/stat/:link", async (req, res) => {
     let r = await getStats(link);
     res.send(r);
   } catch (error) {
-    res.status(400).send("Error while getting statistics");
+    throw new HttpException(400, "Error");
   }
 });
 
