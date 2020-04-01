@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
 import bodyParser from "body-parser";
 import express from "express";
-import short from "short-uuid";
 import storage from "node-persist";
+import short from "short-uuid";
 
 import { Wallet, WalletStatus } from "../models/WalletSchema";
-import { createWallet } from "../utils/wallet";
 import { getWalletFromCampaign } from "../utils/campaign";
 import { sendEmail } from "../utils/email";
+import { createWallet } from "../utils/wallet";
 
 const router = express.Router();
 
@@ -36,13 +36,12 @@ router.get("/rates", async (req, res) => {
     price1001: await storage.getItem("price1001"),
     currencyRates: await storage.getItem("rates")
   };
-  res.send(result)
-})
+  res.send(result);
+});
 
-
-router.get("/status/:id", async (req, res) => {
+router.get("/status/:link", async (req, res) => {
   try {
-    let wallet = await Wallet.findOne({ link: req.params.id });
+    let wallet = await Wallet.findOne({ link: req.params.link });
 
     if (!wallet) {
       res.status(404).send("Wallet not found!");
@@ -53,26 +52,13 @@ router.get("/status/:id", async (req, res) => {
       address: wallet.address,
       browser: wallet.browser || null,
       status: wallet.status
-    })
-  }
-  catch (error) {
-
-  }
-})
+    });
+  } catch (error) {}
+});
 
 // Create new wallet
 router.post("/new", async (req, res) => {
-  let pass = req.body.pass;
-  let name = req.body.name;
-  let payload = req.body.payload;
-  let fromName = req.body.fromName;
-  let preset = req.body.preset;
-
-  if (pass === "") pass = null;
-  if (name === "") name = null;
-  if (fromName === "") fromName = null;
-  if (payload === "") payload = null;
-  if (preset === "") preset = null;
+  const { name, pass, payload, fromName, preset } = req.body;
 
   try {
     let result = await createWallet(pass, name, payload, fromName, preset);
@@ -84,9 +70,9 @@ router.post("/new", async (req, res) => {
 });
 
 // Get wallet by link
-router.get("/wallet/:id", async (req, res) => {
+router.get("/wallet/:link", async (req, res) => {
   try {
-    let wallet = await Wallet.findOne({ link: req.params.id });
+    let wallet = await Wallet.findOne({ link: req.params.link });
 
     if (!wallet) {
       res.status(404).send("Wallet not found!");
@@ -95,7 +81,7 @@ router.get("/wallet/:id", async (req, res) => {
 
     if (wallet.campaign) {
       try {
-        let w = await getWalletFromCampaign(wallet)
+        let w = await getWalletFromCampaign(wallet);
         res.send(w);
       } catch (error) {
         res
@@ -104,7 +90,7 @@ router.get("/wallet/:id", async (req, res) => {
             "Error while activating wallet. maybe the main wallet does not have enough funds"
           );
       }
-      return
+      return;
     }
 
     if (wallet.password !== null) {
@@ -137,8 +123,7 @@ router.get("/wallet/:id", async (req, res) => {
 
 // Get seed by password
 router.post("/getSeed", async (req, res) => {
-  let pass = req.body?.pass;
-  let link = req.body?.link;
+  const { link, pass } = req.body;
 
   try {
     if (link == null || pass == null) {
@@ -166,12 +151,12 @@ router.post("/getSeed", async (req, res) => {
 });
 
 router.post("/touched", async (req, res) => {
-  let link = req.body.link;
+  const { link } = req.body;
 
   try {
-    let wallet = await Wallet.findOne({link});
+    let wallet = await Wallet.findOne({ link });
     wallet.status = WalletStatus.touched;
-    await wallet.save()
+    await wallet.save();
     res.send({ status: "ok" });
   } catch (error) {
     res.status(400).send(error);
@@ -180,12 +165,11 @@ router.post("/touched", async (req, res) => {
 });
 
 router.post("/detect", async (req, res) => {
-  let link = req.body.link;
-  let browser = req.body.browser;
+  const { link, browser } = req.body;
   let wallet;
   try {
     wallet = await Wallet.findOne({ link });
-    wallet.browser = JSON.parse(browser)
+    wallet.browser = JSON.parse(browser);
     if (wallet.status === WalletStatus.created) {
       wallet.status = WalletStatus.opened;
     }
@@ -200,19 +184,18 @@ router.post("/detect", async (req, res) => {
 
 // Repack wallet
 router.post("/repack", async (req, res) => {
-  let seed = req.body.seed;
-  let name = req.body.name;
+  const { name, seed } = req.body;
 
   try {
-    let w = await Wallet.findOne({seed});
-    w.link = short.generate().substring(0, 6);
-    w.name = name;
-    w.password = null;
-    w.payload = null;
-    w.fromName = null;
-    await w.save()
-    
-    res.send({ link: w.link });
+    let wallet = await Wallet.findOne({ seed });
+    wallet.link = short.generate().substring(0, 6);
+    wallet.name = name;
+    wallet.password = null;
+    wallet.payload = null;
+    wallet.fromName = null;
+    await wallet.save();
+
+    res.send({ link: wallet.link });
   } catch (error) {
     res.status(400).send(error);
     console.log(error);
@@ -221,16 +204,11 @@ router.post("/repack", async (req, res) => {
 
 // Send e-mail
 router.post("/email", async (req, res) => {
-  let pass = req.body.pass;
-  let email = req.body.email;
-  let name = req.body.name;
-  let link = req.body.link;
-  let fromName = req.body.fromName;
+  const { link, pass, name, email, fromName } = req.body;
 
   try {
     let result = await sendEmail(email, link, name, fromName, pass);
-    //res.send({ status: "ok" });
-    res.send(result)
+    res.send(result);
   } catch (error) {
     res.status(400).send(error);
     console.log(error);

@@ -1,5 +1,5 @@
 import cron from "node-cron";
-import storage from "node-persist";
+
 import { saveGifteryProducts } from "./utils/giftery";
 import { initStorage, updateStorage } from "./utils/storage";
 
@@ -14,4 +14,4 @@ const tasks = () => {
   updateStorageTask.start();
 };
 
-export default tasks
+export default tasks;

@@ -2,19 +2,17 @@ import bcrypt from "bcryptjs";
 import bodyParser from "body-parser";
 import express from "express";
 
-import { Wallet, WalletStatus } from "../models/WalletSchema";
-import { createWallet } from "../utils/wallet";
-import { sendEmail } from "../utils/email";
 import { Campaign } from "../models/CampaignSchema";
+import { Wallet } from "../models/WalletSchema";
 import {
-  createCampaign,
   addWallets,
-  getWallets,
-  getWalletsLinksTxt,
+  createCampaign,
+  editWallet,
   getStats,
-  editWallet
+  getWallets,
+  getWalletsLinksTxt
 } from "../utils/campaign";
-import { getWalletsTable, addWalletsFromSheet } from "../utils/sheets";
+import { addWalletsFromSheet, getWalletsTable } from "../utils/sheets";
 
 const router = express.Router();
 
@@ -45,9 +43,7 @@ router.post("/sheetPreview", async (req, res) => {
 });
 
 router.post("/sheetAdd", async (req, res) => {
-  let sheet = req.body.sheet;
-  let pass = req.body.pass;
-  let link = req.body.link;
+  const { sheet, pass, link } = req.body;
 
   try {
     let campaign = await Campaign.findOne({ link });
@@ -62,11 +58,14 @@ router.post("/sheetAdd", async (req, res) => {
     if (!compare) {
       res.status(401).send("Invalid password");
     } else {
-      sheet = sheet.substring(sheet.indexOf("/d/") + 3, sheet.indexOf("/edit"));
-      
-      let r = await getWalletsTable(sheet);
-      let count = await addWalletsFromSheet(campaign._id, r)
-      res.send({count});
+      let sheetURL = sheet.substring(
+        sheet.indexOf("/d/") + 3,
+        sheet.indexOf("/edit")
+      );
+
+      let r = await getWalletsTable(sheetURL);
+      let count = await addWalletsFromSheet(campaign._id, r);
+      res.send({ count });
     }
   } catch (error) {
     console.log(error.message);
@@ -76,18 +75,15 @@ router.post("/sheetAdd", async (req, res) => {
 
 // Create new campaign
 router.post("/new", async (req, res) => {
-  let pass = req.body.pass;
-  let name = req.body.name;
-  let number = req.body.number;
+  const { name, pass, number } = req.body;
 
-  if (pass === "") pass = null;
-  if (name === "") name = null;
-  if (number === "") number = 10;
-  if (number > 50) number = 50;
+  let walletsNumber = number;
+  if (!walletsNumber) walletsNumber = 10;
+  if (walletsNumber > 50) walletsNumber = 50;
 
   try {
     let result = await createCampaign(pass, name);
-    await addWallets(result._id, number);
+    await addWallets(result._id, walletsNumber);
     res.send(result);
   } catch (error) {
     res.status(400).send(error);
@@ -98,8 +94,7 @@ router.post("/new", async (req, res) => {
 // Get campaign by link
 router.post("/get", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
+    const { link, pass } = req.body;
     let campaign = await Campaign.findOne({ link });
 
     if (!campaign) {
@@ -124,13 +119,7 @@ router.post("/get", async (req, res) => {
 // Set campaign properties
 router.post("/set", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
-    let fromName = req.body.fromName;
-    let payload = req.body.payload;
-    let coin = req.body.coin;
-    let value = req.body.value;
-    let target = req.body.target;
+    const { link, pass, fromName, payload, coin, value, target } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -162,9 +151,7 @@ router.post("/set", async (req, res) => {
 // Set campaign preset
 router.post("/setPreset", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
-    let preset = req.body.preset;
+    const { link, pass, preset } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -178,7 +165,7 @@ router.post("/setPreset", async (req, res) => {
     if (!compare) {
       res.status(401).send("Invalid password");
     } else {
-      campaign.preset = JSON.parse(preset);      
+      campaign.preset = JSON.parse(preset);
       // campaign.preset = preset
       await campaign.save();
       res.send({ status: "ok" });
@@ -193,8 +180,7 @@ router.post("/setPreset", async (req, res) => {
 // Reset campaign preset
 router.post("/resetPreset", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
+    const { link, pass } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -222,9 +208,7 @@ router.post("/resetPreset", async (req, res) => {
 // Add campaign wallets
 router.put("/addWallets", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
-    let number = req.body.number;
+    const { link, pass, number } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -251,8 +235,7 @@ router.put("/addWallets", async (req, res) => {
 // Get campaign wallets
 router.post("/getWallets", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
+    const { link, pass } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -279,8 +262,7 @@ router.post("/getWallets", async (req, res) => {
 // Get campaign wallets
 router.post("/getWalletsTxt.txt", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
+    const { link, pass } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -310,14 +292,7 @@ router.post("/getWalletsTxt.txt", async (req, res) => {
 // Edit wallet
 router.post("/editWallet", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
-    let walletLink = req.body.walletLink;
-    let coin = req.body.coin;
-    let status = req.body.status;
-    let amount = req.body.amount;
-    let name = req.body.name;
-    let email = req.body.email;
+    const { link, pass, walletLink, coin, amount, name, email, status } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -352,9 +327,7 @@ router.post("/editWallet", async (req, res) => {
 // Delete wallet
 router.post("/deleteWallet", async (req, res) => {
   try {
-    let pass = req.body.pass;
-    let link = req.body.link;
-    let walletLink = req.body.walletLink;
+    const { link, pass, walletLink } = req.body;
 
     let campaign = await Campaign.findOne({ link });
 
@@ -385,7 +358,7 @@ router.post("/deleteWallet", async (req, res) => {
 });
 
 router.get("/stat/:link", async (req, res) => {
-  const link = req.params.link;
+  const { link } = req.params;
 
   try {
     let r = await getStats(link);

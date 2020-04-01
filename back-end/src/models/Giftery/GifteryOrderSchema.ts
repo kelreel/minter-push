@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 export type GifteryOrderDocument = mongoose.Document & {
-  link: string,
+  link: string;
   id: number;
   address: string;
   product_id: number;

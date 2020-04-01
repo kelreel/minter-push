@@ -1,8 +1,8 @@
 import mongoose from "mongoose";
 
 export type PhoneDocument = mongoose.Document & {
-  phone: number,
-  keyword: string
+  phone: number;
+  keyword: string;
 };
 
 const txSchema = new mongoose.Schema(
@@ -15,7 +15,4 @@ const txSchema = new mongoose.Schema(
   }
 );
 
-export const Phone = mongoose.model<PhoneDocument>(
-  "Phone",
-  txSchema
-);
+export const Phone = mongoose.model<PhoneDocument>("Phone", txSchema);

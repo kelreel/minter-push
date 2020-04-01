@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 import { WalletStatus } from "./WalletSchema";
 
 export enum TargetEnum {
@@ -21,8 +22,8 @@ export type CampaignDocument = mongoose.Document & {
   value: number | null;
   coin: string | null;
   returnDay: number | null;
-  target: TargetEnum | null,
-  preset: any
+  target: TargetEnum | null;
+  preset: any;
 };
 
 const campaignSchema = new mongoose.Schema(

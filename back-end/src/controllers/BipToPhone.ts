@@ -1,6 +1,11 @@
-import express from 'express'
-import { getBiptoPhoneInfo, getKeywordByPhone, getStatusPhone } from '../utils/bipToPhone';
-import bodyParser from 'body-parser';
+import bodyParser from "body-parser";
+import express from "express";
+
+import {
+  getBiptoPhoneInfo,
+  getKeywordByPhone,
+  getStatusPhone
+} from "../utils/bipToPhone";
 
 const router = express.Router();
 
@@ -44,4 +49,4 @@ router.post("/getStatus", async (req, res) => {
   }
 });
 
-export default router
+export default router;

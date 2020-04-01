@@ -1,11 +1,12 @@
-import express from "express";
+import axios from "axios";
 import bodyParser from "body-parser";
+import express from "express";
+import { sha256 } from "js-sha256";
+
+import config from "../config";
 import { GifteryOrder } from "../models/Giftery/GifteryOrderSchema";
 import { Product } from "../models/Giftery/ProductSchema";
-import { getGifteryBalance, makeOrder } from "../utils/giftery";
-import { sha256 } from "js-sha256";
-import config from "../config";
-import axios from "axios";
+import { makeOrder } from "../utils/giftery";
 
 const router = express.Router();
 
@@ -20,7 +21,7 @@ router.use(
 );
 
 router.get("/products", async (req, res) => {
-  const games = [12952, 12886, 12453]
+  const games = [12952, 12886, 12453];
   const internet = [
     13797,
     11501,
@@ -35,7 +36,7 @@ router.get("/products", async (req, res) => {
     13712,
     13713,
     12765,
-    11475,
+    11475
   ];
   const shops = [
     11481,
@@ -54,7 +55,7 @@ router.get("/products", async (req, res) => {
   const food = [13900, 11610, 13984, 800];
   try {
     let result = {
-      games: await Product.find({ id: { $in: games } }).sort({title: 1}),
+      games: await Product.find({ id: { $in: games } }).sort({ title: 1 }),
       food: await Product.find({ id: { $in: food } }).sort({ title: 1 }),
       internet: await Product.find({ id: { $in: internet } }).sort({
         title: 1
@@ -93,7 +94,7 @@ router.get("/certificate/:id", async (req, res) => {
     });
     if (result.data.status !== "ok") throw result.data.error.text;
     // const cert = Buffer.from(result.data.data.certificate, 'base64').toString();
-    const cert = result.data.data.certificate
+    const cert = result.data.data.certificate;
     res.send(cert);
   } catch (error) {
     res.status(400).send(error);
