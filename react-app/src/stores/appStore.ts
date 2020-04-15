@@ -15,7 +15,7 @@ export type Balance = {
   coin: string;
   value: number;
   bip_value?: number;
-};
+}; 
 
 class AppStore {
   @observable address: string | null = window.localStorage.getItem("address");
@@ -139,15 +139,6 @@ class AppStore {
       await this.getTotalPrice();
     }, timeout);
   }
-
-  // @action async getRubCourse() {
-  //   try {
-  //     let res = await HTTP.get(`https://www.cbr-xml-daily.ru/daily_json.js`);
-  //     this.rubCourse = res.data.Valute.USD.Value;
-  //   } catch (error) {
-  //     message.error("Error getting Exchanges Rate");
-  //   }
-  // }
 
   @action async getTotalPrice() {
     try {

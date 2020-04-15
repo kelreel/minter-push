@@ -24,7 +24,7 @@ const MultiPasswordForm: React.FC<{ link: string }> = observer(({ link }) => {
       await mStore.initCampaign(link, state.password);
     } catch (error) {
       const { response } = error;
-      response ? message.error(response.data) : message.error(error);
+      response ? message.error(response.data.message) : message.error(error);
     }
     setState({ ...state, loading: false });
   };

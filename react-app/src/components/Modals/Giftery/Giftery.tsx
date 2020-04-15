@@ -110,7 +110,7 @@ const Giftery: React.FC<Props> = observer(
       } catch (error) {
         const { response } = error;
         response ? message.error(response.data) : message.error(error);
-        setState({ ...state, error: response.data, isLoading: false });
+        setState({ ...state, error: response.data.message, isLoading: false });
       }
     };
 

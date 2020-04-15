@@ -20,6 +20,7 @@ import NewMultiView from "./views/NewMulti/NewMulti";
 import PresetView from "./views/Preset/Preset";
 import TgView from "./views/TgView/TgView";
 import WalletView from "./views/Wallet/WalletView";
+import LoginView from "./views/Login/LoginView";
 
 const App: React.FC = observer(() => {
   const { t, i18n } = useTranslation();
@@ -59,6 +60,9 @@ const App: React.FC = observer(() => {
           </Route>
           <Route path="/tg/:link">
             <TgView />
+          </Route>
+          <Route path="/login">
+            <LoginView />
           </Route>
           <Route path="/:link">
             <WalletView />

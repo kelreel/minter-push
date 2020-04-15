@@ -22,7 +22,7 @@ const PasswordForm: React.FC = observer(() => {
       store.setSeed(res.data.seed);
     } catch (error) {
       const { response } = error;
-      response ? message.error(response.data) : message.error(error);
+      response ? message.error(response.data.message) : message.error(error);
     }
     setState({ ...state, loading: false });
   };
