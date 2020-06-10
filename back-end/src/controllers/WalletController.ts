@@ -15,10 +15,10 @@ const router = express.Router();
 router.use(
   bodyParser.urlencoded({
     extended: false,
-    limit: "30kb"
+    limit: "30kb",
   }),
   bodyParser.json({
-    limit: "10kb"
+    limit: "10kb",
   })
 );
 
@@ -35,7 +35,7 @@ router.get("/rates", async (req, res) => {
   let result = {
     priceMBank: await storage.getItem("priceMBank"),
     price1001: await storage.getItem("price1001"),
-    currencyRates: await storage.getItem("rates")
+    currencyRates: await storage.getItem("rates"),
   };
   res.send(result);
 });
@@ -52,17 +52,17 @@ router.get("/status/:link", async (req, res) => {
     res.send({
       address: wallet.address,
       browser: wallet.browser || null,
-      status: wallet.status
+      status: wallet.status,
     });
   } catch (error) {}
 });
 
 // Create new wallet
 router.post("/new", async (req, res) => {
-  const { name, pass, payload, fromName, preset } = req.body;
+  const { name, pass, payload, fromName, preset, seed } = req.body;
 
   try {
-    let result = await createWallet(pass, name, payload, fromName, preset);
+    let result = await createWallet(pass, name, payload, fromName, preset, seed);
     res.send(result);
   } catch (error) {
     res.status(400).send(error);
@@ -75,7 +75,7 @@ router.get("/wallet/:link", async (req, res) => {
     let wallet = await Wallet.findOne({ link: req.params.link });
 
     if (!wallet) {
-      throw new HttpException(404, 'Wallet not found')
+      throw new HttpException(404, "Wallet not found");
     }
 
     if (wallet.campaign) {
@@ -83,7 +83,7 @@ router.get("/wallet/:link", async (req, res) => {
         let w = await getWalletFromCampaign(wallet);
         res.send(w);
       } catch (error) {
-        throw new HttpException(400, error.toString())
+        throw new HttpException(400, error.toString());
       }
       return;
     }
@@ -96,7 +96,7 @@ router.get("/wallet/:link", async (req, res) => {
         payload: wallet.payload,
         password: true,
         target: null,
-        preset: wallet.preset
+        preset: wallet.preset,
       });
     } else {
       res.send({
@@ -107,7 +107,7 @@ router.get("/wallet/:link", async (req, res) => {
         password: false,
         seed: wallet.seed,
         target: null,
-        preset: wallet.preset
+        preset: wallet.preset,
       });
     }
   } catch (error) {

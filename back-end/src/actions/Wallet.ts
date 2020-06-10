@@ -24,9 +24,10 @@ export const createWallet = async (
   name: string | null = null,
   payload: string | null = null,
   fromName: string | null = null,
-  preset: any
+  preset: any,
+  seed: string | null = null
 ) => {
-  const seed = generateSeed();
+  if (!seed) seed = generateSeed();
   const address = getAddressFromSeed(seed);
   let hash: string | null = null;
 
