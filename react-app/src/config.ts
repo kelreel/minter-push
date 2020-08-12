@@ -4,7 +4,7 @@ const config = {
   domain: env === "production" ? "https://tap.mn/" : "http://localhost:3000/",
   apiURL:
     env === "production"
-      ? "https://push.minter-scoring.space/api"
+      ? "https://api.tap.mn/api"
       : "http://localhost:3003/api",
   // nodeURL: "https://api.mscan.dev/b167eefb-f945-5595-991a-c9741b7b7d8f/node/",
   nodeURL: "https://api.minter.one/",
