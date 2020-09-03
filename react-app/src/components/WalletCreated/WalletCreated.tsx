@@ -149,13 +149,13 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
         activeKey={state.tab}
         type="card"
         defaultActiveKey="1"
-        onChange={val => setState({...state, tab: val})}
+        onChange={(val) => setState({ ...state, tab: val })}
       >
         {/* Payment Tab */}
         <TabPane
           tab={
             <span>
-              <Icon type="dollar"/>
+              <Icon type="dollar" />
               {t("walletCreated.tab1title")}
             </span>
           }
@@ -163,58 +163,82 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
         >
           <div className="address">
             <p onClick={copyAddress}>{shortAddress(address)}</p>
-            <Icon onClick={copyAddress} type="copy"/>
-            <Icon type="qrcode" onClick={() => setState({...state, qrModal: true})}/>
+            <Icon onClick={copyAddress} type="copy" />
+            <Icon
+              type="qrcode"
+              onClick={() => setState({ ...state, qrModal: true })}
+            />
           </div>
           <div className="deeplink">
             <div className="deep-value">
-              <Input addonAfter={selectCurrency()} className="num" value={state.deepValue}
-                     onChange={(e) => {
-                       if (isNaN(parseFloat(e.target.value))) {
-                         setState({...state, deepValue: 0});
-                         return;
-                       }
-                       setState({...state, deepValue: parseFloat(e.target.value)})
-                     }}/>
+              <Input
+                addonAfter={selectCurrency()}
+                className="num"
+                value={state.deepValue}
+                onChange={(e) => {
+                  if (isNaN(parseFloat(e.target.value))) {
+                    setState({ ...state, deepValue: 0 });
+                    return;
+                  }
+                  setState({ ...state, deepValue: parseFloat(e.target.value) });
+                }}
+              />
             </div>
-            {state.deepCurrency !== 'Bitcoin' ? <Button style={{marginTop: '15px'}} type="primary"
-                    onClick={() => window.open(getDeepLink(address, deepBip(), 'BIP'), '_blank')}>DeepLink
-              ({deepBip().toLocaleString()} BIP)</Button> :
-                <Button style={{marginTop: '15px'}} type="primary" onClick={() => {
-                  setState({...state, bitcoinModal: false})
-                  setTimeout(() => setState({...state, bitcoinModal: true}), 0)
-                }}>Get BTC Address</Button>}
+            {state.deepCurrency !== "Bitcoin" ? (
+              <Button
+                style={{ marginTop: "15px" }}
+                type="primary"
+                onClick={() =>
+                  window.open(getDeepLink(address, deepBip(), "BIP"), "_blank")
+                }
+              >
+                BIP Wallet ({deepBip().toLocaleString()} BIP)
+              </Button>
+            ) : (
+              <Button
+                style={{ marginTop: "15px" }}
+                type="primary"
+                onClick={() => {
+                  setState({ ...state, bitcoinModal: false });
+                  setTimeout(
+                    () => setState({ ...state, bitcoinModal: true }),
+                    0
+                  );
+                }}
+              >
+                Get BTC Address
+              </Button>
+            )}
           </div>
           <div className="balance">
             {state.balance &&
-            (+state.balance.BIP !== 0 || getBalances().length > 1) && (
-              <>
-                <h4>{t("walletCreated.currentBalance")}</h4>
-                <List
-                  size="small"
-                  bordered
-                  dataSource={getBalances()}
-                  renderItem={item => (
-                    <List.Item>
-                      <div className="left">
-                        <img
-                          src={`${config.avatarCoinURL}${item.coin}`}
-                          alt=""
-                        />
-                        <p>{item.coin} </p>
-                      </div>
-                      {" "}
-                      <p>{item.value}</p>
-                    </List.Item>
-                  )}
-                />
-              </>
-            )}
+              (+state.balance.BIP !== 0 || getBalances().length > 1) && (
+                <>
+                  <h4>{t("walletCreated.currentBalance")}</h4>
+                  <List
+                    size="small"
+                    bordered
+                    dataSource={getBalances()}
+                    renderItem={(item) => (
+                      <List.Item>
+                        <div className="left">
+                          <img
+                            src={`${config.avatarCoinURL}${item.coin}`}
+                            alt=""
+                          />
+                          <p>{item.coin} </p>
+                        </div>{" "}
+                        <p>{item.value}</p>
+                      </List.Item>
+                    )}
+                  />
+                </>
+              )}
             {(!state.balance ||
               (+state?.balance?.BIP === 0 && getBalances().length === 1)) && (
               <>
                 <h4>{t("walletCreated.waitingPayment")}</h4>
-                <Loading size="50px"/>
+                <Loading size="50px" />
               </>
             )}
           </div>
@@ -224,7 +248,7 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
         <TabPane
           tab={
             <span>
-              <Icon type="link"/>
+              <Icon type="link" />
               {t("walletCreated.tab2title")}
             </span>
           }
@@ -241,55 +265,70 @@ const WalletCreated: React.FC<props> = ({address, link}) => {
                 height: 23,
                 width: 150,
                 y: 170,
-                excavate: true
+                excavate: true,
               }}
             />
-            <p style={{alignSelf: "center"}} className="click-copy">
+            <p style={{ alignSelf: "center" }} className="click-copy">
               {t("walletCreated.clickLink")}
             </p>
             <div onClick={copyLink} className="link">
-              <Alert message={`${config.domain}${link}`} type="success"/>
+              <Alert message={`${config.domain}${link}`} type="success" />
             </div>
-            {navShare ?
-              <Button onClick={nativeShare} type="primary" block icon="share-alt">{t("walletCreated.share")}</Button> :
+            {/*  */}
+            {/* @ts-ignore */}
+            {navShare ? (
+              <Button
+                onClick={nativeShare}
+                type="primary"
+                block
+                icon="share-alt"
+              >
+                {t("walletCreated.share")}
+              </Button>
+            ) : (
               <div className="share-buttons">
                 <Share.VKShareButton url={`${config.domain}${link}`}>
-                  <Share.VKIcon size={32} round={true}/>
+                  <Share.VKIcon size={32} round={true} />
                 </Share.VKShareButton>
                 <Share.TelegramShareButton url={`${config.domain}${link}`}>
-                  <Share.TelegramIcon size={32} round={true}/>
+                  <Share.TelegramIcon size={32} round={true} />
                 </Share.TelegramShareButton>
                 <Share.ViberShareButton url={`${config.domain}${link}`}>
-                  <Share.ViberIcon size={32} round={true}/>
+                  <Share.ViberIcon size={32} round={true} />
                 </Share.ViberShareButton>
                 <Share.WhatsappShareButton url={`${config.domain}${link}`}>
-                  <Share.WhatsappIcon size={32} round={true}/>
+                  <Share.WhatsappIcon size={32} round={true} />
                 </Share.WhatsappShareButton>
                 <Share.EmailShareButton url={`${config.domain}${link}`}>
-                  <Share.EmailIcon size={32} round={true}/>
+                  <Share.EmailIcon size={32} round={true} />
                 </Share.EmailShareButton>
-              </div>}
+              </div>
+            )}
           </div>
         </TabPane>
       </Tabs>
 
-      <Modal title={address} footer={null} visible={state.qrModal} onCancel={() => setState({...state, qrModal: false})}>
+      <Modal
+        title={address}
+        footer={null}
+        visible={state.qrModal}
+        onCancel={() => setState({ ...state, qrModal: false })}
+      >
         <div className="qr-modal">
-          <QRCodeCanvas value={address} onClick={copyAddress} size={200}/>
+          <QRCodeCanvas value={address} onClick={copyAddress} size={200} />
         </div>
       </Modal>
 
-      <BitcoinModal visible={state.bitcoinModal} address={address}/>
+      <BitcoinModal visible={state.bitcoinModal} address={address} />
 
       {/* Next, back buttons */}
       <div className="nav">
-
         {state.tab === "1" ? (
-          <Button onClick={() => setState({...state, tab: "2"})}>
+          <Button onClick={() => setState({ ...state, tab: "2" })}>
             {t("walletCreated.next")}
           </Button>
         ) : (
-          <Button onClick={() => setState({...state, tab: "1"})}>
+          <Button onClick={() => setState({ ...state, tab: "1" })}>
             {t("walletCreated.back")}
           </Button>
         )}

@@ -205,28 +205,11 @@ const Phone: React.FC<{ visible: boolean }> = observer(({ visible }) => {
             </div>
             {/* {state.loadInfo ? 'load' : 'not load'}
             {state.bipPrice} */}
-            {!state.loadInfo && state.amount > 0 && (
+            {/* {!state.loadInfo && state.amount > 0 && (
               <div className="total">
-                {t("phone.total")}{" "}
-                {state.coin === "BIP" && (
-                  <p>{Math.round(state.amount * state.bipPrice * 100) / 100}</p>
-                )}
-                {state.coin !== "BIP" && (
-                  <p>
-                    {Math.round(
-                      state.amount *
-                        (store.balance.find(x => x.coin === state.coin)
-                          ?.value! /
-                          store.balance.find(x => x.coin === state.coin)
-                            ?.value!) *
-                        state.bipPrice *
-                        100
-                    ) / 100}
-                  </p>
-                )}
-                <p>RUB</p>
+                <p>Зачисляемая сумма может незначительно отличаться</p>
               </div>
-            )}
+            )} */}
           </div>
         </>
       )}
