@@ -1,4 +1,4 @@
-<h2 align="center"><img height="80" src="https://tap.mn/tapmn.png" /></h2>
+<h2 align="center"><img height="80" src="https://raw.githubusercontent.com/kelreel/minter-push/master/react-app/public/minter-logo.png" /></h2>
 
 <h4 align="center">To integrate your service, you can make a Pull Request with a ready-made React component.</h4>
 
